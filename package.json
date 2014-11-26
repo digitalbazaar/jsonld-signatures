@@ -1,0 +1,79 @@
+{
+  "name": "jsonld-signatures",
+  "version": "0.0.1-dev",
+  "description": "An implementation of the Linked Data Signatures specification for JSON-LD in node.js.",
+  "homepage": "http://github.com/digitalbazaar/jsonld-signatures",
+  "author": {
+    "name": "Digital Bazaar, Inc.",
+    "email": "support@digitalbazaar.com",
+    "url": "http://digitalbazaar.com/"
+  },
+  "contributors": [
+    {
+      "name": "Dave Longley",
+      "email": "dlongley@digitalbazaar.com"
+    },
+    {
+      "name": "Manu Sporny",
+      "email": "msporny@digitalbazaar.com"
+    },
+    {
+      "name": "David I. Lehn",
+      "email": "dlehn@digitalbazaar.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/digitalbazaar/jsonld-signatures"
+  },
+  "bugs": {
+    "url": "https://github.com/digitalbazaar/jsonld-signatures/issues",
+    "email": "support@digitalbazaar.com"
+  },
+  "licenses": [
+    {
+      "type": "BSD",
+      "url": "https://github.com/digitalbazaar/jsonld-signatures/raw/master/LICENSE"
+    }
+  ],
+  "main": "js/jsonld-signatures.js",
+  "dependencies": {
+    "async": "~0.9.0",
+    "commander": "~1.3.0",
+    "es6-promise": "~1.0.0",
+    "jsdom": "~0.7.0",
+    "pkginfo": "~0.3.0",
+    "request": "~2.44.0",
+    "xmldom": "0.1.19",
+    "through": "~2.3.4"
+  },
+  "devDependencies": {
+    "chai": "~1.9.1",
+    "istanbul": "^0.3.2",
+    "mocha": "~1.21.4",
+    "mocha-phantomjs": "~3.5.0",
+    "phantomjs": "~1.9.0"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "keywords": [
+    "JSON",
+    "Linked Data",
+    "JSON-LD",
+    "RDF",
+    "Semantic Web",
+    "jsonld",
+    "digital signatures"
+  ],
+  "bin": {
+    "jsigs": "./bin/jsigs"
+  },
+  "scripts": {
+    "test-node": "make test-node",
+    "test-browser": "make test-browser",
+    "test": "make test",
+    "coverage": "make test-coverage",
+    "lint": "jshint js/jsonld-signatures.js tests/*.js"
+  }
+}
