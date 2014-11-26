@@ -1,0 +1,17 @@
+{
+  "name": "jsonld-signatures",
+  "version": "0.0.1-dev",
+  "description": "An implementation of the Linked Data Signatures specification for JSON-LD in the browser.",
+  "authors": [
+    "Digital Bazaar, Inc."
+  ],
+  "license": "BSD",
+  "main": ["js/jsonld-signatures.js"],
+  "dependencies": {
+    "es6-promise": "1.0.0"
+  },
+  "ignore": [
+    "node_modules",
+    "bower_components"
+  ]
+}
