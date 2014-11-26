@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - "0.10"
+# download test suite and run tests... submodule? meta testing project with
+# all of the reference implementations?
+script: 
+  - make test
+notifications:
+  email:
+    on_success: change
+    on_failure: change
