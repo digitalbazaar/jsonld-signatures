@@ -36,7 +36,7 @@
       "url": "https://github.com/digitalbazaar/jsonld-signatures/raw/master/LICENSE"
     }
   ],
-  "main": "js/jsonld-signatures.js",
+  "main": "lib/jsonld-signatures.js",
   "dependencies": {
     "async": "~0.9.0",
     "commander": "~1.3.0",
@@ -74,6 +74,6 @@
     "test-browser": "make test-browser",
     "test": "make test",
     "coverage": "make test-coverage",
-    "lint": "jshint js/jsonld-signatures.js tests/*.js"
+    "lint": "jshint lib/jsonld-signatures.js tests/*.js"
   }
 }

@@ -15,7 +15,7 @@ var _nodejs = (typeof process !== 'undefined' &&
   process.versions && process.versions.node);
 
 if(_nodejs) {
-  var _jsdir = getEnv().JSDIR || 'js';
+  var _jsdir = getEnv().JSDIR || 'lib';
   var fs = require('fs');
   var path = require('path');
   var jsonld = require('jsonld');
@@ -29,7 +29,7 @@ if(_nodejs) {
   var fs = require('fs');
   var system = require('system');
   require('./setImmediate');
-  var _jsdir = getEnv().JSDIR || 'js';
+  var _jsdir = getEnv().JSDIR || 'lib';
   require('jsonld');
   var jsigs = require('../' + _jsdir + '/jsonld-signatures')(jsonld);
   jsigs = jsigsjs;
