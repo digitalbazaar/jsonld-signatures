@@ -38,6 +38,7 @@ var promises = jsigs.promises;
 // verification
 var promise = promises.verify(signedDoc);
 promise.then(function(verified) {...}, function(err) {...});
+```
 
 Commercial Support
 ------------------
