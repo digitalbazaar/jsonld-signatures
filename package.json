@@ -42,10 +42,13 @@
     "commander": "~1.3.0",
     "es6-promise": "~1.0.0",
     "jsdom": "~0.7.0",
+    "jsonld": "~0.3.10",
+    "node-forge": "~0.6.18",
     "pkginfo": "~0.3.0",
     "request": "~2.44.0",
     "xmldom": "0.1.19",
-    "through": "~2.3.4"
+    "through": "~2.3.4",
+    "underscore": "^1.7.0"
   },
   "devDependencies": {
     "chai": "~1.9.1",
