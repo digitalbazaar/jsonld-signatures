@@ -15,10 +15,10 @@ var _nodejs = (typeof process !== 'undefined' &&
   process.versions && process.versions.node);
 
 if(_nodejs) {
-  var _jsdir = getEnv().JSDIR || 'lib';
+  var _jsdir = process.env.JSDIR || 'lib';
   var fs = require('fs');
   var path = require('path');
-  var jsonld = require('jsonld');
+  var jsonld = require('../node_modules/jsonld');
   var jsigs = require('../' + _jsdir + '/jsonld-signatures')(jsonld);
   var assert = require('assert');
   var program = require('commander');
@@ -60,7 +60,8 @@ describe('JSON-LD Signatures', function() {
   it('should successfully verify a local signed document', function(done) {
     var signedDoc = {};
     jsigs.verify(signedDoc, function(err, verified) {
-      assert.isTrue(verified, 'signature verification failed');
+      assert.ifError(err);
+      assert.equal(verified, true, 'signature verification failed');
       done();
     });
   });
