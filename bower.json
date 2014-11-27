@@ -6,9 +6,13 @@
     "Digital Bazaar, Inc."
   ],
   "license": "BSD",
-  "main": ["lib/jsonld-signatures.js"],
+  "main": [
+    "lib/jsonld-signatures.js"
+  ],
   "dependencies": {
-    "es6-promise": "1.0.0"
+    "es6-promise": "1.0.0",
+    "jsonld": "~0.3.10",
+    "forge": "~0.6.18"
   },
   "ignore": [
     "node_modules",
