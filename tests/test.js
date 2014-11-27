@@ -19,7 +19,7 @@ if(_nodejs) {
   var fs = require('fs');
   var path = require('path');
   var jsonld = require('../node_modules/jsonld');
-  var jsigs = require('../' + _jsdir + '/jsonld-signatures')(jsonld);
+  var jsigs = require('../' + _jsdir + '/jsonld-signatures')();
   var assert = require('assert');
   var program = require('commander');
   program
@@ -29,10 +29,9 @@ if(_nodejs) {
   var fs = require('fs');
   var system = require('system');
   require('./setImmediate');
-  var _jsdir = getEnv().JSDIR || 'lib';
-  require('jsonld');
-  var jsigs = require('../' + _jsdir + '/jsonld-signatures')(jsonld);
-  jsigs = jsigsjs;
+  var _jsdir = system.env.JSDIR || 'lib';
+  require('../node_modules/jsonld');
+  var jsigs = require('../' + _jsdir + '/jsonld-signatures');
   window.Promise = require('es6-promise').Promise;
   var assert = require('chai').assert;
   require('mocha/mocha');
