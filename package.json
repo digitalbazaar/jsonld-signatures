@@ -48,17 +48,22 @@
     "request": "~2.44.0",
     "xmldom": "0.1.19",
     "through": "~2.3.4",
-    "underscore": "^1.7.0"
+    "underscore": "~1.7.0"
   },
   "devDependencies": {
     "chai": "~1.9.1",
-    "istanbul": "^0.3.2",
+    "grunt": "~0.4.2",
+    "grunt-cli": "~0.1.9",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-mocha-test": "~0.12.4",
+    "grunt-shell": "~1.1.1",
+    "istanbul": "~0.3.2",
     "mocha": "~1.21.4",
     "mocha-phantomjs": "~3.5.0",
     "phantomjs": "~1.9.0"
   },
   "engines": {
-    "node": "*"
+    "node": ">=0.10.0"
   },
   "keywords": [
     "JSON",
@@ -73,10 +78,11 @@
     "jsigs": "./bin/jsigs"
   },
   "scripts": {
-    "test-node": "make test-node",
-    "test-browser": "make test-browser",
-    "test": "make test",
-    "coverage": "make test-coverage",
-    "lint": "jshint lib/jsonld-signatures.js tests/*.js"
+    "ci-lint": "grunt jshint --mode=ci || exit 0",
+    "lint": "grunt jshint",
+    "test-node": "grunt mochaTest",
+    "test-browser": "grunt shell:testBrowser",
+    "test": "grunt mochaTest shell:testBrowser",
+    "coverage": "grunt shell:coverage"
   }
 }
