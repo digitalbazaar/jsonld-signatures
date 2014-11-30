@@ -39,12 +39,6 @@ module.exports = function(grunt) {
     }
   });
 
-  // grunt istanbul
-  grunt.loadNpmTasks('grunt-istanbul');
-  grunt.config('exec', {
-
-  });
-
   // grunt release
   grunt.loadNpmTasks('grunt-release');
   grunt.config('release', {
