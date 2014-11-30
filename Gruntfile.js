@@ -47,6 +47,10 @@ module.exports = function(grunt) {
 
   // grunt release
   grunt.loadNpmTasks('grunt-release');
+  grunt.config('release', {
+    options: {
+      commitMessage: 'Release version <%= version %> to npmjs.org.'
+  }});
 
   // _jshint
   grunt.loadNpmTasks('grunt-contrib-jshint');
