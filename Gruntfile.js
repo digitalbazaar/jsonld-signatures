@@ -45,6 +45,9 @@ module.exports = function(grunt) {
 
   });
 
+  // grunt release
+  grunt.loadNpmTasks('grunt-release');
+
   // _jshint
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.config('jshint', {
