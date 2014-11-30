@@ -5,7 +5,7 @@ jsonld-signatures
 [travis-ci-png]: https://travis-ci.org/digitalbazaar/jsonld-signatures.png?branch=master
 [travis-ci-site]: https://travis-ci.org/digitalbazaar/jsonld-signatures
 
-An implementation of the Linked Data Signatures specification for JSON-LD. 
+An implementation of the Linked Data Signatures specification for JSON-LD.
 This software works in all modern browsers as well as node.js.
 
 Introduction
@@ -14,30 +14,76 @@ Introduction
 Here are some examples on using the library:
 
 ```js
-var signedDoc = {
-  "name": "Manu Sporny",
-  "url": "http://manu.sporny.org/",
-  "image": "http://manu.sporny.org/images/manu.png"
-  "signature": {
-    
-  }
+// to generate the next two lines, run the following command:
+//
+// openssl genrsa -out key.pem; cat key.pem; openssl rsa -in key.pem -pubout -out pubkey.pem; cat pubkey.pem; rm key.pem pubkey.pem
+//
+// for an example of how to specify these keys, look at [key-example]:
+var testPublicKeyPem = "-----BEGIN PUBLIC KEY-----\r\n...";
+var testPrivateKeyPem = "-----BEGIN PRIVATE KEY-----\r\n...";
+
+// specify the public key object
+var testPublicKey = {
+  '@context': jsigs.SECURITY_CONTEXT_URL,
+  '@id': 'https://example.com/i/alice/keys/1',
+  owner: 'https://example.com/i/alice',
+  publicKeyPem: testPublicKeyPem
 };
 
-// verify a signed JSON-LD document
-jsigs.verify(signedDoc, function(err, verified) {
-  // should print 'Signed document verified: true' to the console
-  console.log('Signed document verified:', verified);
+// specify the public key owner object
+var testPublicKeyOwner = {
+  "@context": jsigs.SECURITY_CONTEXT_URL,
+  '@id': 'https://example.com/i/alice',
+  publicKey: [testPublicKey]
+};
+
+// create the JSON-LD document that should be signed
+var testDocument = {
+  "@context": {
+    schema: 'http://schema.org/',
+    name: 'schema:name',
+    homepage: 'schema:url',
+    image: 'schema:image'
+  },
+  name: 'Manu Sporny',
+  homepage: 'https://manu.sporny.org/',
+  image: 'https://manu.sporny.org/images/manu.png'
+};
+
+// sign the document and then verify the signed document
+jsigs.sign(testDocument, {
+  privateKeyPem: testPrivateKeyPem,
+  creator: 'https://example.com/i/alice/keys/1'
+}, function(err, signedDocument) {
+  if(err) {
+    return console.log('Signing error:', err);
+  }
+  console.log('Signed document:', signedDocument);
+
+  // verify the signed document
+  jsigs.verify(signedDocument, {
+    publicKey: testPublicKey,
+    publicKeyOwner: testPublicKeyOwner,
+  }, function(err, verified) {
+    if(err) {
+      return console.log('Signature verification error:', err);
+    }
+    console.log('Signature is valid:', verified);
+  });
 });
 
-// verify a signed JSON-LD document at a particular URL
-jsigs.verify('http://example.org/signedDoc',...);
-
-// use the promises API
-var promises = jsigs.promises;
-
 // verification
-var promise = promises.verify(signedDoc);
-promise.then(function(verified) {...}, function(err) {...});
+var sign = jsigs.promises.sign(testDocument, {
+  privateKeyPem: testPrivateKeyPem,
+  creator: 'https://example.com/i/alice/keys/1'
+});
+sign.then(function(signedDocument) {...}, function(err) {...});
+
+var verify = jsigs.promises.verify(signedDocument, {
+  publicKey: testPublicKey,
+  publicKeyOwner: testPublicKeyOwner
+});
+verify.then(function(verified) {...}, function(err) {...});
 ```
 
 Commercial Support
@@ -67,20 +113,17 @@ https://github.com/digitalbazaar/jsonld-signatures/
 
 Run the tests using the following command:
 
-    make test
+    npm run test
 
 The standard tests will run node and browser tests. Just one type can also
 be run:
 
-    make test-node
-    make test-browser
+    npm run test-node
+    npm run test-browser
 
 Code coverage of node tests can be generated in `coverage/`:
 
-    make test-coverage
-
-The Mocha output reporter can be changed to min, dot, list, nyan, etc:
-
-    make test REPORTER=dot
+    npm run coverage
 
 [jsonld-signatures]: https://github.com/digitalbazaar/jsonld-signatures/
+[key-example]: https://github.com/digitalbazaar/jsonld-signatures/blob/44f1f67db2cfb0b166b7d5f63c40e10cc4642416/tests/test.js#L73
