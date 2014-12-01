@@ -4,7 +4,7 @@ node_js:
 # download test suite and run tests... submodule? meta testing project with
 # all of the reference implementations?
 script: 
-  - make test
+  - npm run test-node
 notifications:
   email:
     on_success: change
