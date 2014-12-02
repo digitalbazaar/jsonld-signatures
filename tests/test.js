@@ -30,8 +30,11 @@ if(_nodejs) {
   var system = require('system');
   require('./setImmediate');
   var _jsdir = system.env.JSDIR || 'lib';
+  var async = require('async');
+  window.async = async;
   require('../node_modules/jsonld');
-  var jsigs = require('../' + _jsdir + '/jsonld-signatures');
+  require('../' + _jsdir + '/jsonld-signatures');
+  var jsigs = window.jsigs;
   window.Promise = require('es6-promise').Promise;
   var assert = require('chai').assert;
   require('mocha/mocha');
