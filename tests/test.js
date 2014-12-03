@@ -16,8 +16,6 @@ var _nodejs = (typeof process !== 'undefined' &&
 
 if(_nodejs) {
   var _jsdir = process.env.JSDIR || 'lib';
-  var fs = require('fs');
-  var path = require('path');
   var jsonld = require('../node_modules/jsonld');
   var jsigs = require('../' + _jsdir + '/jsonld-signatures')();
   var assert = require('assert');
@@ -26,7 +24,6 @@ if(_nodejs) {
     .option('--bail', 'Bail when a test fails')
     .parse(process.argv);
 } else {
-  var fs = require('fs');
   var system = require('system');
   require('./setImmediate');
   var _jsdir = system.env.JSDIR || 'lib';
@@ -35,12 +32,24 @@ if(_nodejs) {
   var forge = require('../node_modules/node-forge');
   window.forge = forge;
   require('../node_modules/jsonld');
+  var jsonld = jsonldjs;
   require('../' + _jsdir + '/jsonld-signatures');
   var jsigs = window.jsigs;
   window.Promise = require('es6-promise').Promise;
   var assert = require('chai').assert;
   require('mocha/mocha');
   require('mocha-phantomjs/lib/mocha-phantomjs/core_extensions');
+  
+  // PhantomJS is really bad at doing XHRs, so we have to fake the network
+  // fetch of the JSON-LD Contexts
+  var contextLoader = function(url, callback) {
+    if(url === 'https://w3id.org/security/v1') {
+      callback(null, {contextUrl: null, document: securityContext, 
+        documentUrl: 'https://web-payments.org/contexts/security-v1.jsonld'});
+    }
+  };
+  jsonld.documentLoader = contextLoader;
+  
   var program = {};
   for(var i = 0; i < system.args.length; ++i) {
     var arg = system.args[i];
@@ -59,6 +68,7 @@ if(_nodejs) {
   });
 }
 
+// the test document that will be signed
 var testDocument = {
   "@context": {
     schema: 'http://schema.org/',
@@ -141,5 +151,59 @@ if(!_nodejs) {
     phantom.exit();
   });
 }
+
+// the security context that is used when loading https://w3id.org/security/v1
+var securityContext = {
+  "@context": {
+    "dc": "http://purl.org/dc/terms/",
+    "sec": "https://w3id.org/security#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "EncryptedMessage": "sec:EncryptedMessage",
+    "GraphSignature2012": "sec:GraphSignature2012",
+    "CryptographicKey": "sec:Key",
+
+    "cipherAlgorithm": "sec:cipherAlgorithm",
+    "cipherData": "sec:cipherData",
+    "cipherKey": "sec:cipherKey",
+    "created": {
+      "@id": "dc:created",
+      "@type": "xsd:dateTime"
+    },
+    "creator": {"@id": "dc:creator", "@type": "@id"},
+    "digestAlgorithm": "sec:digestAlgorithm",
+    "digestValue": "sec:digestValue",
+    "encryptionKey": "sec:encryptionKey",
+    "expiration": {
+      "@id": "sec:expiration",
+      "@type": "xsd:dateTime"
+    },
+    "initializationVector": "sec:initializationVector",
+    "nonce": "sec:nonce",
+    "normalizationAlgorithm": "sec:normalizationAlgorithm",
+    "owner": {
+      "@id": "sec:owner",
+      "@type": "@id"
+    },
+    "password": "sec:password",
+    "privateKeyPem": "sec:privateKeyPem",
+    "publicKey": {
+      "@id": "sec:publicKey",
+      "@type": "@id"
+    },
+    "publicKeyPem": "sec:publicKeyPem",
+    "publicKeyService": {
+      "@id": "sec:publicKeyService",
+      "@type": "@id"
+    },
+    "revoked": {
+      "@id": "sec:revoked",
+      "@type": "xsd:dateTime"
+    },
+    "signature": "sec:signature",
+    "signatureAlgorithm": "sec:signingAlgorithm",
+    "signatureValue": "sec:signatureValue"
+  }
+};
 
 })();
