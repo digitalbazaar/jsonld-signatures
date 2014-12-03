@@ -22,6 +22,8 @@
     ".travis.yml",
     "Gruntfile.js",
     "bin/jsigs",
-    "package.json"
+    "package.json",
+    "tests/setImmediate.js",
+    "tests/test.js"
   ]
 }

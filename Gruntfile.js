@@ -43,7 +43,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-release');
   grunt.config('release', {
     options: {
-      commitMessage: 'Release version <%= version %> to npmjs.org.'
+      additionalFiles: 'bower.json',
+      commitMessage: 
+        'Tag version <%= version %> for release to npmjs.org and bower.'
   }});
 
   // _jshint
