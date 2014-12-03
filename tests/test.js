@@ -32,6 +32,8 @@ if(_nodejs) {
   var _jsdir = system.env.JSDIR || 'lib';
   var async = require('async');
   window.async = async;
+  var forge = require('../node_modules/node-forge');
+  window.forge = forge;
   require('../node_modules/jsonld');
   require('../' + _jsdir + '/jsonld-signatures');
   var jsigs = window.jsigs;
@@ -73,7 +75,7 @@ var testDocument = {
 describe('JSON-LD Signatures', function() {
   var testDocumentSigned = {};
   var testPublicKeyUrl = 'https://example.com/i/alice/keys/1';
-  var testPublicKeyPem = 
+  var testPublicKeyPem =
     '-----BEGIN PUBLIC KEY-----\r\n' +
     'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC4R1AmYYyE47FMZgo708NhFU+t\r\n' +
     '+VWn133PYGt/WYmD5BnKj679YiUmyrC3hX6oZfo4eVpOkycxZvGgXCLQGuDp45Xf\r\n' +
@@ -104,24 +106,24 @@ describe('JSON-LD Signatures', function() {
   var testPublicKeyOwner = {
     "@context": jsigs.SECURITY_CONTEXT_URL,
     '@id': 'https://example.com/i/alice',
-    publicKey: [testPublicKey]  
+    publicKey: [testPublicKey]
   };
-  
+
   it('should successfully sign a local document', function(done) {
     jsigs.sign(testDocument, {
       privateKeyPem: testPrivateKeyPem,
       creator: testPublicKeyUrl
     }, function(err, signedDocument) {
       assert.ifError(err);
-      assert.notEqual(signedDocument.signature, undefined, 
+      assert.notEqual(signedDocument.signature, undefined,
         'signature was not created');
-      assert.equal(signedDocument.signature.creator, testPublicKeyUrl, 
+      assert.equal(signedDocument.signature.creator, testPublicKeyUrl,
         'creator key for signature is wrong');
       testDocumentSigned = signedDocument;
       done();
     });
   });
-  
+
   it('should successfully verify a local signed document', function(done) {
     jsigs.verify(testDocumentSigned, {
       publicKey: testPublicKey,
