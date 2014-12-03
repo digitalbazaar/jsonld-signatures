@@ -45,7 +45,7 @@ module.exports = function(grunt) {
     options: {
       additionalFiles: 'bower.json',
       commitMessage: 
-        'Tag version <%= version %> for release to npmjs.org and bower.'
+        'Release version <%= version %>.'
   }});
 
   // _jshint
