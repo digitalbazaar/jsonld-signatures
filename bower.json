@@ -1,6 +1,6 @@
 {
   "name": "jsonld-signatures",
-  "version": "0.0.1-dev",
+  "version": "0.1.0",
   "description": "An implementation of the Linked Data Signatures specification for JSON-LD in the browser.",
   "authors": [
     "Digital Bazaar, Inc."
