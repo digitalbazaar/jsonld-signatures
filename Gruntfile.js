@@ -43,9 +43,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-release');
   grunt.config('release', {
     options: {
-      additionalFiles: 'bower.json',
-      commitMessage: 
-        'Release version <%= version %>.'
+      additionalFiles: ['package.json', 'bower.json'],
+      commitMessage: 'Release version <%= version %>.'
   }});
 
   // _jshint
