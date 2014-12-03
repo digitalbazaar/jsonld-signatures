@@ -16,6 +16,12 @@
   },
   "ignore": [
     "node_modules",
-    "bower_components"
+    "bower_components",
+    ".gitignore",
+    ".jshintrc",
+    ".travis.yml",
+    "Gruntfile.js",
+    "bin/jsigs",
+    "package.json"
   ]
 }
