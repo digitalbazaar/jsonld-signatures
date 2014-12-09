@@ -47,15 +47,25 @@ module.exports = function(grunt) {
       commitMessage: 'Release version <%= version %>.'
   }});
 
+  var _js = [
+    'lib/*.js',
+    'bin/jsigs',
+    'tests/*.js'
+  ];
+
   // _jshint
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.config('jshint', {
     all: {
-      src: [
-       'lib/*.js',
-       'bin/jsigs',
-       'tests/*.js'
-      ]
+      src: _js
+    }
+  });
+
+  // jscs
+  grunt.loadNpmTasks('grunt-jscs');
+  grunt.config('jscs', {
+    all: {
+      src: _js
     }
   });
 

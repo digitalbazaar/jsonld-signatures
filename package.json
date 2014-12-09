@@ -55,6 +55,7 @@
     "grunt": "~0.4.2",
     "grunt-cli": "~0.1.9",
     "grunt-contrib-jshint": "~0.10.0",
+    "grunt-jscs": "^1.0.0",
     "grunt-mocha-test": "~0.12.4",
     "grunt-release": "~0.9.0",
     "grunt-shell": "~1.1.1",
@@ -81,6 +82,7 @@
   "scripts": {
     "ci-lint": "grunt jshint --mode=ci || exit 0",
     "lint": "grunt jshint",
+    "jscs": "grunt jscs",
     "test-node": "grunt mochaTest",
     "test-browser": "grunt shell:testBrowser",
     "test": "grunt mochaTest shell:testBrowser",
