@@ -39,17 +39,17 @@ if(_nodejs) {
   var assert = require('chai').assert;
   require('mocha/mocha');
   require('mocha-phantomjs/lib/mocha-phantomjs/core_extensions');
-  
+
   // PhantomJS is really bad at doing XHRs, so we have to fake the network
   // fetch of the JSON-LD Contexts
   var contextLoader = function(url, callback) {
     if(url === 'https://w3id.org/security/v1') {
-      callback(null, {contextUrl: null, document: securityContext, 
+      callback(null, {contextUrl: null, document: securityContext,
         documentUrl: 'https://web-payments.org/contexts/security-v1.jsonld'});
     }
   };
   jsonld.documentLoader = contextLoader;
-  
+
   var program = {};
   for(var i = 0; i < system.args.length; ++i) {
     var arg = system.args[i];
@@ -137,7 +137,7 @@ describe('JSON-LD Signatures', function() {
   it('should successfully verify a local signed document', function(done) {
     jsigs.verify(testDocumentSigned, {
       publicKey: testPublicKey,
-      publicKeyOwner: testPublicKeyOwner,
+      publicKeyOwner: testPublicKeyOwner
     }, function(err, verified) {
       assert.ifError(err);
       assert.equal(verified, true, 'signature verification failed');

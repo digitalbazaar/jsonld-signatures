@@ -88,7 +88,7 @@ function _jsigsCommand(command) {
   command
     .option('-i, --indent <spaces>', 'spaces to indent [2]', Number, 2)
     .option('-N, --no-newline', 'do not output the trailing newline [newline]')
-    .option('-k, --insecure', 'allow insecure SSL connections [false]')
+    .option('-k, --insecure', 'allow insecure SSL connections [false]');
   return command;
 }
 
@@ -144,7 +144,7 @@ program
       '  beginning with "http://" or "https://", or "-" for stdin (the\n' +
       '  default).');
     console.log();
-  });;
+  });
 
 _jsigsCommand(program.command('verify [filename|URL|-]'))
   .description('verify the digital signature in a JSON-LD document')
