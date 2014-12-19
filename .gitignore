@@ -10,3 +10,4 @@ coverage
 node_modules
 v8.log
 .c9revisions
+npm-debug.log
