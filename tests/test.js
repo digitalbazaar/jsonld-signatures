@@ -110,6 +110,7 @@ describe('JSON-LD Signatures', function() {
   var testPublicKey = {
     "@context": jsigs.SECURITY_CONTEXT_URL,
     '@id': testPublicKeyUrl,
+    '@type': 'CryptographicKey',
     owner: 'https://example.com/i/alice',
     publicKeyPem: testPublicKeyPem
   };
