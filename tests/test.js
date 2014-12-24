@@ -44,8 +44,11 @@ if(_nodejs) {
   // fetch of the JSON-LD Contexts
   var contextLoader = function(url, callback) {
     if(url === 'https://w3id.org/security/v1') {
-      callback(null, {contextUrl: null, document: securityContext,
-        documentUrl: 'https://web-payments.org/contexts/security-v1.jsonld'});
+      callback(null, {
+        contextUrl: null,
+        document: securityContext,
+        documentUrl: 'https://web-payments.org/contexts/security-v1.jsonld'
+      });
     }
   };
   jsonld.documentLoader = contextLoader;
@@ -68,22 +71,8 @@ if(_nodejs) {
   });
 }
 
-// the test document that will be signed
-var testDocument = {
-  "@context": {
-    schema: 'http://schema.org/',
-    name: 'schema:name',
-    homepage: 'schema:url',
-    image: 'schema:image'
-  },
-  name: 'Manu Sporny',
-  homepage: 'https://manu.sporny.org/',
-  image: 'https://manu.sporny.org/images/manu.png'
-};
-
 // run tests
 describe('JSON-LD Signatures', function() {
-  var testDocumentSigned = {};
   var testPublicKeyUrl = 'https://example.com/i/alice/keys/1';
   var testPublicKeyPem =
     '-----BEGIN PUBLIC KEY-----\r\n' +
@@ -108,42 +97,106 @@ describe('JSON-LD Signatures', function() {
     '8Mezti8HCizDxPb+H8HlJMSkfoHx1veWkdLaPWRFrA==\r\n' +
     '-----END RSA PRIVATE KEY-----';
   var testPublicKey = {
-    "@context": jsigs.SECURITY_CONTEXT_URL,
-    '@id': testPublicKeyUrl,
-    '@type': 'CryptographicKey',
+    '@context': jsigs.SECURITY_CONTEXT_URL,
+    id: testPublicKeyUrl,
+    type: 'CryptographicKey',
     owner: 'https://example.com/i/alice',
     publicKeyPem: testPublicKeyPem
   };
   var testPublicKeyOwner = {
-    "@context": jsigs.SECURITY_CONTEXT_URL,
-    '@id': 'https://example.com/i/alice',
+    '@context': jsigs.SECURITY_CONTEXT_URL,
+    id: 'https://example.com/i/alice',
     publicKey: [testPublicKey]
   };
 
-  it('should successfully sign a local document', function(done) {
-    jsigs.sign(testDocument, {
-      privateKeyPem: testPrivateKeyPem,
-      creator: testPublicKeyUrl
-    }, function(err, signedDocument) {
-      assert.ifError(err);
-      assert.notEqual(signedDocument.signature, undefined,
-        'signature was not created');
-      assert.equal(signedDocument.signature.creator, testPublicKeyUrl,
-        'creator key for signature is wrong');
-      testDocumentSigned = signedDocument;
-      done();
+  describe('signing and verify w/o security context', function() {
+    // the test document that will be signed
+    var testDocument = {
+      '@context': {
+        schema: 'http://schema.org/',
+        name: 'schema:name',
+        homepage: 'schema:url',
+        image: 'schema:image'
+      },
+      name: 'Manu Sporny',
+      homepage: 'https://manu.sporny.org/',
+      image: 'https://manu.sporny.org/images/manu.png'
+    };
+    var testDocumentSigned = {};
+
+    it('should successfully sign a local document', function(done) {
+      jsigs.sign(testDocument, {
+        privateKeyPem: testPrivateKeyPem,
+        creator: testPublicKeyUrl
+      }, function(err, signedDocument) {
+        assert.ifError(err);
+        assert.notEqual(
+          signedDocument['https://w3id.org/security#signature'], undefined,
+          'signature was not created');
+        assert.equal(
+          signedDocument['https://w3id.org/security#signature']
+            ['http://purl.org/dc/terms/creator']['@id'], testPublicKeyUrl,
+          'creator key for signature is wrong');
+        testDocumentSigned = signedDocument;
+        done();
+      });
     });
+
+    it('should successfully verify a local signed document', function(done) {
+      jsigs.verify(testDocumentSigned, {
+        publicKey: testPublicKey,
+        publicKeyOwner: testPublicKeyOwner
+      }, function(err, verified) {
+        assert.ifError(err);
+        assert.equal(verified, true, 'signature verification failed');
+        done();
+      });
+    });
+
   });
 
-  it('should successfully verify a local signed document', function(done) {
-    jsigs.verify(testDocumentSigned, {
-      publicKey: testPublicKey,
-      publicKeyOwner: testPublicKeyOwner
-    }, function(err, verified) {
-      assert.ifError(err);
-      assert.equal(verified, true, 'signature verification failed');
-      done();
+  describe('signing and verify w/security context', function() {
+
+    // the test document that will be signed
+    var testDocument = {
+      '@context': [{
+        schema: 'http://schema.org/',
+        name: 'schema:name',
+        homepage: 'schema:url',
+        image: 'schema:image'
+      }, jsigs.SECURITY_CONTEXT_URL],
+      name: 'Manu Sporny',
+      homepage: 'https://manu.sporny.org/',
+      image: 'https://manu.sporny.org/images/manu.png'
+    };
+    var testDocumentSigned = {};
+
+    it('should successfully sign a local document', function(done) {
+      jsigs.sign(testDocument, {
+        privateKeyPem: testPrivateKeyPem,
+        creator: testPublicKeyUrl
+      }, function(err, signedDocument) {
+        assert.ifError(err);
+        assert.notEqual(signedDocument.signature, undefined,
+          'signature was not created');
+        assert.equal(signedDocument.signature.creator, testPublicKeyUrl,
+          'creator key for signature is wrong');
+        testDocumentSigned = signedDocument;
+        done();
+      });
     });
+
+    it('should successfully verify a local signed document', function(done) {
+      jsigs.verify(testDocumentSigned, {
+        publicKey: testPublicKey,
+        publicKeyOwner: testPublicKeyOwner
+      }, function(err, verified) {
+        assert.ifError(err);
+        assert.equal(verified, true, 'signature verification failed');
+        done();
+      });
+    });
+
   });
 });
 
@@ -156,6 +209,9 @@ if(!_nodejs) {
 // the security context that is used when loading https://w3id.org/security/v1
 var securityContext = {
   "@context": {
+    "id": "@id",
+    "type": "@type",
+
     "dc": "http://purl.org/dc/terms/",
     "sec": "https://w3id.org/security#",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
@@ -164,43 +220,30 @@ var securityContext = {
     "GraphSignature2012": "sec:GraphSignature2012",
     "CryptographicKey": "sec:Key",
 
+    "credential": {"@id": "sec:credential", "@type": "@id"},
     "cipherAlgorithm": "sec:cipherAlgorithm",
     "cipherData": "sec:cipherData",
     "cipherKey": "sec:cipherKey",
-    "created": {
-      "@id": "dc:created",
-      "@type": "xsd:dateTime"
-    },
+    "claim": {"@id": "sec:claim", "@type": "@id"},
+    "created": {"@id": "dc:created", "@type": "xsd:dateTime"},
     "creator": {"@id": "dc:creator", "@type": "@id"},
     "digestAlgorithm": "sec:digestAlgorithm",
     "digestValue": "sec:digestValue",
+    "domain": "sec:domain",
     "encryptionKey": "sec:encryptionKey",
-    "expiration": {
-      "@id": "sec:expiration",
-      "@type": "xsd:dateTime"
-    },
+    "expiration": {"@id": "sec:expiration", "@type": "xsd:dateTime"},
+    "expires": {"@id": "sec:expiration", "@type": "xsd:dateTime"},
     "initializationVector": "sec:initializationVector",
     "nonce": "sec:nonce",
     "normalizationAlgorithm": "sec:normalizationAlgorithm",
-    "owner": {
-      "@id": "sec:owner",
-      "@type": "@id"
-    },
+    "owner": {"@id": "sec:owner", "@type": "@id"},
     "password": "sec:password",
+    "privateKey": {"@id": "sec:privateKey", "@type": "@id"},
     "privateKeyPem": "sec:privateKeyPem",
-    "publicKey": {
-      "@id": "sec:publicKey",
-      "@type": "@id"
-    },
+    "publicKey": {"@id": "sec:publicKey", "@type": "@id"},
     "publicKeyPem": "sec:publicKeyPem",
-    "publicKeyService": {
-      "@id": "sec:publicKeyService",
-      "@type": "@id"
-    },
-    "revoked": {
-      "@id": "sec:revoked",
-      "@type": "xsd:dateTime"
-    },
+    "publicKeyService": {"@id": "sec:publicKeyService", "@type": "@id"},
+    "revoked": {"@id": "sec:revoked", "@type": "xsd:dateTime"},
     "signature": "sec:signature",
     "signatureAlgorithm": "sec:signingAlgorithm",
     "signatureValue": "sec:signatureValue"
