@@ -1,6 +1,7 @@
 {
   "name": "jsonld-signatures",
-  "version": "0.2.5",
+  "version": "1.0.0",
+  "moduleType": ["amd"],
   "description": "An implementation of the Linked Data Signatures specification for JSON-LD in the browser.",
   "authors": [
     "Digital Bazaar, Inc."
