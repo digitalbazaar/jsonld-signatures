@@ -27,9 +27,6 @@ script tag in the order listed above.
 Here are some examples on using the library:
 
 ```js
-var jsonld = require('jsonld');
-var jsig = require('jsonld-signatures')({inject:{jsonld:jsonld}});
-
 // to generate the next two lines, run the following command:
 //
 // openssl genrsa -out key.pem; cat key.pem; openssl rsa -in key.pem -pubout -out pubkey.pem; cat pubkey.pem; rm key.pem pubkey.pem
