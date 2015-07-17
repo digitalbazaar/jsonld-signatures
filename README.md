@@ -11,9 +11,25 @@ This software works in all modern browsers as well as node.js.
 Introduction
 ------------
 
+In node.js, include the library like this:
+```js
+var jsonld = require('jsonld');
+var jsig = require('jsonld-signatures')({inject:{jsonld: jsonld}});
+```
+
+In a browser environment, include the library like this:
+
+You will need to bower install _ (undescore), async, crypto, 
+forge, jsonld, and jsonld-signatures. You will then need to 
+serve those files from your server and include each via a
+script tag in the order listed above.
+
 Here are some examples on using the library:
 
 ```js
+var jsonld = require('jsonld');
+var jsig = require('jsonld-signatures')({inject:{jsonld:jsonld}});
+
 // to generate the next two lines, run the following command:
 //
 // openssl genrsa -out key.pem; cat key.pem; openssl rsa -in key.pem -pubout -out pubkey.pem; cat pubkey.pem; rm key.pem pubkey.pem
@@ -24,7 +40,7 @@ var testPrivateKeyPem = "-----BEGIN PRIVATE KEY-----\r\n...";
 
 // specify the public key object
 var testPublicKey = {
-  '@context': jsigs.SECURITY_CONTEXT_URL,
+  '@context': jsig.SECURITY_CONTEXT_URL,
   '@id': 'https://example.com/i/alice/keys/1',
   owner: 'https://example.com/i/alice',
   publicKeyPem: testPublicKeyPem
@@ -32,7 +48,7 @@ var testPublicKey = {
 
 // specify the public key owner object
 var testPublicKeyOwner = {
-  "@context": jsigs.SECURITY_CONTEXT_URL,
+  "@context": jsig.SECURITY_CONTEXT_URL,
   '@id': 'https://example.com/i/alice',
   publicKey: [testPublicKey]
 };
@@ -51,7 +67,7 @@ var testDocument = {
 };
 
 // sign the document and then verify the signed document
-jsigs.sign(testDocument, {
+jsig.sign(testDocument, {
   privateKeyPem: testPrivateKeyPem,
   creator: 'https://example.com/i/alice/keys/1'
 }, function(err, signedDocument) {
@@ -61,7 +77,7 @@ jsigs.sign(testDocument, {
   console.log('Signed document:', signedDocument);
 
   // verify the signed document
-  jsigs.verify(signedDocument, {
+  jsig.verify(signedDocument, {
     publicKey: testPublicKey,
     publicKeyOwner: testPublicKeyOwner,
   }, function(err, verified) {
@@ -73,13 +89,13 @@ jsigs.sign(testDocument, {
 });
 
 // verification
-var sign = jsigs.promises.sign(testDocument, {
+var sign = jsig.promises.sign(testDocument, {
   privateKeyPem: testPrivateKeyPem,
   creator: 'https://example.com/i/alice/keys/1'
 });
 sign.then(function(signedDocument) {...}, function(err) {...});
 
-var verify = jsigs.promises.verify(signedDocument, {
+var verify = jsig.promises.verify(signedDocument, {
   publicKey: testPublicKey,
   publicKeyOwner: testPublicKeyOwner
 });
