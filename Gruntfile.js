@@ -43,7 +43,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-release');
   grunt.config('release', {
     options: {
-      additionalFiles: ['package.json', 'bower.json'],
+      additionalFiles: ['bower.json'],
       commitMessage: 'Release version <%= version %>.'
   }});
 
