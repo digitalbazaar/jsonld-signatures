@@ -76,9 +76,6 @@
     "jsonld",
     "digital signatures"
   ],
-  "bin": {
-    "jsigs": "./bin/jsigs"
-  },
   "scripts": {
     "ci-lint": "grunt jshint --mode=ci || exit 0",
     "lint": "grunt jshint",
