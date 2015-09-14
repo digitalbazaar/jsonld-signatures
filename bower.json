@@ -13,9 +13,9 @@
     "lib/jsonld-signatures.js"
   ],
   "dependencies": {
-    "es6-promise": "1.0.0",
-    "jsonld": "~0.3.10",
-    "forge": "~0.6.18"
+    "es6-promise": "~2.0.1",
+    "jsonld": "~0.4.1",
+    "forge": "~0.6.34"
   },
   "ignore": [
     "node_modules",
