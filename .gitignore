@@ -6,6 +6,7 @@
 *.sublime-workspace
 .DS_Store
 .settings
+bower_components
 coverage
 node_modules
 v8.log
