@@ -30,12 +30,7 @@
     "url": "https://github.com/digitalbazaar/jsonld-signatures/issues",
     "email": "support@digitalbazaar.com"
   },
-  "licenses": [
-    {
-      "type": "BSD",
-      "url": "https://github.com/digitalbazaar/jsonld-signatures/raw/master/LICENSE"
-    }
-  ],
+  "license": "BSD-3-Clause",
   "main": "lib/jsonld-signatures.js",
   "dependencies": {
     "async": "^1.4.2",
