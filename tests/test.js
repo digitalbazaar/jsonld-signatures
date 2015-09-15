@@ -25,6 +25,7 @@ if(_nodejs) {
     .parse(process.argv);
 } else {
   var system = require('system');
+  require('./bind');
   require('./setImmediate');
   var _jsdir = system.env.JSDIR || 'lib';
   var async = require('async');
