@@ -110,7 +110,7 @@ describe('JSON-LD Signatures', function() {
     publicKey: [testPublicKey]
   };
 
-  describe('signing and verify w/o security context', function() {
+  describe('signing and verify Graph2012 w/o security context', function() {
     // the test document that will be signed
     var testDocument = {
       '@context': {
@@ -127,6 +127,7 @@ describe('JSON-LD Signatures', function() {
 
     it('should successfully sign a local document', function(done) {
       jsigs.sign(testDocument, {
+        algorithm: 'GraphSignature2012',
         privateKeyPem: testPrivateKeyPem,
         creator: testPublicKeyUrl
       }, function(err, signedDocument) {
@@ -156,7 +157,54 @@ describe('JSON-LD Signatures', function() {
 
   });
 
-  describe('signing and verify w/security context', function() {
+  describe('signing and verify Graph2015 w/o security context', function() {
+    // the test document that will be signed
+    var testDocument = {
+      '@context': {
+        schema: 'http://schema.org/',
+        name: 'schema:name',
+        homepage: 'schema:url',
+        image: 'schema:image'
+      },
+      name: 'Manu Sporny',
+      homepage: 'https://manu.sporny.org/',
+      image: 'https://manu.sporny.org/images/manu.png'
+    };
+    var testDocumentSigned = {};
+
+    it('should successfully sign a local document', function(done) {
+      jsigs.sign(testDocument, {
+        algorithm: 'GraphSignature2015',
+        privateKeyPem: testPrivateKeyPem,
+        creator: testPublicKeyUrl
+      }, function(err, signedDocument) {
+        assert.ifError(err);
+        assert.notEqual(
+          signedDocument['https://w3id.org/security#signature'], undefined,
+          'signature was not created');
+        assert.equal(
+          signedDocument['https://w3id.org/security#signature']
+            ['http://purl.org/dc/terms/creator']['@id'], testPublicKeyUrl,
+          'creator key for signature is wrong');
+        testDocumentSigned = signedDocument;
+        done();
+      });
+    });
+
+    it('should successfully verify a local signed document', function(done) {
+      jsigs.verify(testDocumentSigned, {
+        publicKey: testPublicKey,
+        publicKeyOwner: testPublicKeyOwner
+      }, function(err, verified) {
+        assert.ifError(err);
+        assert.equal(verified, true, 'signature verification failed');
+        done();
+      });
+    });
+
+  });
+
+  describe('signing and verify GraphSignature2012 w/security context', function() {
 
     // the test document that will be signed
     var testDocument = {
@@ -174,6 +222,52 @@ describe('JSON-LD Signatures', function() {
 
     it('should successfully sign a local document', function(done) {
       jsigs.sign(testDocument, {
+        algorithm: 'GraphSignature2012',
+        privateKeyPem: testPrivateKeyPem,
+        creator: testPublicKeyUrl
+      }, function(err, signedDocument) {
+        assert.ifError(err);
+        assert.notEqual(signedDocument.signature, undefined,
+          'signature was not created');
+        assert.equal(signedDocument.signature.creator, testPublicKeyUrl,
+          'creator key for signature is wrong');
+        testDocumentSigned = signedDocument;
+        done();
+      });
+    });
+
+    it('should successfully verify a local signed document', function(done) {
+      jsigs.verify(testDocumentSigned, {
+        publicKey: testPublicKey,
+        publicKeyOwner: testPublicKeyOwner
+      }, function(err, verified) {
+        assert.ifError(err);
+        assert.equal(verified, true, 'signature verification failed');
+        done();
+      });
+    });
+
+  });
+
+  describe('signing and verify GraphSignature2015 w/security context', function() {
+
+    // the test document that will be signed
+    var testDocument = {
+      '@context': [{
+        schema: 'http://schema.org/',
+        name: 'schema:name',
+        homepage: 'schema:url',
+        image: 'schema:image'
+      }, jsigs.SECURITY_CONTEXT_URL],
+      name: 'Manu Sporny',
+      homepage: 'https://manu.sporny.org/',
+      image: 'https://manu.sporny.org/images/manu.png'
+    };
+    var testDocumentSigned = {};
+
+    it('should successfully sign a local document', function(done) {
+      jsigs.sign(testDocument, {
+        algorithm: 'GraphSignature2015',
         privateKeyPem: testPrivateKeyPem,
         creator: testPublicKeyUrl
       }, function(err, signedDocument) {
@@ -219,6 +313,7 @@ var securityContext = {
 
     "EncryptedMessage": "sec:EncryptedMessage",
     "GraphSignature2012": "sec:GraphSignature2012",
+    "GraphSignature2015": "sec:GraphSignature2015",
     "CryptographicKey": "sec:Key",
 
     "credential": {"@id": "sec:credential", "@type": "@id"},
