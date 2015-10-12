@@ -36,7 +36,7 @@
     "async": "^1.4.2",
     "commander": "~1.3.0",
     "es6-promise": "~2.0.1",
-    "jsonld": "~0.4.1",
+    "jsonld": "~0.4.2",
     "node-forge": "~0.6.18",
     "underscore": "~1.7.0"
   },
