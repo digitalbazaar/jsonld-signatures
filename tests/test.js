@@ -174,7 +174,7 @@ describe('JSON-LD Signatures', function() {
 
     it('should successfully sign a local document', function(done) {
       jsigs.sign(testDocument, {
-        algorithm: 'GraphSignature2015',
+        algorithm: 'LinkedDataSignature2015',
         privateKeyPem: testPrivateKeyPem,
         creator: testPublicKeyUrl
       }, function(err, signedDocument) {
@@ -249,7 +249,7 @@ describe('JSON-LD Signatures', function() {
 
   });
 
-  describe('signing and verify GraphSignature2015 w/security context', function() {
+  describe('signing and verify LinkedDataSignature2015 w/security context', function() {
 
     // the test document that will be signed
     var testDocument = {
@@ -267,7 +267,7 @@ describe('JSON-LD Signatures', function() {
 
     it('should successfully sign a local document', function(done) {
       jsigs.sign(testDocument, {
-        algorithm: 'GraphSignature2015',
+        algorithm: 'LinkedDataSignature2015',
         privateKeyPem: testPrivateKeyPem,
         creator: testPublicKeyUrl
       }, function(err, signedDocument) {
@@ -313,7 +313,7 @@ var securityContext = {
 
     "EncryptedMessage": "sec:EncryptedMessage",
     "GraphSignature2012": "sec:GraphSignature2012",
-    "GraphSignature2015": "sec:GraphSignature2015",
+    "LinkedDataSignature2015": "sec:LinkedDataSignature2015",
     "CryptographicKey": "sec:Key",
 
     "credential": {"@id": "sec:credential", "@type": "@id"},
