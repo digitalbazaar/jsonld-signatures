@@ -316,11 +316,10 @@ var securityContext = {
     "LinkedDataSignature2015": "sec:LinkedDataSignature2015",
     "CryptographicKey": "sec:Key",
 
-    "credential": {"@id": "sec:credential", "@type": "@id"},
+    "authenticationTag": "sec:authenticationTag",
     "cipherAlgorithm": "sec:cipherAlgorithm",
     "cipherData": "sec:cipherData",
     "cipherKey": "sec:cipherKey",
-    "claim": {"@id": "sec:claim", "@type": "@id"},
     "created": {"@id": "dc:created", "@type": "xsd:dateTime"},
     "creator": {"@id": "dc:creator", "@type": "@id"},
     "digestAlgorithm": "sec:digestAlgorithm",
@@ -330,6 +329,7 @@ var securityContext = {
     "expiration": {"@id": "sec:expiration", "@type": "xsd:dateTime"},
     "expires": {"@id": "sec:expiration", "@type": "xsd:dateTime"},
     "initializationVector": "sec:initializationVector",
+    "iterationCount": "sec:iterationCount",
     "nonce": "sec:nonce",
     "normalizationAlgorithm": "sec:normalizationAlgorithm",
     "owner": {"@id": "sec:owner", "@type": "@id"},
@@ -340,6 +340,7 @@ var securityContext = {
     "publicKeyPem": "sec:publicKeyPem",
     "publicKeyService": {"@id": "sec:publicKeyService", "@type": "@id"},
     "revoked": {"@id": "sec:revoked", "@type": "xsd:dateTime"},
+    "salt": "sec:salt",
     "signature": "sec:signature",
     "signatureAlgorithm": "sec:signingAlgorithm",
     "signatureValue": "sec:signatureValue"
