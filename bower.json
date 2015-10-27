@@ -13,6 +13,7 @@
     "lib/jsonld-signatures.js"
   ],
   "dependencies": {
+    "async": "^1.4.2",
     "es6-promise": "~2.0.1",
     "jsonld": "~0.4.2",
     "forge": "~0.6.34"
