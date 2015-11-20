@@ -20,7 +20,7 @@ var jsig = require('jsonld-signatures')({inject:{jsonld: jsonld}});
 In a browser environment, include the library like this:
 
 You will need to bower install jsonld-signatures and then serve it and
-depedencies from your server and include each via a script tag, or other
+its dependencies from your server and include each via a script tag, or other
 mechanism, in the order: es6-promise, async, jsonld, forge, jsonld-signatures.
 
 Here are some examples on using the library:
