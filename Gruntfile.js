@@ -49,7 +49,6 @@ module.exports = function(grunt) {
 
   var _js = [
     'lib/*.js',
-    'bin/jsigs',
     'tests/*.js'
   ];
 
