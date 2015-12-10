@@ -14,7 +14,8 @@ Introduction
 In node.js, include the library like this:
 ```js
 var jsonld = require('jsonld');
-var jsig = require('jsonld-signatures')({inject:{jsonld: jsonld}});
+var jsig = require('jsonld-signatures');
+jsig.use('jsonld', jsonld);
 ```
 
 In a browser environment, include the library like this:
