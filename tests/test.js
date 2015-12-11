@@ -155,6 +155,40 @@ describe('JSON-LD Signatures', function() {
       });
     });
 
+    it('should successfully sign a local document w/promises API', function(done) {
+      jsigs.promises.sign(testDocument, {
+        algorithm: 'GraphSignature2012',
+        privateKeyPem: testPrivateKeyPem,
+        creator: testPublicKeyUrl
+      }).then(function(signedDocument) {
+        assert.notEqual(
+          signedDocument['https://w3id.org/security#signature'], undefined,
+          'signature was not created');
+        assert.equal(
+          signedDocument['https://w3id.org/security#signature']
+            ['http://purl.org/dc/terms/creator']['@id'], testPublicKeyUrl,
+          'creator key for signature is wrong');
+        testDocumentSigned = signedDocument;
+      }).catch(function(err) {
+        assert.ifError(err);
+      }).then(function() {
+        done();
+      });
+    });
+
+    it('should successfully verify a local signed document w/promises API', function(done) {
+      jsigs.promises.verify(testDocumentSigned, {
+        publicKey: testPublicKey,
+        publicKeyOwner: testPublicKeyOwner
+      }).then(function(verified) {
+        assert.equal(verified, true, 'signature verification failed');
+      }).catch(function(err) {
+        assert.ifError(err);
+      }).then(function() {
+        done();
+      });
+    });
+
   });
 
   describe('signing and verify Graph2015 w/o security context', function() {
@@ -198,6 +232,40 @@ describe('JSON-LD Signatures', function() {
       }, function(err, verified) {
         assert.ifError(err);
         assert.equal(verified, true, 'signature verification failed');
+        done();
+      });
+    });
+
+    it('should successfully sign a local document w/promises API', function(done) {
+      jsigs.promises.sign(testDocument, {
+        algorithm: 'LinkedDataSignature2015',
+        privateKeyPem: testPrivateKeyPem,
+        creator: testPublicKeyUrl
+      }).then(function(signedDocument) {
+        assert.notEqual(
+          signedDocument['https://w3id.org/security#signature'], undefined,
+          'signature was not created');
+        assert.equal(
+          signedDocument['https://w3id.org/security#signature']
+            ['http://purl.org/dc/terms/creator']['@id'], testPublicKeyUrl,
+          'creator key for signature is wrong');
+        testDocumentSigned = signedDocument;
+      }).catch(function(err) {
+        assert.ifError(err);
+      }).then(function() {
+        done();
+      });
+    });
+
+    it('should successfully verify a local signed document w/promises API', function(done) {
+      jsigs.promises.verify(testDocumentSigned, {
+        publicKey: testPublicKey,
+        publicKeyOwner: testPublicKeyOwner
+      }).then(function(verified) {
+        assert.equal(verified, true, 'signature verification failed');
+      }).catch(function(err) {
+        assert.ifError(err);
+      }).then(function() {
         done();
       });
     });
@@ -247,6 +315,37 @@ describe('JSON-LD Signatures', function() {
       });
     });
 
+    it('should successfully sign a local document w/promises API', function(done) {
+      jsigs.promises.sign(testDocument, {
+        algorithm: 'GraphSignature2012',
+        privateKeyPem: testPrivateKeyPem,
+        creator: testPublicKeyUrl
+      }).then(function(signedDocument) {
+        assert.notEqual(signedDocument.signature, undefined,
+          'signature was not created');
+        assert.equal(signedDocument.signature.creator, testPublicKeyUrl,
+          'creator key for signature is wrong');
+        testDocumentSigned = signedDocument;
+      }).catch(function(err) {
+        assert.ifError(err);
+      }).then(function() {
+        done();
+      });
+    });
+
+    it('should successfully verify a local signed document w/promises API', function(done) {
+      jsigs.promises.verify(testDocumentSigned, {
+        publicKey: testPublicKey,
+        publicKeyOwner: testPublicKeyOwner
+      }).then(function(verified) {
+        assert.equal(verified, true, 'signature verification failed');
+      }).catch(function(err) {
+        assert.ifError(err);
+      }).then(function() {
+        done();
+      });
+    });
+
   });
 
   describe('signing and verify LinkedDataSignature2015 w/security context', function() {
@@ -288,6 +387,37 @@ describe('JSON-LD Signatures', function() {
       }, function(err, verified) {
         assert.ifError(err);
         assert.equal(verified, true, 'signature verification failed');
+        done();
+      });
+    });
+
+    it('should successfully sign a local document w/promises', function(done) {
+      jsigs.promises.sign(testDocument, {
+        algorithm: 'LinkedDataSignature2015',
+        privateKeyPem: testPrivateKeyPem,
+        creator: testPublicKeyUrl
+      }).then(function(signedDocument) {
+        assert.notEqual(signedDocument.signature, undefined,
+          'signature was not created');
+        assert.equal(signedDocument.signature.creator, testPublicKeyUrl,
+          'creator key for signature is wrong');
+        testDocumentSigned = signedDocument;
+      }).catch(function(err) {
+        assert.ifError(err);
+      }).then(function() {
+        done();
+      });
+    });
+
+    it('should successfully verify a local signed document w/promises', function(done) {
+      jsigs.promises.verify(testDocumentSigned, {
+        publicKey: testPublicKey,
+        publicKeyOwner: testPublicKeyOwner
+      }).then(function(verified) {
+        assert.equal(verified, true, 'signature verification failed');
+      }).catch(function(err) {
+        assert.ifError(err);
+      }).then(function() {
         done();
       });
     });
