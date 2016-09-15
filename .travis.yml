@@ -2,13 +2,15 @@ language: node_js
 node_js:
   - "0.10"
   - "0.12"
-  - "4.0"
+  - 4
+  - 5
+  - 6
   - "node"
   - "iojs"
 sudo: false
 # download test suite and run tests... submodule? meta testing project with
 # all of the reference implementations?
-script: 
+script:
   - npm run test
 notifications:
   email:
