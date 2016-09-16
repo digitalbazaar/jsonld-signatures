@@ -32,6 +32,8 @@ if(_nodejs) {
   window.async = async;
   var forge = require('../node_modules/node-forge');
   window.forge = forge;
+  var bitcoreMessage = require('../node_modules/bitcore-message/dist/bitcore-message.js');
+  window.bitcoreMessage = bitcoreMessage;
   require('../node_modules/jsonld');
   var jsonld = jsonldjs;
   require('../' + _jsdir + '/jsonld-signatures');
@@ -269,6 +271,87 @@ describe('JSON-LD Signatures', function() {
         done();
       });
     });
+
+  });
+
+  describe('signing and verify BitcoinSignature2016 w/o security context', function() {
+    // the test document that will be signed
+    var testDocument = {
+      '@context': {
+        schema: 'http://schema.org/',
+        name: 'schema:name',
+        homepage: 'schema:url',
+        image: 'schema:image'
+      },
+      name: 'Manu Sporny',
+      homepage: 'https://manu.sporny.org/',
+      image: 'https://manu.sporny.org/images/manu.png'
+    };
+    var testDocumentSigned = {};
+    var testPrivateKeyWif = 'L4mEi7eEdTNNFQEWaa7JhUKAbtHdVvByGAqvpJKC53mfiqunjBjw'
+    var testPublicKeyWif = '1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER'
+    var testPublicKeyFriendly = 'bitcoin-key:' + testPublicKeyWif
+
+    var testPublicKeyBtc = {
+      '@context': jsigs.SECURITY_CONTEXT_URL,
+      id: testPublicKeyFriendly,
+      type: 'CryptographicKey',
+      owner: 'https://example.com/i/alice',
+      publicKeyWif: testPublicKeyWif
+    };
+
+    var testPublicKeyBtcOwner = {
+      '@context': jsigs.SECURITY_CONTEXT_URL,
+      id: 'https://example.com/i/alice',
+      publicKey: [testPublicKeyFriendly]
+    };
+
+    it('should successfully sign a local document', function(done) {
+      jsigs.sign(testDocument, {
+        algorithm: 'BitcoinSignature2016',
+        privateKeyWif: testPrivateKeyWif,
+        creator: testPublicKeyFriendly
+      }, function(err, signedDocument) {
+        assert.ifError(err);
+        assert.notEqual(
+          signedDocument['https://w3id.org/security#signature'], undefined,
+          'signature was not created');
+        assert.equal(
+          signedDocument['https://w3id.org/security#signature']
+            ['http://purl.org/dc/terms/creator']['@id'], testPublicKeyFriendly,
+          'creator key for signature is wrong');
+        testDocumentSigned = signedDocument;
+        done();
+      });
+    });
+
+    it('should successfully verify a local signed document', function(done) {
+      jsigs.verify(testDocumentSigned, {
+        publicKey: testPublicKeyBtc,
+        publicKeyOwner: testPublicKeyBtcOwner
+      }, function(err, verified) {
+        assert.ifError(err);
+        assert.equal(verified, true, 'signature verification failed');
+        done();
+      });
+    });
+
+    it('verify should return false if the document was signed by a different private key', function(done) {
+      var invalidPublicKeyWif = '1BHdCBqQ1GQLfHVEnoXtYf44T97aEHodwe';
+      testPublicKeyBtc.publicKeyWif = invalidPublicKeyWif;
+
+      jsigs.verify(testDocumentSigned, {
+        publicKey: testPublicKeyBtc,
+        publicKeyOwner: testPublicKeyBtcOwner
+      }, function(err, verified) {
+        assert.ifError(err);
+        assert.equal(verified, false, 'signature verification should have failed');
+        done();
+      });
+    });
+
+    xit('should successfully sign a local document w/promises API')
+    xit('should successfully verify a local signed document w/promises API')
 
   });
 
