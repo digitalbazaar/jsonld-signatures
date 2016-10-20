@@ -6,7 +6,7 @@ jsonld-signatures
 [travis-ci-site]: https://travis-ci.org/digitalbazaar/jsonld-signatures
 
 An implementation of the Linked Data Signatures specification for JSON-LD.
-This software works in all modern browsers as well as node.js.
+This software works in all modern browsers as well as node.js via [npm](https://www.npmjs.com/package/jsonld-signatures).
 
 Introduction
 ------------
