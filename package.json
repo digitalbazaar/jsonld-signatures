@@ -53,6 +53,7 @@
     "istanbul": "~0.4.5",
     "mocha": "^2.3.2",
     "mocha-phantomjs": "~3.5.0",
+    "npm-run-all": "^3.1.1",
     "phantomjs": "~1.9.20"
   },
   "engines": {
@@ -71,6 +72,7 @@
     "ci-lint": "grunt jshint --mode=ci || exit 0",
     "lint": "grunt jshint",
     "jscs": "grunt jscs",
+    "test-all": "npm-run-all --silent test lint jscs",
     "test-node": "grunt mochaTest",
     "test-browser": "grunt shell:testBrowser",
     "test": "grunt mochaTest shell:testBrowser",
