@@ -14,12 +14,14 @@
 var _nodejs = (typeof process !== 'undefined' &&
   process.versions && process.versions.node);
 
+var _jsdir, jsonld, jsigs, assert, program;
+
 if(_nodejs) {
-  var _jsdir = process.env.JSDIR || 'lib';
-  var jsonld = require('../node_modules/jsonld');
-  var jsigs = require('../' + _jsdir + '/jsonld-signatures')();
-  var assert = require('assert');
-  var program = require('commander');
+  _jsdir = process.env.JSDIR || 'lib';
+  jsonld = require('../node_modules/jsonld');
+  jsigs = require('../' + _jsdir + '/jsonld-signatures')();
+  assert = require('assert');
+  program = require('commander');
   program
     .option('--bail', 'Bail when a test fails')
     .parse(process.argv);
@@ -27,19 +29,18 @@ if(_nodejs) {
   var system = require('system');
   require('./bind');
   require('./setImmediate');
-  var _jsdir = system.env.JSDIR || 'lib';
-  var async = require('async');
-  window.async = async;
+  _jsdir = system.env.JSDIR || 'lib';
+  window.async = require('async');
   var forge = require('../node_modules/node-forge');
   window.forge = forge;
   var bitcoreMessage = require('../node_modules/bitcore-message/dist/bitcore-message.js');
   window.bitcoreMessage = bitcoreMessage;
   require('../node_modules/jsonld');
-  var jsonld = jsonldjs;
+  jsonld = jsonldjs;
   require('../' + _jsdir + '/jsonld-signatures');
-  var jsigs = window.jsigs;
+  jsigs = window.jsigs;
   window.Promise = require('es6-promise').Promise;
-  var assert = require('chai').assert;
+  assert = require('chai').assert;
   require('mocha/mocha');
   require('mocha-phantomjs/lib/mocha-phantomjs/core_extensions');
 
@@ -56,7 +57,7 @@ if(_nodejs) {
   };
   jsonld.documentLoader = contextLoader;
 
-  var program = {};
+  program = {};
   for(var i = 0; i < system.args.length; ++i) {
     var arg = system.args[i];
     if(arg.indexOf('--') === 0) {
@@ -271,7 +272,6 @@ describe('JSON-LD Signatures', function() {
         done();
       });
     });
-
   });
 
   describe('signing and verify EcdsaKoblitzSignature2016 w/o security context', function() {
@@ -288,9 +288,9 @@ describe('JSON-LD Signatures', function() {
       image: 'https://manu.sporny.org/images/manu.png'
     };
     var testDocumentSigned = {};
-    var testPrivateKeyWif = 'L4mEi7eEdTNNFQEWaa7JhUKAbtHdVvByGAqvpJKC53mfiqunjBjw'
-    var testPublicKeyWif = '1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER'
-    var testPublicKeyFriendly = 'sha256-ecdsa-secp256k1-public-key:' + testPublicKeyWif
+    var testPrivateKeyWif = 'L4mEi7eEdTNNFQEWaa7JhUKAbtHdVvByGAqvpJKC53mfiqunjBjw';
+    var testPublicKeyWif = '1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER';
+    var testPublicKeyFriendly = 'bitcoin-key:' + testPublicKeyWif;
 
     var testPublicKeyBtc = {
       '@context': jsigs.SECURITY_CONTEXT_URL,
@@ -350,8 +350,8 @@ describe('JSON-LD Signatures', function() {
       });
     });
 
-    xit('should successfully sign a local document w/promises API')
-    xit('should successfully verify a local signed document w/promises API')
+    xit('should successfully sign a local document w/promises API');
+    xit('should successfully verify a local signed document w/promises API');
 
   });
 
