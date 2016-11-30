@@ -38,8 +38,7 @@
     "commander": "~2.9.0",
     "es6-promise": "~3.3.1",
     "jsonld": "0.4.3",
-    "node-forge": "~0.6.42",
-    "underscore": "~1.8.3"
+    "node-forge": "~0.6.42"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -69,7 +68,6 @@
     "digital signatures"
   ],
   "scripts": {
-    "ci-lint": "grunt jshint --mode=ci || exit 0",
     "lint": "grunt jshint",
     "jscs": "grunt jscs",
     "test-all": "npm-run-all --silent test lint jscs",
