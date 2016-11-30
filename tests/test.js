@@ -75,6 +75,11 @@ if(_nodejs) {
   });
 }
 
+// helper:
+function clone(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+
 // run tests
 describe('JSON-LD Signatures', function() {
   var testPublicKeyUrl = 'https://example.com/i/alice/keys/1';
@@ -275,36 +280,60 @@ describe('JSON-LD Signatures', function() {
   });
 
   describe('signing and verify EcdsaKoblitzSignature2016 w/o security context', function() {
-    // the test document that will be signed
-    var testDocument = {
-      '@context': {
-        schema: 'http://schema.org/',
-        name: 'schema:name',
-        homepage: 'schema:url',
-        image: 'schema:image'
-      },
-      name: 'Manu Sporny',
-      homepage: 'https://manu.sporny.org/',
-      image: 'https://manu.sporny.org/images/manu.png'
-    };
-    var testDocumentSigned = {};
-    var testPrivateKeyWif = 'L4mEi7eEdTNNFQEWaa7JhUKAbtHdVvByGAqvpJKC53mfiqunjBjw';
-    var testPublicKeyWif = '1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER';
-    var testPublicKeyFriendly = 'bitcoin-key:' + testPublicKeyWif;
+    var testDocument;
+    var testDocumentSigned;
+    var testPrivateKeyWif;
+    var testPublicKeyWif;
+    var testPublicKeyFriendly;
+    var testPublicKeyBtc;
+    var testPublicKeyBtcOwner;
+    var invalidPublicKeyWif = '1BHdCBqQ1GQLfHVEnoXtYf44T97aEHodwe';
 
-    var testPublicKeyBtc = {
-      '@context': jsigs.SECURITY_CONTEXT_URL,
-      id: testPublicKeyFriendly,
-      type: 'CryptographicKey',
-      owner: 'https://example.com/i/alice',
-      publicKeyWif: testPublicKeyWif
-    };
+    beforeEach(function() {
+      testDocument = {
+        '@context': {
+          schema: 'http://schema.org/',
+          name: 'schema:name',
+          homepage: 'schema:url',
+          image: 'schema:image'
+        },
+        name: 'Manu Sporny',
+        homepage: 'https://manu.sporny.org/',
+        image: 'https://manu.sporny.org/images/manu.png'
+      };
 
-    var testPublicKeyBtcOwner = {
-      '@context': jsigs.SECURITY_CONTEXT_URL,
-      id: 'https://example.com/i/alice',
-      publicKey: [testPublicKeyFriendly]
-    };
+      testDocumentSigned = clone(testDocument);
+      testDocumentSigned["https://w3id.org/security#signature"] = {
+        "@type": "EcdsaKoblitzSignature2016",
+        "http://purl.org/dc/terms/created": {
+          "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+          "@value": "2016-11-30T01:44:34Z"
+        },
+        "http://purl.org/dc/terms/creator": {
+          "@id": "ecdsa-koblitz-pubkey:1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER"
+        },
+        "https://w3id.org/security#signatureValue": "IEDwNo/X5cQx0ZQwXx1Qt5kO+gQQ0IPgURC/SpmbRT5lWUC65QByTDkqu6OWKRcZ0EbRZlV/NVUNr+XExxTmECI="
+      };
+
+      testPrivateKeyWif = 'L4mEi7eEdTNNFQEWaa7JhUKAbtHdVvByGAqvpJKC53mfiqunjBjw';
+      testPublicKeyWif = '1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER';
+      testPublicKeyFriendly = 'ecdsa-koblitz-pubkey:' + testPublicKeyWif;
+
+      testPublicKeyBtc = {
+        '@context': jsigs.SECURITY_CONTEXT_URL,
+        id: testPublicKeyFriendly,
+        type: 'CryptographicKey',
+        owner: 'https://example.com/i/alice',
+        publicKeyWif: testPublicKeyWif
+      };
+
+      testPublicKeyBtcOwner = {
+        '@context': jsigs.SECURITY_CONTEXT_URL,
+        id: 'https://example.com/i/alice',
+        publicKey: [testPublicKeyFriendly]
+      };
+
+    });
 
     it('should successfully sign a local document', function(done) {
       jsigs.sign(testDocument, {
@@ -320,7 +349,6 @@ describe('JSON-LD Signatures', function() {
           signedDocument['https://w3id.org/security#signature']
             ['http://purl.org/dc/terms/creator']['@id'], testPublicKeyFriendly,
           'creator key for signature is wrong');
-        testDocumentSigned = signedDocument;
         done();
       });
     });
@@ -337,7 +365,6 @@ describe('JSON-LD Signatures', function() {
     });
 
     it('verify should return false if the document was signed by a different private key', function(done) {
-      var invalidPublicKeyWif = '1BHdCBqQ1GQLfHVEnoXtYf44T97aEHodwe';
       testPublicKeyBtc.publicKeyWif = invalidPublicKeyWif;
 
       jsigs.verify(testDocumentSigned, {
@@ -350,9 +377,45 @@ describe('JSON-LD Signatures', function() {
       });
     });
 
-    xit('should successfully sign a local document w/promises API');
-    xit('should successfully verify a local signed document w/promises API');
+    it('should successfully sign a local document' +
+      ' w/promises API', function(done) {
+      jsigs.promises.sign(testDocument, {
+        algorithm: 'EcdsaKoblitzSignature2016',
+        privateKeyWif: testPrivateKeyWif,
+        creator: testPublicKeyFriendly
+      }).then(function(signedDocument) {
+        assert.notEqual(
+          signedDocument['https://w3id.org/security#signature'], undefined,
+          'signature was not created');
+        assert.equal(
+          signedDocument['https://w3id.org/security#signature']
+            ['http://purl.org/dc/terms/creator']['@id'], testPublicKeyFriendly,
+          'creator key for signature is wrong');
+      }).then(done).catch(done);
+    });
 
+    it('should successfully verify a local signed document' +
+      ' w/promises API', function(done) {
+      jsigs.promises.verify(testDocumentSigned, {
+        publicKey: testPublicKeyBtc,
+        publicKeyOwner: testPublicKeyBtcOwner
+      }).then(function(verified) {
+        assert.equal(verified, true, 'signature verification failed');
+      }).then(done).catch(done);
+    });
+
+    it('verify should return false if the document was signed by' +
+      ' a different private key w/promises API', function(done) {
+      testPublicKeyBtc.publicKeyWif = invalidPublicKeyWif;
+
+      jsigs.promises.verify(testDocumentSigned, {
+        publicKey: testPublicKeyBtc,
+        publicKeyOwner: testPublicKeyBtcOwner
+      }).then(function(verified) {
+        assert.equal(verified, false,
+          'signature verification should have failed but did not');
+      }).then(done).catch(done);
+    });
   });
 
   describe('signing and verify GraphSignature2012 w/security context', function() {
