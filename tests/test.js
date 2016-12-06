@@ -274,7 +274,7 @@ describe('JSON-LD Signatures', function() {
 
   });
 
-  describe('signing and verify BitcoinSignature2016 w/o security context', function() {
+  describe('signing and verify EcdsaKoblitzSignature2016 w/o security context', function() {
     // the test document that will be signed
     var testDocument = {
       '@context': {
@@ -290,7 +290,7 @@ describe('JSON-LD Signatures', function() {
     var testDocumentSigned = {};
     var testPrivateKeyWif = 'L4mEi7eEdTNNFQEWaa7JhUKAbtHdVvByGAqvpJKC53mfiqunjBjw'
     var testPublicKeyWif = '1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER'
-    var testPublicKeyFriendly = 'bitcoin-key:' + testPublicKeyWif
+    var testPublicKeyFriendly = 'sha256-ecdsa-secp256k1-public-key:' + testPublicKeyWif
 
     var testPublicKeyBtc = {
       '@context': jsigs.SECURITY_CONTEXT_URL,
@@ -308,7 +308,7 @@ describe('JSON-LD Signatures', function() {
 
     it('should successfully sign a local document', function(done) {
       jsigs.sign(testDocument, {
-        algorithm: 'BitcoinSignature2016',
+        algorithm: 'EcdsaKoblitzSignature2016',
         privateKeyWif: testPrivateKeyWif,
         creator: testPublicKeyFriendly
       }, function(err, signedDocument) {
