@@ -332,7 +332,6 @@ describe('JSON-LD Signatures', function() {
         id: 'https://example.com/i/alice',
         publicKey: [testPublicKeyFriendly]
       };
-
     });
 
     it('should successfully sign a local document', function(done) {
@@ -407,7 +406,6 @@ describe('JSON-LD Signatures', function() {
     it('verify should return false if the document was signed by' +
       ' a different private key w/promises API', function(done) {
       testPublicKeyBtc.publicKeyWif = invalidPublicKeyWif;
-
       jsigs.promises.verify(testDocumentSigned, {
         publicKey: testPublicKeyBtc,
         publicKeyOwner: testPublicKeyBtcOwner
