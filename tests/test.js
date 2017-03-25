@@ -276,6 +276,7 @@ describe('JSON-LD Signatures', function() {
       var testPublicKeyBtc;
       var testPublicKeyBtcOwner;
       var invalidPublicKeyWif;
+      var testDocumentSignedAltered;
 
       beforeEach(function() {
         testDocument = {
@@ -302,6 +303,8 @@ describe('JSON-LD Signatures', function() {
           },
           "https://w3id.org/security#signatureValue": "IEDwNo/X5cQx0ZQwXx1Qt5kO+gQQ0IPgURC/SpmbRT5lWUC65QByTDkqu6OWKRcZ0EbRZlV/NVUNr+XExxTmECI="
         };
+        testDocumentSignedAltered = clone(testDocumentSigned);
+        testDocumentSignedAltered["name"] = 'Manu Spornoneous';
 
         testPrivateKeyWif = 'L4mEi7eEdTNNFQEWaa7JhUKAbtHdVvByGAqvpJKC53mfiqunjBjw';
         testPublicKeyWif = '1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER';
@@ -357,6 +360,17 @@ describe('JSON-LD Signatures', function() {
         testPublicKeyBtc.publicKeyWif = invalidPublicKeyWif;
 
         jsigs.verify(testDocumentSigned, {
+          publicKey: testPublicKeyBtc,
+          publicKeyOwner: testPublicKeyBtcOwner
+        }, function(err, verified) {
+          assert.ifError(err);
+          assert.equal(verified, false, 'signature verification should have failed');
+          done();
+        });
+      });
+
+      it('verify should return false if the document was altered after signing', function(done) {
+        jsigs.verify(testDocumentSignedAltered, {
           publicKey: testPublicKeyBtc,
           publicKeyOwner: testPublicKeyBtcOwner
         }, function(err, verified) {
@@ -553,6 +567,7 @@ describe('JSON-LD Signatures', function() {
       var testPublicKeyBtc;
       var testPublicKeyBtcOwner;
       var invalidPublicKeyWif;
+      var testDocumentSignedAltered;
 
       beforeEach(function() {
         testDocument = {
@@ -579,6 +594,8 @@ describe('JSON-LD Signatures', function() {
           },
           "https://w3id.org/security#signatureValue": "IEDwNo/X5cQx0ZQwXx1Qt5kO+gQQ0IPgURC/SpmbRT5lWUC65QByTDkqu6OWKRcZ0EbRZlV/NVUNr+XExxTmECI="
         };
+        testDocumentSignedAltered = clone(testDocumentSigned);
+        testDocumentSignedAltered["name"] = 'Manu Spornoneous';
 
         testPrivateKeyWif = 'L4mEi7eEdTNNFQEWaa7JhUKAbtHdVvByGAqvpJKC53mfiqunjBjw';
         testPublicKeyWif = '1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER';
@@ -671,6 +688,17 @@ describe('JSON-LD Signatures', function() {
         testPublicKeyBtc.publicKeyWif = invalidPublicKeyWif;
 
         jsigs.promises.verify(testDocumentSigned, {
+          publicKey: testPublicKeyBtc,
+          publicKeyOwner: testPublicKeyBtcOwner
+        }).then(function(verified) {
+          assert.equal(verified, false,
+            'signature verification should have failed but did not');
+        }).then(done).catch(done);
+      });
+
+      it('verify should return false if the document was altered after' +
+        ' signing w/promises API', function(done) {
+        jsigs.promises.verify(testDocumentSignedAltered, {
           publicKey: testPublicKeyBtc,
           publicKeyOwner: testPublicKeyBtcOwner
         }).then(function(verified) {
