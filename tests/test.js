@@ -296,12 +296,12 @@ describe('JSON-LD Signatures', function() {
           "@type": "EcdsaKoblitzSignature2016",
           "http://purl.org/dc/terms/created": {
             "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
-            "@value": "2016-11-30T01:44:34Z"
+            "@value": "2017-03-25T22:01:04Z"
           },
           "http://purl.org/dc/terms/creator": {
             "@id": "ecdsa-koblitz-pubkey:1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER"
           },
-          "https://w3id.org/security#signatureValue": "IEDwNo/X5cQx0ZQwXx1Qt5kO+gQQ0IPgURC/SpmbRT5lWUC65QByTDkqu6OWKRcZ0EbRZlV/NVUNr+XExxTmECI="
+          "https://w3id.org/security#signatureValue": "IOoF0rMmpcdxNZFoirTpRMCyLr8kGHLqXFl7v+m3naetCx+OLNhVY/6SCUwDGZfFs4yPXeAl6Tj1WgtLIHOVZmw="
         };
         testDocumentSignedAltered = clone(testDocumentSigned);
         testDocumentSignedAltered["name"] = 'Manu Spornoneous';
@@ -587,12 +587,12 @@ describe('JSON-LD Signatures', function() {
           "@type": "EcdsaKoblitzSignature2016",
           "http://purl.org/dc/terms/created": {
             "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
-            "@value": "2016-11-30T01:44:34Z"
+            "@value": "2017-03-25T22:01:04Z"
           },
           "http://purl.org/dc/terms/creator": {
             "@id": "ecdsa-koblitz-pubkey:1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER"
           },
-          "https://w3id.org/security#signatureValue": "IEDwNo/X5cQx0ZQwXx1Qt5kO+gQQ0IPgURC/SpmbRT5lWUC65QByTDkqu6OWKRcZ0EbRZlV/NVUNr+XExxTmECI="
+          "https://w3id.org/security#signatureValue": "IOoF0rMmpcdxNZFoirTpRMCyLr8kGHLqXFl7v+m3naetCx+OLNhVY/6SCUwDGZfFs4yPXeAl6Tj1WgtLIHOVZmw="
         };
         testDocumentSignedAltered = clone(testDocumentSigned);
         testDocumentSignedAltered["name"] = 'Manu Spornoneous';
