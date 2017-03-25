@@ -304,7 +304,7 @@ describe('JSON-LD Signatures', function() {
           "https://w3id.org/security#signatureValue": "IOoF0rMmpcdxNZFoirTpRMCyLr8kGHLqXFl7v+m3naetCx+OLNhVY/6SCUwDGZfFs4yPXeAl6Tj1WgtLIHOVZmw="
         };
         testDocumentSignedAltered = clone(testDocumentSigned);
-        testDocumentSignedAltered["name"] = 'Manu Spornoneous';
+        testDocumentSignedAltered.name = 'Manu Spornoneous';
 
         testPrivateKeyWif = 'L4mEi7eEdTNNFQEWaa7JhUKAbtHdVvByGAqvpJKC53mfiqunjBjw';
         testPublicKeyWif = '1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER';
@@ -595,7 +595,7 @@ describe('JSON-LD Signatures', function() {
           "https://w3id.org/security#signatureValue": "IOoF0rMmpcdxNZFoirTpRMCyLr8kGHLqXFl7v+m3naetCx+OLNhVY/6SCUwDGZfFs4yPXeAl6Tj1WgtLIHOVZmw="
         };
         testDocumentSignedAltered = clone(testDocumentSigned);
-        testDocumentSignedAltered["name"] = 'Manu Spornoneous';
+        testDocumentSignedAltered.name = 'Manu Spornoneous';
 
         testPrivateKeyWif = 'L4mEi7eEdTNNFQEWaa7JhUKAbtHdVvByGAqvpJKC53mfiqunjBjw';
         testPublicKeyWif = '1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER';
