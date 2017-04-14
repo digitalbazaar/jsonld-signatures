@@ -1,0 +1,9 @@
+# jsonld-signatures ChangeLog
+
+## 1.2.0 - 2017-04-14
+
+### Added
+- EcdsaKoblitzSignature2016 signature algorithm.
+
+## 1.1.x
+- See git history for changes.
