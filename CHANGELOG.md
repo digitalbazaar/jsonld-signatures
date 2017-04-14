@@ -1,5 +1,10 @@
 # jsonld-signatures ChangeLog
 
+## 1.2.1 - 2017-04-14
+
+### Changed
+- Add `key` validation in `checkKey` API.
+
 ## 1.2.0 - 2017-04-14
 
 ### Added
