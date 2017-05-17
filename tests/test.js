@@ -17,6 +17,9 @@ var _nodejs = (typeof process !== 'undefined' &&
 var _jsdir, jsonld, jsigs, assert, program;
 
 if(_nodejs) {
+  if(!global.Promise) {
+    global.Promise = require('es6-promise').Promise;
+  }
   _jsdir = process.env.JSDIR || 'lib';
   jsonld = require('../node_modules/jsonld');
   jsigs = require('../' + _jsdir + '/jsonld-signatures')();
@@ -26,11 +29,13 @@ if(_nodejs) {
     .option('--bail', 'Bail when a test fails')
     .parse(process.argv);
 } else {
+  if(!window.Promise) {
+    window.Promise = require('es6-promise').Promise;
+  }
   var system = require('system');
   require('./bind');
   require('./setImmediate');
   _jsdir = system.env.JSDIR || 'lib';
-  window.Promise = require('es6-promise').Promise;
   var forge = require('../node_modules/node-forge');
   window.forge = forge;
   var bitcoreMessage = require('../node_modules/bitcore-message/dist/bitcore-message.js');
