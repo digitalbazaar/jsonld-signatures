@@ -30,7 +30,7 @@ if(_nodejs) {
   require('./bind');
   require('./setImmediate');
   _jsdir = system.env.JSDIR || 'lib';
-  window.async = require('async');
+  window.Promise = require('es6-promise').Promise;
   var forge = require('../node_modules/node-forge');
   window.forge = forge;
   var bitcoreMessage = require('../node_modules/bitcore-message/dist/bitcore-message.js');
@@ -39,7 +39,6 @@ if(_nodejs) {
   jsonld = jsonldjs;
   require('../' + _jsdir + '/jsonld-signatures');
   jsigs = window.jsigs;
-  window.Promise = require('es6-promise').Promise;
   assert = require('chai').assert;
   require('mocha/mocha');
   require('mocha-phantomjs/lib/mocha-phantomjs/core_extensions');
