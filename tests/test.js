@@ -340,17 +340,20 @@ describe('JSON-LD Signatures', function() {
               assert.notEqual(
                 signedDocument['https://w3id.org/security#signature'],
                 undefined, 'signature was not created');
+              assert(Array.isArray(
+                signedDocument['https://w3id.org/security#signature']));
               assert.equal(
                 signedDocument['https://w3id.org/security#signature'].length,
                 2);
               assert.equal(
                 signedDocument['https://w3id.org/security#signature'][0]
                   ['http://purl.org/dc/terms/creator']['@id'], testPublicKeyUrl,
-                'creator key for signature is wrong');
+                'creator key for the first signature is wrong');
               assert.equal(
                 signedDocument['https://w3id.org/security#signature'][1]
                   ['http://purl.org/dc/terms/creator']['@id'],
-                testPublicKeyUrl2,'creator key for signature is wrong');
+                testPublicKeyUrl2,
+                'creator key for the second signature is wrong');
               done();
             });
           });
