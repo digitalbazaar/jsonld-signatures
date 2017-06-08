@@ -17,14 +17,57 @@ var _nodejs = (typeof process !== 'undefined' &&
 
 var _jsdir, jsonld, jsigs, assert, program;
 
+var testLoader = function(url, callback) {
+  if(url === 'https://w3id.org/security/v1') {
+    return callback(null, {
+      contextUrl: null,
+      document: securityContext,
+      documentUrl: 'https://web-payments.org/contexts/security-v1.jsonld'
+    });
+  }
+  console.log('UUUUUUUU' ,url);
+  if(url === testPublicKeyUrl) {
+    return callback(null, {
+      contextUrl: null,
+      document: testPublicKey,
+      documentUrl: testPublicKeyUrl
+    });
+  }
+  if(url === testPublicKeyUrl2) {
+    console.log('KKKKKK2222222222');
+    return callback(null, {
+      contextUrl: null,
+      document: testPublicKey2,
+      documentUrl: testPublicKeyUrl2
+    });
+  }
+  if(url === testPublicKeyOwner.id) {
+    return callback(null, {
+      contextUrl: null,
+      document: testPublicKeyOwner,
+      documentUrl: testPublicKeyOwner.id
+    });
+  }
+  if(url === testPublicKeyOwner2.id) {
+    console.log('OOOOOO22222222222');
+    return callback(null, {
+      contextUrl: null,
+      document: testPublicKeyOwner2,
+      documentUrl: testPublicKeyOwner2.id
+    });
+  }
+};
+
 if(_nodejs) {
   if(!global.Promise) {
     global.Promise = require('es6-promise').Promise;
   }
   _jsdir = process.env.JSDIR || 'lib';
   jsonld = require('../node_modules/jsonld');
+  jsonld.documentLoader = testLoader;
   jsigs = require('../' + _jsdir + '/jsonld-signatures')();
-  assert = require('assert');
+  jsigs.use('jsonld', jsonld);
+  assert = require('chai').assert;
   program = require('commander');
   program
     .option('--bail', 'Bail when a test fails')
@@ -52,16 +95,8 @@ if(_nodejs) {
 
   // PhantomJS is really bad at doing XHRs, so we have to fake the network
   // fetch of the JSON-LD Contexts
-  var contextLoader = function(url, callback) {
-    if(url === 'https://w3id.org/security/v1') {
-      callback(null, {
-        contextUrl: null,
-        document: securityContext,
-        documentUrl: 'https://web-payments.org/contexts/security-v1.jsonld'
-      });
-    }
-  };
-  jsonld.documentLoader = contextLoader;
+
+  jsonld.documentLoader = testLoader;
 
   program = {};
   for(var i = 0; i < system.args.length; ++i) {
@@ -88,92 +123,6 @@ function clone(obj) {
 
 // run tests
 describe('JSON-LD Signatures', function() {
-  var testPublicKeyUrl = 'https://example.com/i/alice/keys/1';
-  var testPublicKeyUrl2 = 'https://example.com/i/bob/keys/1';
-  var testPublicKeyPem =
-    '-----BEGIN PUBLIC KEY-----\n' +
-    'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC4R1AmYYyE47FMZgo708NhFU+t\n' +
-    '+VWn133PYGt/WYmD5BnKj679YiUmyrC3hX6oZfo4eVpOkycxZvGgXCLQGuDp45Xf\n' +
-    'Zkdsjqs3o62En4YjlHWxgeGmkiRqGfZ3sJ3u5WZ2xwapdZY3/2T/oOV5ri8SktTv\n' +
-    'mVGCyhwFuJC/NbJMEwIDAQAB\n' +
-    '-----END PUBLIC KEY-----';
-  var testPrivateKeyPem = '-----BEGIN RSA PRIVATE KEY-----\n' +
-    'MIICWwIBAAKBgQC4R1AmYYyE47FMZgo708NhFU+t+VWn133PYGt/WYmD5BnKj679\n' +
-    'YiUmyrC3hX6oZfo4eVpOkycxZvGgXCLQGuDp45XfZkdsjqs3o62En4YjlHWxgeGm\n' +
-    'kiRqGfZ3sJ3u5WZ2xwapdZY3/2T/oOV5ri8SktTvmVGCyhwFuJC/NbJMEwIDAQAB\n' +
-    'AoGAZXNdPMQXiFGSGm1S1P0QYzJIW48ZCP4p1TFP/RxeCK5bRJk1zWlq6qBMCb0E\n' +
-    'rdD2oICupvN8cEYsYAxZXhhuGWZ60vggbqTTa+4LXB+SGCbKMX711ZoQHdY7rnaF\n' +
-    'b/Udf4wTLD1yAslx1TrHkV56OfuJcEdWC7JWqyNXQoxedwECQQDZvcEmBT/Sol/S\n' +
-    'AT5ZSsgXm6xCrEl4K26Vyw3M5UShRSlgk12gfqqSpdeP5Z7jdV/t5+vD89OJVfaa\n' +
-    'Tw4h9BibAkEA2Khe03oYQzqP1V4YyV3QeC4yl5fCBr8HRyOMC4qHHKQqBp2VDUyu\n' +
-    'RBJhTqqf1ErzUBkXseawNxtyuPmPrMSl6QJAQOgfu4W1EMT2a1OTkmqIWwE8yGMz\n' +
-    'Q28u99gftQRjAO/s9az4K++WSUDGkU6RnpxOjEymKzNzy2ykpjsKq3RoIQJAA+XL\n' +
-    'huxsYVE9Yy5FLeI1LORP3rBJOkvXeq0mCNMeKSK+6s2M7+dQP0NBYuPo6i3LAMbi\n' +
-    'yT2IMAWbY76Bmi8TeQJAfdLJGwiDNIhTVYHxvDz79ANzgRAd1kPKPddJZ/w7Gfhm\n' +
-    '8Mezti8HCizDxPb+H8HlJMSkfoHx1veWkdLaPWRFrA==\n' +
-    '-----END RSA PRIVATE KEY-----';
-  var testPublicKeyPem2 =
-    '-----BEGIN PUBLIC KEY-----\n' +
-    'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwyD/b26ez7OQB0bwvd4K\n' +
-    'gyzlRaLOxyZyEFYZi9DqphK+NKtYnqGHfk2Qi2xanCVj2IrxJetvEWNFnoS1JgI4\n' +
-    'BdnN2/D3yJfr4Di/nuppB3EYBu/auKuiuFrQhR5gPeNM6NAwD7HUQ1XKaSk2iow8\n' +
-    'IJHEHe+4bIiUht7V+rN6iUi0oOYW+mjbaLLKcUR/ngdX3DXZs99Jx+hDwd28s1su\n' +
-    'zWB9N29NiFaqg2RwqFELCSav9gx+nYb0zj5ltVGIIgNp2ibYO+nVQ3zmhE+O8zFc\n' +
-    'l5c0l72XnEQn5eKZ5gJHPn4ZDpykO/NKZRj+hDRIxApDHmg0wYRJovtqJ6v5AZkh\n' +
-    'ywIDAQAB\n' +
-    '-----END PUBLIC KEY-----';
-  var testPrivateKeyPem2 = '-----BEGIN RSA PRIVATE KEY-----\r\n' +
-    'MIIEowIBAAKCAQEAwyD/b26ez7OQB0bwvd4KgyzlRaLOxyZyEFYZi9DqphK+NKtY\n' +
-    'nqGHfk2Qi2xanCVj2IrxJetvEWNFnoS1JgI4BdnN2/D3yJfr4Di/nuppB3EYBu/a\n' +
-    'uKuiuFrQhR5gPeNM6NAwD7HUQ1XKaSk2iow8IJHEHe+4bIiUht7V+rN6iUi0oOYW\n' +
-    '+mjbaLLKcUR/ngdX3DXZs99Jx+hDwd28s1suzWB9N29NiFaqg2RwqFELCSav9gx+\n' +
-    'nYb0zj5ltVGIIgNp2ibYO+nVQ3zmhE+O8zFcl5c0l72XnEQn5eKZ5gJHPn4ZDpyk\n' +
-    'O/NKZRj+hDRIxApDHmg0wYRJovtqJ6v5AZkhywIDAQABAoIBAGHxrkXAwPaAq0r7\n' +
-    '0Nt9GMm/P1Y04pYUNiz9CtWjiCTUQ6UsXM9DRT+gr21Mdi7qlbOcCm9+PcH8knV/\n' +
-    'J25srrJBIZPE4JtPppZl5cle4Flb6zOQMbmAba0b6I7pMGXgMjqqRXWbTXB/H5qp\n' +
-    'lTb2LTgr8sUUDv5rkCIiuEWe0WMWuzGoeFuh4kYAUGu91Qh9q9GDEgZ7C7CoonsH\n' +
-    'O15CD1LxfE7Jcfabjx0qSjelcmIkXijtji3NhBaS784hJomjxuL2sjsOAdaxfFfB\n' +
-    '5kHa4YjJ05gWRuz6mIBMGN/Dvpexz1SZnbudmxA2moFXUzj2rV1CzopERnWC3vHz\n' +
-    'HnkCLAECgYEA4ZK5VDnX/AljCu5Ps57wfK6Cy+C3tbY4/PXEGtoF34FeE8i+xg3v\n' +
-    'yiQfqzqSnC9n37R111k3oFxUABYpjC1eJdI46pKqMwNJ/px0jiZU5PyawXBbaA4M\n' +
-    'jaiKPcYoEHS4bWeYbiEVtr/MEGWpdCSAhW7KLDxtRW3ZEIf1ZFxwy98CgYEA3XMA\n' +
-    'muA8t7cyr7qgnp/QuLHRKKU7W/Jl6eGwnhIhp8mDSg2GMFF0xwcqEV3u6k8b8oS8\n' +
-    'E6E7BPk1DjRwydE0FCpQYNKV0kbFrw44J56IhMZ6PJobt/9Dg15uFBAwo6YImqsu\n' +
-    'J38CwRwysunb2nkcXmcGSKrLrhetJenIYf+Mp5UCgYAzVhQNghiQiIZc332OEHcE\n' +
-    'uSaVRbApj64Ki9g0kDfT9Po3IHGiW1ueMnhunKbvGq7WL5i+CNTrDvgjCOgtucl6\n' +
-    'bAx9/iDz+SSm6G5yR3D8qCyEJ5D17nSW7KuBgY5uqFGsvG3pamgprh7AAJL/FquV\n' +
-    'MnCafqoTqftDkt2bGJqnGwKBgCpHKnZnGTB56VNjbgbavB6G1EfOQ+bqAEsGq5GC\n' +
-    'JKrD7izVKClRY9obpAxswpA5Sjyi2sVkor/wVBDCMkZVinvPGElj6vaaTGN/c3kc\n' +
-    '6zNuMSggw+n88gbCoIF0FdUofbwJsmYX+Y6ks4k03KR5OtFLGggFk51JJ+V1HKyY\n' +
-    '/WGBAoGBAJH23ZK1AUmv/c8X+wifjjLLmhoJgL3OcyjFiaJsKFpbTYR2m8WxWlQr\n' +
-    'I6uT8jR2jQVWZoEWSuIV7ciekihFa7k/R0YevmAZt3h6KHYfqJvjaLHLAcxYNE2T\n' +
-    '54pu8qaIrQ9kBM7vOBrQtK4s8glzDC6VLThEO1FyrZVehshoue9f\n' +
-    '-----END RSA PRIVATE KEY-----';
-  var testPublicKey = {
-    '@context': jsigs.SECURITY_CONTEXT_URL,
-    id: testPublicKeyUrl,
-    type: 'CryptographicKey',
-    owner: 'https://example.com/i/alice',
-    publicKeyPem: testPublicKeyPem
-  };
-  var testPublicKeyOwner = {
-    '@context': jsigs.SECURITY_CONTEXT_URL,
-    id: 'https://example.com/i/alice',
-    publicKey: [testPublicKey]
-  };
-  var testPublicKey2 = {
-    '@context': jsigs.SECURITY_CONTEXT_URL,
-    id: testPublicKeyUrl,
-    type: 'CryptographicKey',
-    owner: 'https://example.com/i/bob',
-    publicKeyPem: testPublicKeyPem2
-  };
-  var testPublicKeyOwner2 = {
-    '@context': jsigs.SECURITY_CONTEXT_URL,
-    id: 'https://example.com/i/bob',
-    publicKey: [testPublicKey2]
-  };
-
   context('with NO security context', function() {
     // the test document that will be signed
     var testDocument = {
@@ -354,10 +303,57 @@ describe('JSON-LD Signatures', function() {
                   ['http://purl.org/dc/terms/creator']['@id'],
                 testPublicKeyUrl2,
                 'creator key for the second signature is wrong');
+              testDocumentSigned = signedDocument;
               done();
             });
           });
         });
+        it('should successfully verify a local signed document',
+          function(done) {
+            console.log('SSSSSSSS', JSON.stringify(testDocumentSigned, null, 2));
+            jsigs.verify(testDocumentSigned, {}, function(err, result) {
+              console.log('EEEEEEE', err, result);
+              assert.ifError(err);
+              assert.equal(
+                result.verified, true, 'signature verification failed');
+              done();
+            });
+          });
+        it('should successfully sign a local document w/promises API',
+          function() {
+            jsigs.promises.sign(testDocument, {
+              algorithm: 'LinkedDataSignature2015',
+              privateKeyPem: testPrivateKeyPem,
+              creator: testPublicKeyUrl
+            }).then(function(signedDocument) {
+              return jsigs.promises.sign(signedDocument, {
+                algorithm: 'LinkedDataSignature2015',
+                privateKeyPem: testPrivateKeyPem2,
+                creator: testPublicKeyUrl2
+              });
+            }).then(function(signedDocument) {
+              assert.notEqual(
+                signedDocument['https://w3id.org/security#signature'],
+                undefined, 'signature was not created');
+              assert(Array.isArray(
+                signedDocument['https://w3id.org/security#signature']));
+              assert.equal(
+                signedDocument['https://w3id.org/security#signature'].length,
+                2);
+              assert.equal(
+                signedDocument['https://w3id.org/security#signature'][0]
+                  ['http://purl.org/dc/terms/creator']['@id'], testPublicKeyUrl,
+                'creator key for the first signature is wrong');
+              assert.equal(
+                signedDocument['https://w3id.org/security#signature'][1]
+                  ['http://purl.org/dc/terms/creator']['@id'],
+                testPublicKeyUrl2,
+                'creator key for the second signature is wrong');
+              testDocumentSigned = signedDocument;
+            }).catch(function(err) {
+              assert.ifError(err);
+            });
+          });
 
       }); // end multiple signatures
     }); // end signing and verify Graph2015
@@ -883,5 +879,93 @@ var securityContext = {
     "signatureValue": "sec:signatureValue"
   }
 };
+
+var testPublicKeyUrl = 'https://example.com/i/alice/keys/1';
+var testPublicKeyUrl2 = 'https://example.com/i/bob/keys/1';
+var testPublicKeyPem =
+  '-----BEGIN PUBLIC KEY-----\n' +
+  'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC4R1AmYYyE47FMZgo708NhFU+t\n' +
+  '+VWn133PYGt/WYmD5BnKj679YiUmyrC3hX6oZfo4eVpOkycxZvGgXCLQGuDp45Xf\n' +
+  'Zkdsjqs3o62En4YjlHWxgeGmkiRqGfZ3sJ3u5WZ2xwapdZY3/2T/oOV5ri8SktTv\n' +
+  'mVGCyhwFuJC/NbJMEwIDAQAB\n' +
+  '-----END PUBLIC KEY-----';
+var testPrivateKeyPem = '-----BEGIN RSA PRIVATE KEY-----\n' +
+  'MIICWwIBAAKBgQC4R1AmYYyE47FMZgo708NhFU+t+VWn133PYGt/WYmD5BnKj679\n' +
+  'YiUmyrC3hX6oZfo4eVpOkycxZvGgXCLQGuDp45XfZkdsjqs3o62En4YjlHWxgeGm\n' +
+  'kiRqGfZ3sJ3u5WZ2xwapdZY3/2T/oOV5ri8SktTvmVGCyhwFuJC/NbJMEwIDAQAB\n' +
+  'AoGAZXNdPMQXiFGSGm1S1P0QYzJIW48ZCP4p1TFP/RxeCK5bRJk1zWlq6qBMCb0E\n' +
+  'rdD2oICupvN8cEYsYAxZXhhuGWZ60vggbqTTa+4LXB+SGCbKMX711ZoQHdY7rnaF\n' +
+  'b/Udf4wTLD1yAslx1TrHkV56OfuJcEdWC7JWqyNXQoxedwECQQDZvcEmBT/Sol/S\n' +
+  'AT5ZSsgXm6xCrEl4K26Vyw3M5UShRSlgk12gfqqSpdeP5Z7jdV/t5+vD89OJVfaa\n' +
+  'Tw4h9BibAkEA2Khe03oYQzqP1V4YyV3QeC4yl5fCBr8HRyOMC4qHHKQqBp2VDUyu\n' +
+  'RBJhTqqf1ErzUBkXseawNxtyuPmPrMSl6QJAQOgfu4W1EMT2a1OTkmqIWwE8yGMz\n' +
+  'Q28u99gftQRjAO/s9az4K++WSUDGkU6RnpxOjEymKzNzy2ykpjsKq3RoIQJAA+XL\n' +
+  'huxsYVE9Yy5FLeI1LORP3rBJOkvXeq0mCNMeKSK+6s2M7+dQP0NBYuPo6i3LAMbi\n' +
+  'yT2IMAWbY76Bmi8TeQJAfdLJGwiDNIhTVYHxvDz79ANzgRAd1kPKPddJZ/w7Gfhm\n' +
+  '8Mezti8HCizDxPb+H8HlJMSkfoHx1veWkdLaPWRFrA==\n' +
+  '-----END RSA PRIVATE KEY-----';
+var testPublicKeyPem2 =
+  '-----BEGIN PUBLIC KEY-----\n' +
+  'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwlsOUSgEA9NZdtxFmra5\n' +
+  'tbdQQkcLcOTqLNBjXm275/Vdoz5Bcwfipty3As2b2nxJt8I9co4lmE4wsDHp5dyu\n' +
+  '34SFKn4/Y9SQzQWAvmkSBkgcRXCBS91cakW7Wx3O9/Yr66hSO7pAbt2TEW3Jf3Xl\n' +
+  '3NZcnCDpNCYc40UOWRh0pmMMeyKMedHki6rWD6fgT/0Qm+LeN7E9Aelqy/5OwW38\n' +
+  'aKXCuf6J9J2bBzGTc9nof7Ordnllz/XS7dLm6qNT3lkx+VMFOa9L1JXo77p7DI+L\n' +
+  'z7CnswIQ8Yq9ukZZzjLvX6RN1pEB9CW9rvU9r2k2VPN8bTY3yXjolo1s6bG69lc3\n' +
+  'vQIDAQAB\n' +
+  '-----END PUBLIC KEY-----';
+var testPrivateKeyPem2 = '-----BEGIN RSA PRIVATE KEY-----\r\n' +
+  'MIIEpQIBAAKCAQEAwlsOUSgEA9NZdtxFmra5tbdQQkcLcOTqLNBjXm275/Vdoz5B\n' +
+  'cwfipty3As2b2nxJt8I9co4lmE4wsDHp5dyu34SFKn4/Y9SQzQWAvmkSBkgcRXCB\n' +
+  'S91cakW7Wx3O9/Yr66hSO7pAbt2TEW3Jf3Xl3NZcnCDpNCYc40UOWRh0pmMMeyKM\n' +
+  'edHki6rWD6fgT/0Qm+LeN7E9Aelqy/5OwW38aKXCuf6J9J2bBzGTc9nof7Ordnll\n' +
+  'z/XS7dLm6qNT3lkx+VMFOa9L1JXo77p7DI+Lz7CnswIQ8Yq9ukZZzjLvX6RN1pEB\n' +
+  '9CW9rvU9r2k2VPN8bTY3yXjolo1s6bG69lc3vQIDAQABAoIBAC68FIpBVA3TcYza\n' +
+  'VMZqL+fZR6xYRxEDiqfyCCL5whh58OVDIBvYBpFXO46qAFMeVd+hDoOQWMvx6VVE\n' +
+  '+1hxo39N73OTXgzUXWlfbGDdBR+LkXjFH+ItPX60e+PiHBWWFWOaWwPPupSuJSIo\n' +
+  'wy4qHHbo+OX2J/2JOKMRxOx5q/siI+vrzYKEdRU+P338vWpvlBK9GiodIY29t71Z\n' +
+  'qTV+2eA1v5rmDK/pa8+WXUNKyKrIZQ8qxdf8LbD/1QkspvCqcyQ+XTl+qkRM8hp8\n' +
+  'ONfhLFPrIN0BOonwGNh9u9bsYGZGmoV8YzdgJoNJ1jWRyuKhO9Px5hQmnixuBdkO\n' +
+  'XcdkOiECgYEA/y5vsNeUgwTkolYSIs2QqHuLqxZZ1U5JyPKVipuqgrSgAV20A3Ah\n' +
+  'Bvnp+GpqrConLrvjoYKRCWf9IRI+MfxFiLTgKdWxc6PlDXAFpaSZAgYVBTRudgd/\n' +
+  'CLpr7fC1w9rx5S/VHaDu89aLBTsSHjQBIKZaWhmFM00Y+tqkxtqrBjkCgYEAwvqq\n' +
+  '3/MbOZHEOXjDzbwsZPg+8q8eyBE0bPzp4tjxBPvxnWqwhC3NoKhZP/E2gojVDgdH\n' +
+  'ZvsEO+o8JXH2DKFBEXc80c77Gl8hhiRsFab1rIRl7vCUjgNksu1ChzXnvwJuRAB4\n' +
+  'mFHsuxJi83kRQD8HqgIfuDnsS5kl6gpvAlel3aUCgYEAjBxjFyZHVOkK4FeB/boB\n' +
+  'A4FSXs4W5RfnS35mvYRbSwkCEb3xaTHX8Iyn+s3zZDSA7xgbFEMsf42pXs81dxyc\n' +
+  '0UL/EflTRbtnuMkZUKnfmUzdnc38GLJk/dXeDPdt1ewRhVWOHoaOrTPPgT+94veK\n' +
+  '5vJwCaiZimF6pcIHV2gZH4ECgYEAmcq4b07FIaKdYSulXijX54h7tlZ09B/F91WC\n' +
+  'ciDl8yV6zcyykH/EWr2PMEVl1o5xZtBM/KhwDYZTjMGX7xxeQ5WGjoMxQvrYaYNf\n' +
+  'EbEQxNPlxxNSSbXZftxwBlB5jAsxyEeK17J/BIubKypKdh+BPxLPzDM78+FHq5Qx\n' +
+  'PWq+9NUCgYEAqm0LdhkoqdKgbkU/rgNjX3CgINQ/OhbUGpqq78EAbw/90MCXGdOB\n' +
+  '5pxB4HwKFtDPNtquIQ3UCIVVCJlDZfW7mJJQ9LkD21uqwxXOf1uPH2cb651yeLqd\n' +
+  'TSz1b9F4+GFdKxjk8JKywWAD2fIamcx2W0Wfgfyvr6Kd+kJrkyWn+ZM=\n' +
+  '-----END RSA PRIVATE KEY-----';
+var testPublicKey = {
+  '@context': jsigs.SECURITY_CONTEXT_URL,
+  id: testPublicKeyUrl,
+  type: 'CryptographicKey',
+  owner: 'https://example.com/i/alice',
+  publicKeyPem: testPublicKeyPem
+};
+var testPublicKeyOwner = {
+  '@context': jsigs.SECURITY_CONTEXT_URL,
+  id: 'https://example.com/i/alice',
+  publicKey: [testPublicKey]
+};
+var testPublicKey2 = {
+  '@context': jsigs.SECURITY_CONTEXT_URL,
+  id: testPublicKeyUrl2,
+  type: 'CryptographicKey',
+  owner: 'https://example.com/i/bob',
+  publicKeyPem: testPublicKeyPem2
+};
+var testPublicKeyOwner2 = {
+  '@context': jsigs.SECURITY_CONTEXT_URL,
+  id: 'https://example.com/i/bob',
+  publicKey: [testPublicKey2]
+};
+
+console.log('OOOOOOOOOO', JSON.stringify(testPublicKeyOwner2, null, 2));
 
 })();
