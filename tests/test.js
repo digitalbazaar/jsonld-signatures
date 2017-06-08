@@ -4,8 +4,9 @@
  * @author Dave Longley <dlongley@digitalbazaar.com>
  * @author Manu Sporny <msporny@digitalbazaar.com>
  *
- * Copyright (c) 2014 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2017 Digital Bazaar, Inc. All rights reserved.
  */
+/* globals jsonldjs */
 (function() {
 
 'use strict';
@@ -38,7 +39,8 @@ if(_nodejs) {
   _jsdir = system.env.JSDIR || 'lib';
   var forge = require('../node_modules/node-forge');
   window.forge = forge;
-  var bitcoreMessage = require('../node_modules/bitcore-message/dist/bitcore-message.js');
+  var bitcoreMessage = require(
+    '../node_modules/bitcore-message/dist/bitcore-message.js');
   window.bitcoreMessage = bitcoreMessage;
   require('../node_modules/jsonld');
   jsonld = jsonldjs;
@@ -161,46 +163,48 @@ describe('JSON-LD Signatures', function() {
         jsigs.verify(testDocumentSigned, {
           publicKey: testPublicKey,
           publicKeyOwner: testPublicKeyOwner
-        }, function(err, verified) {
+        }, function(err, result) {
           assert.ifError(err);
-          assert.equal(verified, true, 'signature verification failed');
+          assert.equal(result.verified, true, 'signature verification failed');
           done();
         });
       });
 
-      it('should successfully sign a local document w/promises API', function(done) {
-        jsigs.promises.sign(testDocument, {
-          algorithm: 'GraphSignature2012',
-          privateKeyPem: testPrivateKeyPem,
-          creator: testPublicKeyUrl
-        }).then(function(signedDocument) {
-          assert.notEqual(
-            signedDocument['https://w3id.org/security#signature'], undefined,
-            'signature was not created');
-          assert.equal(
-            signedDocument['https://w3id.org/security#signature']
-              ['http://purl.org/dc/terms/creator']['@id'], testPublicKeyUrl,
-            'creator key for signature is wrong');
-          testDocumentSigned = signedDocument;
-        }).catch(function(err) {
-          assert.ifError(err);
-        }).then(function() {
-          done();
+      it('should successfully sign a local document w/promises API',
+        function(done) {
+          jsigs.promises.sign(testDocument, {
+            algorithm: 'GraphSignature2012',
+            privateKeyPem: testPrivateKeyPem,
+            creator: testPublicKeyUrl
+          }).then(function(signedDocument) {
+            assert.notEqual(
+              signedDocument['https://w3id.org/security#signature'], undefined,
+              'signature was not created');
+            assert.equal(
+              signedDocument['https://w3id.org/security#signature']
+                ['http://purl.org/dc/terms/creator']['@id'], testPublicKeyUrl,
+              'creator key for signature is wrong');
+            testDocumentSigned = signedDocument;
+          }).catch(function(err) {
+            assert.ifError(err);
+          }).then(function() {
+            done();
+          });
         });
-      });
 
-      it('should successfully verify a local signed document w/promises API', function(done) {
-        jsigs.promises.verify(testDocumentSigned, {
-          publicKey: testPublicKey,
-          publicKeyOwner: testPublicKeyOwner
-        }).then(function(verified) {
-          assert.equal(verified, true, 'signature verification failed');
-        }).catch(function(err) {
-          assert.ifError(err);
-        }).then(function() {
-          done();
+      it('should successfully verify a local signed document w/promises API',
+        function(done) {
+          jsigs.promises.verify(testDocumentSigned, {
+            publicKey: testPublicKey,
+            publicKeyOwner: testPublicKeyOwner
+          }).then(function(verified) {
+            assert.equal(verified, true, 'signature verification failed');
+          }).catch(function(err) {
+            assert.ifError(err);
+          }).then(function() {
+            done();
+          });
         });
-      });
 
     });
 
@@ -235,39 +239,41 @@ describe('JSON-LD Signatures', function() {
         });
       });
 
-      it('should successfully sign a local document w/promises API', function(done) {
-        jsigs.promises.sign(testDocument, {
-          algorithm: 'LinkedDataSignature2015',
-          privateKeyPem: testPrivateKeyPem,
-          creator: testPublicKeyUrl
-        }).then(function(signedDocument) {
-          assert.notEqual(
-            signedDocument['https://w3id.org/security#signature'], undefined,
-            'signature was not created');
-          assert.equal(
-            signedDocument['https://w3id.org/security#signature']
-              ['http://purl.org/dc/terms/creator']['@id'], testPublicKeyUrl,
-            'creator key for signature is wrong');
-          testDocumentSigned = signedDocument;
-        }).catch(function(err) {
-          assert.ifError(err);
-        }).then(function() {
-          done();
+      it('should successfully sign a local document w/promises API',
+        function(done) {
+          jsigs.promises.sign(testDocument, {
+            algorithm: 'LinkedDataSignature2015',
+            privateKeyPem: testPrivateKeyPem,
+            creator: testPublicKeyUrl
+          }).then(function(signedDocument) {
+            assert.notEqual(
+              signedDocument['https://w3id.org/security#signature'], undefined,
+              'signature was not created');
+            assert.equal(
+              signedDocument['https://w3id.org/security#signature']
+                ['http://purl.org/dc/terms/creator']['@id'], testPublicKeyUrl,
+              'creator key for signature is wrong');
+            testDocumentSigned = signedDocument;
+          }).catch(function(err) {
+            assert.ifError(err);
+          }).then(function() {
+            done();
+          });
         });
-      });
 
-      it('should successfully verify a local signed document w/promises API', function(done) {
-        jsigs.promises.verify(testDocumentSigned, {
-          publicKey: testPublicKey,
-          publicKeyOwner: testPublicKeyOwner
-        }).then(function(verified) {
-          assert.equal(verified, true, 'signature verification failed');
-        }).catch(function(err) {
-          assert.ifError(err);
-        }).then(function() {
-          done();
+      it('should successfully verify a local signed document w/promises API',
+        function(done) {
+          jsigs.promises.verify(testDocumentSigned, {
+            publicKey: testPublicKey,
+            publicKeyOwner: testPublicKeyOwner
+          }).then(function(verified) {
+            assert.equal(verified, true, 'signature verification failed');
+          }).catch(function(err) {
+            assert.ifError(err);
+          }).then(function() {
+            done();
+          });
         });
-      });
     });
 
     describe('signing and verify EcdsaKoblitzSignature2016', function() {
@@ -305,12 +311,15 @@ describe('JSON-LD Signatures', function() {
           "http://purl.org/dc/terms/creator": {
             "@id": "ecdsa-koblitz-pubkey:1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER"
           },
-          "https://w3id.org/security#signatureValue": "IOoF0rMmpcdxNZFoirTpRMCyLr8kGHLqXFl7v+m3naetCx+OLNhVY/6SCUwDGZfFs4yPXeAl6Tj1WgtLIHOVZmw="
+          "https://w3id.org/security#signatureValue":
+            "IOoF0rMmpcdxNZFoirTpRMCyLr8kGHLqXFl7v+m3naetCx+OLNhVY/6SCUwDGZf" +
+            "Fs4yPXeAl6Tj1WgtLIHOVZmw="
         };
         testDocumentSignedAltered = clone(testDocumentSigned);
         testDocumentSignedAltered.name = 'Manu Spornoneous';
 
-        testPrivateKeyWif = 'L4mEi7eEdTNNFQEWaa7JhUKAbtHdVvByGAqvpJKC53mfiqunjBjw';
+        testPrivateKeyWif =
+          'L4mEi7eEdTNNFQEWaa7JhUKAbtHdVvByGAqvpJKC53mfiqunjBjw';
         testPublicKeyWif = '1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER';
         testPublicKeyFriendly = 'ecdsa-koblitz-pubkey:' + testPublicKeyWif;
 
@@ -343,7 +352,8 @@ describe('JSON-LD Signatures', function() {
             'signature was not created');
           assert.equal(
             signedDocument['https://w3id.org/security#signature']
-              ['http://purl.org/dc/terms/creator']['@id'], testPublicKeyFriendly,
+              ['http://purl.org/dc/terms/creator']['@id'],
+            testPublicKeyFriendly,
             'creator key for signature is wrong');
           done();
         });
@@ -360,7 +370,8 @@ describe('JSON-LD Signatures', function() {
         });
       });
 
-      it('verify should return false if the document was signed by a different private key', function(done) {
+      it('verify should return false if the document was signed by a ' +
+        'different private key', function(done) {
         testPublicKeyBtc.publicKeyWif = invalidPublicKeyWif;
 
         jsigs.verify(testDocumentSigned, {
@@ -368,21 +379,24 @@ describe('JSON-LD Signatures', function() {
           publicKeyOwner: testPublicKeyBtcOwner
         }, function(err, verified) {
           assert.ifError(err);
-          assert.equal(verified, false, 'signature verification should have failed');
+          assert.equal(
+            verified, false, 'signature verification should have failed');
           done();
         });
       });
 
-      it('verify should return false if the document was altered after signing', function(done) {
-        jsigs.verify(testDocumentSignedAltered, {
-          publicKey: testPublicKeyBtc,
-          publicKeyOwner: testPublicKeyBtcOwner
-        }, function(err, verified) {
-          assert.ifError(err);
-          assert.equal(verified, false, 'signature verification should have failed');
-          done();
+      it('verify returns false if the document was altered after signing',
+        function(done) {
+          jsigs.verify(testDocumentSignedAltered, {
+            publicKey: testPublicKeyBtc,
+            publicKeyOwner: testPublicKeyBtcOwner
+          }, function(err, verified) {
+            assert.ifError(err);
+            assert.equal(
+              verified, false, 'signature verification should have failed');
+            done();
+          });
         });
-      });
 
       it('should successfully sign a local document' +
         ' w/promises API', function(done) {
@@ -396,8 +410,8 @@ describe('JSON-LD Signatures', function() {
             'signature was not created');
           assert.equal(
             signedDocument['https://w3id.org/security#signature']
-              ['http://purl.org/dc/terms/creator']['@id'], testPublicKeyFriendly,
-            'creator key for signature is wrong');
+              ['http://purl.org/dc/terms/creator']['@id'],
+            testPublicKeyFriendly, 'creator key for signature is wrong');
         }).then(done).catch(done);
       });
 
@@ -441,126 +455,135 @@ describe('JSON-LD Signatures', function() {
     };
     var testDocumentSigned = {};
 
-    describe('signing and verify GraphSignature2012 w/security context', function() {
-      it('should successfully sign a local document', function(done) {
-        jsigs.sign(testDocument, {
-          algorithm: 'GraphSignature2012',
-          privateKeyPem: testPrivateKeyPem,
-          creator: testPublicKeyUrl
-        }, function(err, signedDocument) {
-          assert.ifError(err);
-          assert.notEqual(signedDocument.signature, undefined,
-            'signature was not created');
-          assert.equal(signedDocument.signature.creator, testPublicKeyUrl,
-            'creator key for signature is wrong');
-          testDocumentSigned = signedDocument;
-          done();
+    describe(
+      'signing and verify GraphSignature2012 w/security context', function() {
+        it('should successfully sign a local document', function(done) {
+          jsigs.sign(testDocument, {
+            algorithm: 'GraphSignature2012',
+            privateKeyPem: testPrivateKeyPem,
+            creator: testPublicKeyUrl
+          }, function(err, signedDocument) {
+            assert.ifError(err);
+            assert.notEqual(signedDocument.signature, undefined,
+              'signature was not created');
+            assert.equal(signedDocument.signature.creator, testPublicKeyUrl,
+              'creator key for signature is wrong');
+            testDocumentSigned = signedDocument;
+            done();
+          });
         });
+
+        it('should successfully verify a local signed document',
+          function(done) {
+            jsigs.verify(testDocumentSigned, {
+              publicKey: testPublicKey,
+              publicKeyOwner: testPublicKeyOwner
+            }, function(err, verified) {
+              assert.ifError(err);
+              assert.equal(verified, true, 'signature verification failed');
+              done();
+            });
+          });
+
+        it('should successfully sign a local document w/promises API',
+          function(done) {
+            jsigs.promises.sign(testDocument, {
+              algorithm: 'GraphSignature2012',
+              privateKeyPem: testPrivateKeyPem,
+              creator: testPublicKeyUrl
+            }).then(function(signedDocument) {
+              assert.notEqual(signedDocument.signature, undefined,
+                'signature was not created');
+              assert.equal(signedDocument.signature.creator, testPublicKeyUrl,
+                'creator key for signature is wrong');
+              testDocumentSigned = signedDocument;
+            }).catch(function(err) {
+              assert.ifError(err);
+            }).then(function() {
+              done();
+            });
+          });
+
+        it('should successfully verify a local signed document w/promises API',
+          function(done) {
+            jsigs.promises.verify(testDocumentSigned, {
+              publicKey: testPublicKey,
+              publicKeyOwner: testPublicKeyOwner
+            }).then(function(verified) {
+              assert.equal(verified, true, 'signature verification failed');
+            }).catch(function(err) {
+              assert.ifError(err);
+            }).then(function() {
+              done();
+            });
+          });
+
       });
 
-      it('should successfully verify a local signed document', function(done) {
-        jsigs.verify(testDocumentSigned, {
-          publicKey: testPublicKey,
-          publicKeyOwner: testPublicKeyOwner
-        }, function(err, verified) {
-          assert.ifError(err);
-          assert.equal(verified, true, 'signature verification failed');
-          done();
+    describe(
+      'signing and verify LinkedDataSignature2015 w/security context',
+      function() {
+        it('should successfully sign a local document', function(done) {
+          jsigs.sign(testDocument, {
+            algorithm: 'LinkedDataSignature2015',
+            privateKeyPem: testPrivateKeyPem,
+            creator: testPublicKeyUrl
+          }, function(err, signedDocument) {
+            assert.ifError(err);
+            assert.notEqual(signedDocument.signature, undefined,
+              'signature was not created');
+            assert.equal(signedDocument.signature.creator, testPublicKeyUrl,
+              'creator key for signature is wrong');
+            testDocumentSigned = signedDocument;
+            done();
+          });
         });
-      });
 
-      it('should successfully sign a local document w/promises API', function(done) {
-        jsigs.promises.sign(testDocument, {
-          algorithm: 'GraphSignature2012',
-          privateKeyPem: testPrivateKeyPem,
-          creator: testPublicKeyUrl
-        }).then(function(signedDocument) {
-          assert.notEqual(signedDocument.signature, undefined,
-            'signature was not created');
-          assert.equal(signedDocument.signature.creator, testPublicKeyUrl,
-            'creator key for signature is wrong');
-          testDocumentSigned = signedDocument;
-        }).catch(function(err) {
-          assert.ifError(err);
-        }).then(function() {
-          done();
-        });
-      });
+        it('should successfully verify a local signed document',
+          function(done) {
+            jsigs.verify(testDocumentSigned, {
+              publicKey: testPublicKey,
+              publicKeyOwner: testPublicKeyOwner
+            }, function(err, verified) {
+              assert.ifError(err);
+              assert.equal(verified, true, 'signature verification failed');
+              done();
+            });
+          });
 
-      it('should successfully verify a local signed document w/promises API', function(done) {
-        jsigs.promises.verify(testDocumentSigned, {
-          publicKey: testPublicKey,
-          publicKeyOwner: testPublicKeyOwner
-        }).then(function(verified) {
-          assert.equal(verified, true, 'signature verification failed');
-        }).catch(function(err) {
-          assert.ifError(err);
-        }).then(function() {
-          done();
-        });
-      });
+        it('should successfully sign a local document w/promises',
+          function(done) {
+            jsigs.promises.sign(testDocument, {
+              algorithm: 'LinkedDataSignature2015',
+              privateKeyPem: testPrivateKeyPem,
+              creator: testPublicKeyUrl
+            }).then(function(signedDocument) {
+              assert.notEqual(signedDocument.signature, undefined,
+                'signature was not created');
+              assert.equal(signedDocument.signature.creator, testPublicKeyUrl,
+                'creator key for signature is wrong');
+              testDocumentSigned = signedDocument;
+            }).catch(function(err) {
+              assert.ifError(err);
+            }).then(function() {
+              done();
+            });
+          });
 
-    });
-
-    describe('signing and verify LinkedDataSignature2015 w/security context', function() {
-      it('should successfully sign a local document', function(done) {
-        jsigs.sign(testDocument, {
-          algorithm: 'LinkedDataSignature2015',
-          privateKeyPem: testPrivateKeyPem,
-          creator: testPublicKeyUrl
-        }, function(err, signedDocument) {
-          assert.ifError(err);
-          assert.notEqual(signedDocument.signature, undefined,
-            'signature was not created');
-          assert.equal(signedDocument.signature.creator, testPublicKeyUrl,
-            'creator key for signature is wrong');
-          testDocumentSigned = signedDocument;
-          done();
-        });
+        it('should successfully verify a local signed document w/promises',
+          function(done) {
+            jsigs.promises.verify(testDocumentSigned, {
+              publicKey: testPublicKey,
+              publicKeyOwner: testPublicKeyOwner
+            }).then(function(verified) {
+              assert.equal(verified, true, 'signature verification failed');
+            }).catch(function(err) {
+              assert.ifError(err);
+            }).then(function() {
+              done();
+            });
+          });
       });
-
-      it('should successfully verify a local signed document', function(done) {
-        jsigs.verify(testDocumentSigned, {
-          publicKey: testPublicKey,
-          publicKeyOwner: testPublicKeyOwner
-        }, function(err, verified) {
-          assert.ifError(err);
-          assert.equal(verified, true, 'signature verification failed');
-          done();
-        });
-      });
-
-      it('should successfully sign a local document w/promises', function(done) {
-        jsigs.promises.sign(testDocument, {
-          algorithm: 'LinkedDataSignature2015',
-          privateKeyPem: testPrivateKeyPem,
-          creator: testPublicKeyUrl
-        }).then(function(signedDocument) {
-          assert.notEqual(signedDocument.signature, undefined,
-            'signature was not created');
-          assert.equal(signedDocument.signature.creator, testPublicKeyUrl,
-            'creator key for signature is wrong');
-          testDocumentSigned = signedDocument;
-        }).catch(function(err) {
-          assert.ifError(err);
-        }).then(function() {
-          done();
-        });
-      });
-
-      it('should successfully verify a local signed document w/promises', function(done) {
-        jsigs.promises.verify(testDocumentSigned, {
-          publicKey: testPublicKey,
-          publicKeyOwner: testPublicKeyOwner
-        }).then(function(verified) {
-          assert.equal(verified, true, 'signature verification failed');
-        }).catch(function(err) {
-          assert.ifError(err);
-        }).then(function() {
-          done();
-        });
-      });
-    });
 
     describe('signing and verify EcdsaKoblitzSignature2016', function() {
       var testDocument;
@@ -596,12 +619,15 @@ describe('JSON-LD Signatures', function() {
           "http://purl.org/dc/terms/creator": {
             "@id": "ecdsa-koblitz-pubkey:1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER"
           },
-          "https://w3id.org/security#signatureValue": "IOoF0rMmpcdxNZFoirTpRMCyLr8kGHLqXFl7v+m3naetCx+OLNhVY/6SCUwDGZfFs4yPXeAl6Tj1WgtLIHOVZmw="
+          "https://w3id.org/security#signatureValue":
+            "IOoF0rMmpcdxNZFoirTpRMCyLr8kGHLqXFl7v+m3naetCx+OLNhVY/6SCUwDGZf" +
+              "Fs4yPXeAl6Tj1WgtLIHOVZmw="
         };
         testDocumentSignedAltered = clone(testDocumentSigned);
         testDocumentSignedAltered.name = 'Manu Spornoneous';
 
-        testPrivateKeyWif = 'L4mEi7eEdTNNFQEWaa7JhUKAbtHdVvByGAqvpJKC53mfiqunjBjw';
+        testPrivateKeyWif =
+          'L4mEi7eEdTNNFQEWaa7JhUKAbtHdVvByGAqvpJKC53mfiqunjBjw';
         testPublicKeyWif = '1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER';
         testPublicKeyFriendly = 'ecdsa-koblitz-pubkey:' + testPublicKeyWif;
 
@@ -649,7 +675,8 @@ describe('JSON-LD Signatures', function() {
         });
       });
 
-      it('verify should return false if the document was signed by a different private key', function(done) {
+      it('verify should return false if the document was signed by a ' +
+        'different private key', function(done) {
         testPublicKeyBtc.publicKeyWif = invalidPublicKeyWif;
 
         jsigs.verify(testDocumentSigned, {
@@ -657,7 +684,8 @@ describe('JSON-LD Signatures', function() {
           publicKeyOwner: testPublicKeyBtcOwner
         }, function(err, verified) {
           assert.ifError(err);
-          assert.equal(verified, false, 'signature verification should have failed');
+          assert.equal(
+            verified, false, 'signature verification should have failed');
           done();
         });
       });
