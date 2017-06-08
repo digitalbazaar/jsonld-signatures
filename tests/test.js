@@ -25,7 +25,6 @@ var testLoader = function(url, callback) {
       documentUrl: 'https://web-payments.org/contexts/security-v1.jsonld'
     });
   }
-  console.log('UUUUUUUU' ,url);
   if(url === testPublicKeyUrl) {
     return callback(null, {
       contextUrl: null,
@@ -34,7 +33,6 @@ var testLoader = function(url, callback) {
     });
   }
   if(url === testPublicKeyUrl2) {
-    console.log('KKKKKK2222222222');
     return callback(null, {
       contextUrl: null,
       document: testPublicKey2,
@@ -49,7 +47,6 @@ var testLoader = function(url, callback) {
     });
   }
   if(url === testPublicKeyOwner2.id) {
-    console.log('OOOOOO22222222222');
     return callback(null, {
       contextUrl: null,
       document: testPublicKeyOwner2,
@@ -272,7 +269,7 @@ describe('JSON-LD Signatures', function() {
           });
       }); // end single signature
 
-      describe.only('multiple signatures', function() {
+      describe('multiple signatures', function() {
         it('should successfully sign a local document', function(done) {
           jsigs.sign(testDocument, {
             algorithm: 'LinkedDataSignature2015',
@@ -289,14 +286,15 @@ describe('JSON-LD Signatures', function() {
               assert.notEqual(
                 signedDocument['https://w3id.org/security#signature'],
                 undefined, 'signature was not created');
-              assert(Array.isArray(
-                signedDocument['https://w3id.org/security#signature']));
+              assert.isArray(
+                signedDocument['https://w3id.org/security#signature']);
               assert.equal(
                 signedDocument['https://w3id.org/security#signature'].length,
                 2);
               assert.equal(
                 signedDocument['https://w3id.org/security#signature'][0]
-                  ['http://purl.org/dc/terms/creator']['@id'], testPublicKeyUrl,
+                  ['http://purl.org/dc/terms/creator']['@id'],
+                testPublicKeyUrl,
                 'creator key for the first signature is wrong');
               assert.equal(
                 signedDocument['https://w3id.org/security#signature'][1]
@@ -310,12 +308,17 @@ describe('JSON-LD Signatures', function() {
         });
         it('should successfully verify a local signed document',
           function(done) {
-            console.log('SSSSSSSS', JSON.stringify(testDocumentSigned, null, 2));
             jsigs.verify(testDocumentSigned, {}, function(err, result) {
-              console.log('EEEEEEE', err, result);
               assert.ifError(err);
-              assert.equal(
-                result.verified, true, 'signature verification failed');
+              assert.isBoolean(result.verified);
+              assert.isTrue(result.verified, 'signature verification failed');
+              assert.isObject(result.keyResults);
+              assert.isObject(result.keyResults[testPublicKeyUrl]);
+              assert.isObject(result.keyResults[testPublicKeyUrl2]);
+              assert.isBoolean(result.keyResults[testPublicKeyUrl].verified);
+              assert.isBoolean(result.keyResults[testPublicKeyUrl2].verified);
+              assert.isTrue(result.keyResults[testPublicKeyUrl].verified);
+              assert.isTrue(result.keyResults[testPublicKeyUrl2].verified);
               done();
             });
           });
@@ -354,7 +357,23 @@ describe('JSON-LD Signatures', function() {
               assert.ifError(err);
             });
           });
-
+        it('should successfully verify a local signed document w/promises API',
+          function() {
+            jsigs.promises.verify(testDocumentSigned, {})
+              .then(function(result) {
+                assert.isBoolean(result.verified);
+                assert.isTrue(result.verified,'signature verification failed');
+                assert.isObject(result.keyResults);
+                assert.isObject(result.keyResults[testPublicKeyUrl]);
+                assert.isObject(result.keyResults[testPublicKeyUrl2]);
+                assert.isBoolean(result.keyResults[testPublicKeyUrl].verified);
+                assert.isBoolean(result.keyResults[testPublicKeyUrl2].verified);
+                assert.isTrue(result.keyResults[testPublicKeyUrl].verified);
+                assert.isTrue(result.keyResults[testPublicKeyUrl2].verified);
+              }).catch(function(err) {
+                assert.ifError(err);
+              });
+          });
       }); // end multiple signatures
     }); // end signing and verify Graph2015
 
@@ -965,7 +984,5 @@ var testPublicKeyOwner2 = {
   id: 'https://example.com/i/bob',
   publicKey: [testPublicKey2]
 };
-
-console.log('OOOOOOOOOO', JSON.stringify(testPublicKeyOwner2, null, 2));
 
 })();
