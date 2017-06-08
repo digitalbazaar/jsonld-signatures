@@ -1,9 +1,7 @@
 jsonld-signatures
 =================
 
-[![Build Status][travis-ci-png]][travis-ci-site]
-[travis-ci-png]: https://travis-ci.org/digitalbazaar/jsonld-signatures.png?branch=master
-[travis-ci-site]: https://travis-ci.org/digitalbazaar/jsonld-signatures
+[![Build Status](https://travis-ci.org/digitalbazaar/jsonld-signatures.png?branch=master)](https://travis-ci.org/digitalbazaar/jsonld-signatures)
 
 An implementation of the Linked Data Signatures specification for JSON-LD.
 This software works in all modern browsers as well as node.js via [npm](https://www.npmjs.com/package/jsonld-signatures).
