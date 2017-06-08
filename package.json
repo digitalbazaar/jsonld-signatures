@@ -41,7 +41,7 @@
     "node-forge": "~0.6.45"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
+    "chai": "^4.0.2",
     "grunt": "~1.0.1",
     "grunt-cli": "~1.2.0",
     "grunt-contrib-jshint": "~1.1.0",

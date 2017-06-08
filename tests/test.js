@@ -89,27 +89,65 @@ function clone(obj) {
 // run tests
 describe('JSON-LD Signatures', function() {
   var testPublicKeyUrl = 'https://example.com/i/alice/keys/1';
+  var testPublicKeyUrl2 = 'https://example.com/i/bob/keys/1';
   var testPublicKeyPem =
-    '-----BEGIN PUBLIC KEY-----\r\n' +
-    'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC4R1AmYYyE47FMZgo708NhFU+t\r\n' +
-    '+VWn133PYGt/WYmD5BnKj679YiUmyrC3hX6oZfo4eVpOkycxZvGgXCLQGuDp45Xf\r\n' +
-    'Zkdsjqs3o62En4YjlHWxgeGmkiRqGfZ3sJ3u5WZ2xwapdZY3/2T/oOV5ri8SktTv\r\n' +
-    'mVGCyhwFuJC/NbJMEwIDAQAB\r\n' +
+    '-----BEGIN PUBLIC KEY-----\n' +
+    'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC4R1AmYYyE47FMZgo708NhFU+t\n' +
+    '+VWn133PYGt/WYmD5BnKj679YiUmyrC3hX6oZfo4eVpOkycxZvGgXCLQGuDp45Xf\n' +
+    'Zkdsjqs3o62En4YjlHWxgeGmkiRqGfZ3sJ3u5WZ2xwapdZY3/2T/oOV5ri8SktTv\n' +
+    'mVGCyhwFuJC/NbJMEwIDAQAB\n' +
     '-----END PUBLIC KEY-----';
-  var testPrivateKeyPem = '-----BEGIN RSA PRIVATE KEY-----\r\n' +
-    'MIICWwIBAAKBgQC4R1AmYYyE47FMZgo708NhFU+t+VWn133PYGt/WYmD5BnKj679\r\n' +
-    'YiUmyrC3hX6oZfo4eVpOkycxZvGgXCLQGuDp45XfZkdsjqs3o62En4YjlHWxgeGm\r\n' +
-    'kiRqGfZ3sJ3u5WZ2xwapdZY3/2T/oOV5ri8SktTvmVGCyhwFuJC/NbJMEwIDAQAB\r\n' +
-    'AoGAZXNdPMQXiFGSGm1S1P0QYzJIW48ZCP4p1TFP/RxeCK5bRJk1zWlq6qBMCb0E\r\n' +
-    'rdD2oICupvN8cEYsYAxZXhhuGWZ60vggbqTTa+4LXB+SGCbKMX711ZoQHdY7rnaF\r\n' +
-    'b/Udf4wTLD1yAslx1TrHkV56OfuJcEdWC7JWqyNXQoxedwECQQDZvcEmBT/Sol/S\r\n' +
-    'AT5ZSsgXm6xCrEl4K26Vyw3M5UShRSlgk12gfqqSpdeP5Z7jdV/t5+vD89OJVfaa\r\n' +
-    'Tw4h9BibAkEA2Khe03oYQzqP1V4YyV3QeC4yl5fCBr8HRyOMC4qHHKQqBp2VDUyu\r\n' +
-    'RBJhTqqf1ErzUBkXseawNxtyuPmPrMSl6QJAQOgfu4W1EMT2a1OTkmqIWwE8yGMz\r\n' +
-    'Q28u99gftQRjAO/s9az4K++WSUDGkU6RnpxOjEymKzNzy2ykpjsKq3RoIQJAA+XL\r\n' +
-    'huxsYVE9Yy5FLeI1LORP3rBJOkvXeq0mCNMeKSK+6s2M7+dQP0NBYuPo6i3LAMbi\r\n' +
-    'yT2IMAWbY76Bmi8TeQJAfdLJGwiDNIhTVYHxvDz79ANzgRAd1kPKPddJZ/w7Gfhm\r\n' +
-    '8Mezti8HCizDxPb+H8HlJMSkfoHx1veWkdLaPWRFrA==\r\n' +
+  var testPrivateKeyPem = '-----BEGIN RSA PRIVATE KEY-----\n' +
+    'MIICWwIBAAKBgQC4R1AmYYyE47FMZgo708NhFU+t+VWn133PYGt/WYmD5BnKj679\n' +
+    'YiUmyrC3hX6oZfo4eVpOkycxZvGgXCLQGuDp45XfZkdsjqs3o62En4YjlHWxgeGm\n' +
+    'kiRqGfZ3sJ3u5WZ2xwapdZY3/2T/oOV5ri8SktTvmVGCyhwFuJC/NbJMEwIDAQAB\n' +
+    'AoGAZXNdPMQXiFGSGm1S1P0QYzJIW48ZCP4p1TFP/RxeCK5bRJk1zWlq6qBMCb0E\n' +
+    'rdD2oICupvN8cEYsYAxZXhhuGWZ60vggbqTTa+4LXB+SGCbKMX711ZoQHdY7rnaF\n' +
+    'b/Udf4wTLD1yAslx1TrHkV56OfuJcEdWC7JWqyNXQoxedwECQQDZvcEmBT/Sol/S\n' +
+    'AT5ZSsgXm6xCrEl4K26Vyw3M5UShRSlgk12gfqqSpdeP5Z7jdV/t5+vD89OJVfaa\n' +
+    'Tw4h9BibAkEA2Khe03oYQzqP1V4YyV3QeC4yl5fCBr8HRyOMC4qHHKQqBp2VDUyu\n' +
+    'RBJhTqqf1ErzUBkXseawNxtyuPmPrMSl6QJAQOgfu4W1EMT2a1OTkmqIWwE8yGMz\n' +
+    'Q28u99gftQRjAO/s9az4K++WSUDGkU6RnpxOjEymKzNzy2ykpjsKq3RoIQJAA+XL\n' +
+    'huxsYVE9Yy5FLeI1LORP3rBJOkvXeq0mCNMeKSK+6s2M7+dQP0NBYuPo6i3LAMbi\n' +
+    'yT2IMAWbY76Bmi8TeQJAfdLJGwiDNIhTVYHxvDz79ANzgRAd1kPKPddJZ/w7Gfhm\n' +
+    '8Mezti8HCizDxPb+H8HlJMSkfoHx1veWkdLaPWRFrA==\n' +
+    '-----END RSA PRIVATE KEY-----';
+  var testPublicKeyPem2 =
+    '-----BEGIN PUBLIC KEY-----\n' +
+    'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwyD/b26ez7OQB0bwvd4K\n' +
+    'gyzlRaLOxyZyEFYZi9DqphK+NKtYnqGHfk2Qi2xanCVj2IrxJetvEWNFnoS1JgI4\n' +
+    'BdnN2/D3yJfr4Di/nuppB3EYBu/auKuiuFrQhR5gPeNM6NAwD7HUQ1XKaSk2iow8\n' +
+    'IJHEHe+4bIiUht7V+rN6iUi0oOYW+mjbaLLKcUR/ngdX3DXZs99Jx+hDwd28s1su\n' +
+    'zWB9N29NiFaqg2RwqFELCSav9gx+nYb0zj5ltVGIIgNp2ibYO+nVQ3zmhE+O8zFc\n' +
+    'l5c0l72XnEQn5eKZ5gJHPn4ZDpykO/NKZRj+hDRIxApDHmg0wYRJovtqJ6v5AZkh\n' +
+    'ywIDAQAB\n' +
+    '-----END PUBLIC KEY-----';
+  var testPrivateKeyPem2 = '-----BEGIN RSA PRIVATE KEY-----\r\n' +
+    'MIIEowIBAAKCAQEAwyD/b26ez7OQB0bwvd4KgyzlRaLOxyZyEFYZi9DqphK+NKtY\n' +
+    'nqGHfk2Qi2xanCVj2IrxJetvEWNFnoS1JgI4BdnN2/D3yJfr4Di/nuppB3EYBu/a\n' +
+    'uKuiuFrQhR5gPeNM6NAwD7HUQ1XKaSk2iow8IJHEHe+4bIiUht7V+rN6iUi0oOYW\n' +
+    '+mjbaLLKcUR/ngdX3DXZs99Jx+hDwd28s1suzWB9N29NiFaqg2RwqFELCSav9gx+\n' +
+    'nYb0zj5ltVGIIgNp2ibYO+nVQ3zmhE+O8zFcl5c0l72XnEQn5eKZ5gJHPn4ZDpyk\n' +
+    'O/NKZRj+hDRIxApDHmg0wYRJovtqJ6v5AZkhywIDAQABAoIBAGHxrkXAwPaAq0r7\n' +
+    '0Nt9GMm/P1Y04pYUNiz9CtWjiCTUQ6UsXM9DRT+gr21Mdi7qlbOcCm9+PcH8knV/\n' +
+    'J25srrJBIZPE4JtPppZl5cle4Flb6zOQMbmAba0b6I7pMGXgMjqqRXWbTXB/H5qp\n' +
+    'lTb2LTgr8sUUDv5rkCIiuEWe0WMWuzGoeFuh4kYAUGu91Qh9q9GDEgZ7C7CoonsH\n' +
+    'O15CD1LxfE7Jcfabjx0qSjelcmIkXijtji3NhBaS784hJomjxuL2sjsOAdaxfFfB\n' +
+    '5kHa4YjJ05gWRuz6mIBMGN/Dvpexz1SZnbudmxA2moFXUzj2rV1CzopERnWC3vHz\n' +
+    'HnkCLAECgYEA4ZK5VDnX/AljCu5Ps57wfK6Cy+C3tbY4/PXEGtoF34FeE8i+xg3v\n' +
+    'yiQfqzqSnC9n37R111k3oFxUABYpjC1eJdI46pKqMwNJ/px0jiZU5PyawXBbaA4M\n' +
+    'jaiKPcYoEHS4bWeYbiEVtr/MEGWpdCSAhW7KLDxtRW3ZEIf1ZFxwy98CgYEA3XMA\n' +
+    'muA8t7cyr7qgnp/QuLHRKKU7W/Jl6eGwnhIhp8mDSg2GMFF0xwcqEV3u6k8b8oS8\n' +
+    'E6E7BPk1DjRwydE0FCpQYNKV0kbFrw44J56IhMZ6PJobt/9Dg15uFBAwo6YImqsu\n' +
+    'J38CwRwysunb2nkcXmcGSKrLrhetJenIYf+Mp5UCgYAzVhQNghiQiIZc332OEHcE\n' +
+    'uSaVRbApj64Ki9g0kDfT9Po3IHGiW1ueMnhunKbvGq7WL5i+CNTrDvgjCOgtucl6\n' +
+    'bAx9/iDz+SSm6G5yR3D8qCyEJ5D17nSW7KuBgY5uqFGsvG3pamgprh7AAJL/FquV\n' +
+    'MnCafqoTqftDkt2bGJqnGwKBgCpHKnZnGTB56VNjbgbavB6G1EfOQ+bqAEsGq5GC\n' +
+    'JKrD7izVKClRY9obpAxswpA5Sjyi2sVkor/wVBDCMkZVinvPGElj6vaaTGN/c3kc\n' +
+    '6zNuMSggw+n88gbCoIF0FdUofbwJsmYX+Y6ks4k03KR5OtFLGggFk51JJ+V1HKyY\n' +
+    '/WGBAoGBAJH23ZK1AUmv/c8X+wifjjLLmhoJgL3OcyjFiaJsKFpbTYR2m8WxWlQr\n' +
+    'I6uT8jR2jQVWZoEWSuIV7ciekihFa7k/R0YevmAZt3h6KHYfqJvjaLHLAcxYNE2T\n' +
+    '54pu8qaIrQ9kBM7vOBrQtK4s8glzDC6VLThEO1FyrZVehshoue9f\n' +
     '-----END RSA PRIVATE KEY-----';
   var testPublicKey = {
     '@context': jsigs.SECURITY_CONTEXT_URL,
@@ -122,6 +160,18 @@ describe('JSON-LD Signatures', function() {
     '@context': jsigs.SECURITY_CONTEXT_URL,
     id: 'https://example.com/i/alice',
     publicKey: [testPublicKey]
+  };
+  var testPublicKey2 = {
+    '@context': jsigs.SECURITY_CONTEXT_URL,
+    id: testPublicKeyUrl,
+    type: 'CryptographicKey',
+    owner: 'https://example.com/i/bob',
+    publicKeyPem: testPublicKeyPem2
+  };
+  var testPublicKeyOwner2 = {
+    '@context': jsigs.SECURITY_CONTEXT_URL,
+    id: 'https://example.com/i/bob',
+    publicKey: [testPublicKey2]
   };
 
   context('with NO security context', function() {
@@ -206,43 +256,14 @@ describe('JSON-LD Signatures', function() {
     });
 
     describe('signing and verify Graph2015', function() {
-      it('should successfully sign a local document', function(done) {
-        jsigs.sign(testDocument, {
-          algorithm: 'LinkedDataSignature2015',
-          privateKeyPem: testPrivateKeyPem,
-          creator: testPublicKeyUrl
-        }, function(err, signedDocument) {
-          assert.ifError(err);
-          assert.notEqual(
-            signedDocument['https://w3id.org/security#signature'], undefined,
-            'signature was not created');
-          assert.equal(
-            signedDocument['https://w3id.org/security#signature']
-              ['http://purl.org/dc/terms/creator']['@id'], testPublicKeyUrl,
-            'creator key for signature is wrong');
-          testDocumentSigned = signedDocument;
-          done();
-        });
-      });
-
-      it('should successfully verify a local signed document', function(done) {
-        jsigs.verify(testDocumentSigned, {
-          publicKey: testPublicKey,
-          publicKeyOwner: testPublicKeyOwner
-        }, function(err, result) {
-          assert.ifError(err);
-          assert.equal(result.verified, true, 'signature verification failed');
-          done();
-        });
-      });
-
-      it('should successfully sign a local document w/promises API',
-        function() {
-          jsigs.promises.sign(testDocument, {
+      describe('single signature', function() {
+        it('should successfully sign a local document', function(done) {
+          jsigs.sign(testDocument, {
             algorithm: 'LinkedDataSignature2015',
             privateKeyPem: testPrivateKeyPem,
             creator: testPublicKeyUrl
-          }).then(function(signedDocument) {
+          }, function(err, signedDocument) {
+            assert.ifError(err);
             assert.notEqual(
               signedDocument['https://w3id.org/security#signature'], undefined,
               'signature was not created');
@@ -251,24 +272,92 @@ describe('JSON-LD Signatures', function() {
                 ['http://purl.org/dc/terms/creator']['@id'], testPublicKeyUrl,
               'creator key for signature is wrong');
             testDocumentSigned = signedDocument;
-          }).catch(function(err) {
-            assert.ifError(err);
+            done();
           });
         });
 
-      it('should successfully verify a local signed document w/promises API',
-        function() {
-          jsigs.promises.verify(testDocumentSigned, {
-            publicKey: testPublicKey,
-            publicKeyOwner: testPublicKeyOwner
-          }).then(function(result) {
-            assert.equal(
-              result.verified, true, 'signature verification failed');
-          }).catch(function(err) {
-            assert.ifError(err);
+        it('should successfully verify a local signed document',
+          function(done) {
+            jsigs.verify(testDocumentSigned, {
+              publicKey: testPublicKey,
+              publicKeyOwner: testPublicKeyOwner
+            }, function(err, result) {
+              assert.ifError(err);
+              assert.equal(
+                result.verified, true, 'signature verification failed');
+              done();
+            });
+          });
+
+        it('should successfully sign a local document w/promises API',
+          function() {
+            jsigs.promises.sign(testDocument, {
+              algorithm: 'LinkedDataSignature2015',
+              privateKeyPem: testPrivateKeyPem,
+              creator: testPublicKeyUrl
+            }).then(function(signedDocument) {
+              assert.notEqual(
+                signedDocument['https://w3id.org/security#signature'],
+                undefined, 'signature was not created');
+              assert.equal(
+                signedDocument['https://w3id.org/security#signature']
+                  ['http://purl.org/dc/terms/creator']['@id'], testPublicKeyUrl,
+                'creator key for signature is wrong');
+              testDocumentSigned = signedDocument;
+            }).catch(function(err) {
+              assert.ifError(err);
+            });
+          });
+
+        it('should successfully verify a local signed document w/promises API',
+          function() {
+            jsigs.promises.verify(testDocumentSigned, {
+              publicKey: testPublicKey,
+              publicKeyOwner: testPublicKeyOwner
+            }).then(function(result) {
+              assert.equal(
+                result.verified, true, 'signature verification failed');
+            }).catch(function(err) {
+              assert.ifError(err);
+            });
+          });
+      }); // end single signature
+
+      describe.only('multiple signatures', function() {
+        it('should successfully sign a local document', function(done) {
+          jsigs.sign(testDocument, {
+            algorithm: 'LinkedDataSignature2015',
+            privateKeyPem: testPrivateKeyPem,
+            creator: testPublicKeyUrl
+          }, function(err, signedDocument) {
+            // add a second signature
+            jsigs.sign(signedDocument, {
+              algorithm: 'LinkedDataSignature2015',
+              privateKeyPem: testPrivateKeyPem2,
+              creator: testPublicKeyUrl2
+            }, function(err, signedDocument) {
+              assert.ifError(err);
+              assert.notEqual(
+                signedDocument['https://w3id.org/security#signature'],
+                undefined, 'signature was not created');
+              assert.equal(
+                signedDocument['https://w3id.org/security#signature'].length,
+                2);
+              assert.equal(
+                signedDocument['https://w3id.org/security#signature'][0]
+                  ['http://purl.org/dc/terms/creator']['@id'], testPublicKeyUrl,
+                'creator key for signature is wrong');
+              assert.equal(
+                signedDocument['https://w3id.org/security#signature'][1]
+                  ['http://purl.org/dc/terms/creator']['@id'],
+                testPublicKeyUrl2,'creator key for signature is wrong');
+              done();
+            });
           });
         });
-    });
+
+      }); // end multiple signatures
+    }); // end signing and verify Graph2015
 
     describe('signing and verify EcdsaKoblitzSignature2016', function() {
 
