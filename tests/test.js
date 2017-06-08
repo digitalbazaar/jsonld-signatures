@@ -197,8 +197,9 @@ describe('JSON-LD Signatures', function() {
           jsigs.promises.verify(testDocumentSigned, {
             publicKey: testPublicKey,
             publicKeyOwner: testPublicKeyOwner
-          }).then(function(verified) {
-            assert.equal(verified, true, 'signature verification failed');
+          }).then(function(result) {
+            assert.equal(
+              result.verified, true, 'signature verification failed');
           }).catch(function(err) {
             assert.ifError(err);
           }).then(function() {
@@ -232,9 +233,9 @@ describe('JSON-LD Signatures', function() {
         jsigs.verify(testDocumentSigned, {
           publicKey: testPublicKey,
           publicKeyOwner: testPublicKeyOwner
-        }, function(err, verified) {
+        }, function(err, result) {
           assert.ifError(err);
-          assert.equal(verified, true, 'signature verification failed');
+          assert.equal(result.verified, true, 'signature verification failed');
           done();
         });
       });
@@ -266,8 +267,9 @@ describe('JSON-LD Signatures', function() {
           jsigs.promises.verify(testDocumentSigned, {
             publicKey: testPublicKey,
             publicKeyOwner: testPublicKeyOwner
-          }).then(function(verified) {
-            assert.equal(verified, true, 'signature verification failed');
+          }).then(function(result) {
+            assert.equal(
+              result.verified, true, 'signature verification failed');
           }).catch(function(err) {
             assert.ifError(err);
           }).then(function() {
