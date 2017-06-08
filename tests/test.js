@@ -171,7 +171,7 @@ describe('JSON-LD Signatures', function() {
       });
 
       it('should successfully sign a local document w/promises API',
-        function(done) {
+        function() {
           jsigs.promises.sign(testDocument, {
             algorithm: 'GraphSignature2012',
             privateKeyPem: testPrivateKeyPem,
@@ -187,13 +187,11 @@ describe('JSON-LD Signatures', function() {
             testDocumentSigned = signedDocument;
           }).catch(function(err) {
             assert.ifError(err);
-          }).then(function() {
-            done();
           });
         });
 
       it('should successfully verify a local signed document w/promises API',
-        function(done) {
+        function() {
           jsigs.promises.verify(testDocumentSigned, {
             publicKey: testPublicKey,
             publicKeyOwner: testPublicKeyOwner
@@ -202,8 +200,6 @@ describe('JSON-LD Signatures', function() {
               result.verified, true, 'signature verification failed');
           }).catch(function(err) {
             assert.ifError(err);
-          }).then(function() {
-            done();
           });
         });
 
@@ -241,7 +237,7 @@ describe('JSON-LD Signatures', function() {
       });
 
       it('should successfully sign a local document w/promises API',
-        function(done) {
+        function() {
           jsigs.promises.sign(testDocument, {
             algorithm: 'LinkedDataSignature2015',
             privateKeyPem: testPrivateKeyPem,
@@ -257,13 +253,11 @@ describe('JSON-LD Signatures', function() {
             testDocumentSigned = signedDocument;
           }).catch(function(err) {
             assert.ifError(err);
-          }).then(function() {
-            done();
           });
         });
 
       it('should successfully verify a local signed document w/promises API',
-        function(done) {
+        function() {
           jsigs.promises.verify(testDocumentSigned, {
             publicKey: testPublicKey,
             publicKeyOwner: testPublicKeyOwner
@@ -272,8 +266,6 @@ describe('JSON-LD Signatures', function() {
               result.verified, true, 'signature verification failed');
           }).catch(function(err) {
             assert.ifError(err);
-          }).then(function() {
-            done();
           });
         });
     });
@@ -365,9 +357,9 @@ describe('JSON-LD Signatures', function() {
         jsigs.verify(testDocumentSigned, {
           publicKey: testPublicKeyBtc,
           publicKeyOwner: testPublicKeyBtcOwner
-        }, function(err, verified) {
+        }, function(err, result) {
           assert.ifError(err);
-          assert.equal(verified, true, 'signature verification failed');
+          assert.equal(result.verified, true, 'signature verification failed');
           done();
         });
       });
@@ -379,10 +371,11 @@ describe('JSON-LD Signatures', function() {
         jsigs.verify(testDocumentSigned, {
           publicKey: testPublicKeyBtc,
           publicKeyOwner: testPublicKeyBtcOwner
-        }, function(err, verified) {
+        }, function(err, result) {
           assert.ifError(err);
           assert.equal(
-            verified, false, 'signature verification should have failed');
+            result.verified, false,
+            'signature verification should have failed');
           done();
         });
       });
@@ -392,10 +385,11 @@ describe('JSON-LD Signatures', function() {
           jsigs.verify(testDocumentSignedAltered, {
             publicKey: testPublicKeyBtc,
             publicKeyOwner: testPublicKeyBtcOwner
-          }, function(err, verified) {
+          }, function(err, result) {
             assert.ifError(err);
             assert.equal(
-              verified, false, 'signature verification should have failed');
+              result.verified, false,
+              'signature verification should have failed');
             done();
           });
         });
@@ -418,26 +412,26 @@ describe('JSON-LD Signatures', function() {
       });
 
       it('should successfully verify a local signed document' +
-        ' w/promises API', function(done) {
+        ' w/promises API', function() {
         jsigs.promises.verify(testDocumentSigned, {
           publicKey: testPublicKeyBtc,
           publicKeyOwner: testPublicKeyBtcOwner
-        }).then(function(verified) {
-          assert.equal(verified, true, 'signature verification failed');
-        }).then(done).catch(done);
+        }).then(function(result) {
+          assert.equal(result.verified, true, 'signature verification failed');
+        });
       });
 
       it('verify should return false if the document was signed by' +
-        ' a different private key w/promises API', function(done) {
+        ' a different private key w/promises API', function() {
         testPublicKeyBtc.publicKeyWif = invalidPublicKeyWif;
 
         jsigs.promises.verify(testDocumentSigned, {
           publicKey: testPublicKeyBtc,
           publicKeyOwner: testPublicKeyBtcOwner
-        }).then(function(verified) {
-          assert.equal(verified, false,
+        }).then(function(result) {
+          assert.equal(result.verified, false,
             'signature verification should have failed but did not');
-        }).then(done).catch(done);
+        });
       });
     });
   });
@@ -480,15 +474,16 @@ describe('JSON-LD Signatures', function() {
             jsigs.verify(testDocumentSigned, {
               publicKey: testPublicKey,
               publicKeyOwner: testPublicKeyOwner
-            }, function(err, verified) {
+            }, function(err, result) {
               assert.ifError(err);
-              assert.equal(verified, true, 'signature verification failed');
+              assert.equal(
+                result.verified, true, 'signature verification failed');
               done();
             });
           });
 
         it('should successfully sign a local document w/promises API',
-          function(done) {
+          function() {
             jsigs.promises.sign(testDocument, {
               algorithm: 'GraphSignature2012',
               privateKeyPem: testPrivateKeyPem,
@@ -501,22 +496,19 @@ describe('JSON-LD Signatures', function() {
               testDocumentSigned = signedDocument;
             }).catch(function(err) {
               assert.ifError(err);
-            }).then(function() {
-              done();
             });
           });
 
         it('should successfully verify a local signed document w/promises API',
-          function(done) {
+          function() {
             jsigs.promises.verify(testDocumentSigned, {
               publicKey: testPublicKey,
               publicKeyOwner: testPublicKeyOwner
-            }).then(function(verified) {
-              assert.equal(verified, true, 'signature verification failed');
+            }).then(function(result) {
+              assert.equal(
+                result.verified, true, 'signature verification failed');
             }).catch(function(err) {
               assert.ifError(err);
-            }).then(function() {
-              done();
             });
           });
 
@@ -546,15 +538,16 @@ describe('JSON-LD Signatures', function() {
             jsigs.verify(testDocumentSigned, {
               publicKey: testPublicKey,
               publicKeyOwner: testPublicKeyOwner
-            }, function(err, verified) {
+            }, function(err, result) {
               assert.ifError(err);
-              assert.equal(verified, true, 'signature verification failed');
+              assert.equal(
+                result.verified, true, 'signature verification failed');
               done();
             });
           });
 
         it('should successfully sign a local document w/promises',
-          function(done) {
+          function() {
             jsigs.promises.sign(testDocument, {
               algorithm: 'LinkedDataSignature2015',
               privateKeyPem: testPrivateKeyPem,
@@ -567,22 +560,19 @@ describe('JSON-LD Signatures', function() {
               testDocumentSigned = signedDocument;
             }).catch(function(err) {
               assert.ifError(err);
-            }).then(function() {
-              done();
             });
           });
 
         it('should successfully verify a local signed document w/promises',
-          function(done) {
+          function() {
             jsigs.promises.verify(testDocumentSigned, {
               publicKey: testPublicKey,
               publicKeyOwner: testPublicKeyOwner
-            }).then(function(verified) {
-              assert.equal(verified, true, 'signature verification failed');
+            }).then(function(result) {
+              assert.equal(
+                result.verified, true, 'signature verification failed');
             }).catch(function(err) {
               assert.ifError(err);
-            }).then(function() {
-              done();
             });
           });
       });
@@ -670,9 +660,9 @@ describe('JSON-LD Signatures', function() {
         jsigs.verify(testDocumentSigned, {
           publicKey: testPublicKeyBtc,
           publicKeyOwner: testPublicKeyBtcOwner
-        }, function(err, verified) {
+        }, function(err, result) {
           assert.ifError(err);
-          assert.equal(verified, true, 'signature verification failed');
+          assert.equal(result.verified, true, 'signature verification failed');
           done();
         });
       });
@@ -684,16 +674,17 @@ describe('JSON-LD Signatures', function() {
         jsigs.verify(testDocumentSigned, {
           publicKey: testPublicKeyBtc,
           publicKeyOwner: testPublicKeyBtcOwner
-        }, function(err, verified) {
+        }, function(err, result) {
           assert.ifError(err);
           assert.equal(
-            verified, false, 'signature verification should have failed');
+            result.verified, false,
+            'signature verification should have failed');
           done();
         });
       });
 
       it('should successfully sign a local document' +
-        ' w/promises API', function(done) {
+        ' w/promises API', function() {
         jsigs.promises.sign(testDocument, {
           algorithm: 'EcdsaKoblitzSignature2016',
           privateKeyWif: testPrivateKeyWif,
@@ -704,41 +695,41 @@ describe('JSON-LD Signatures', function() {
           assert.equal(signedDocument.signature.creator, testPublicKeyFriendly,
             'creator key for signature is wrong');
           testDocumentSigned = signedDocument;
-        }).then(done).catch(done);
+        });
       });
 
       it('should successfully verify a local signed document' +
-        ' w/promises API', function(done) {
+        ' w/promises API', function() {
         jsigs.promises.verify(testDocumentSigned, {
           publicKey: testPublicKeyBtc,
           publicKeyOwner: testPublicKeyBtcOwner
-        }).then(function(verified) {
-          assert.equal(verified, true, 'signature verification failed');
-        }).then(done).catch(done);
+        }).then(function(result) {
+          assert.equal(result.verified, true, 'signature verification failed');
+        });
       });
 
       it('verify should return false if the document was signed by' +
-        ' a different private key w/promises API', function(done) {
+        ' a different private key w/promises API', function() {
         testPublicKeyBtc.publicKeyWif = invalidPublicKeyWif;
 
         jsigs.promises.verify(testDocumentSigned, {
           publicKey: testPublicKeyBtc,
           publicKeyOwner: testPublicKeyBtcOwner
-        }).then(function(verified) {
-          assert.equal(verified, false,
+        }).then(function(result) {
+          assert.equal(result.verified, false,
             'signature verification should have failed but did not');
-        }).then(done).catch(done);
+        });
       });
 
       it('verify should return false if the document was altered after' +
-        ' signing w/promises API', function(done) {
+        ' signing w/promises API', function() {
         jsigs.promises.verify(testDocumentSignedAltered, {
           publicKey: testPublicKeyBtc,
           publicKeyOwner: testPublicKeyBtcOwner
-        }).then(function(verified) {
-          assert.equal(verified, false,
+        }).then(function(result) {
+          assert.equal(result.verified, false,
             'signature verification should have failed but did not');
-        }).then(done).catch(done);
+        });
       });
 
     });
