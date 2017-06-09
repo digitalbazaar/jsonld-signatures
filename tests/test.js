@@ -311,14 +311,17 @@ describe('JSON-LD Signatures', function() {
             jsigs.verify(testDocumentSigned, {}, function(err, result) {
               assert.ifError(err);
               assert.isBoolean(result.verified);
-              assert.isTrue(result.verified, 'signature verification failed');
-              assert.isObject(result.keyResults);
-              assert.isObject(result.keyResults[testPublicKeyUrl]);
-              assert.isObject(result.keyResults[testPublicKeyUrl2]);
-              assert.isBoolean(result.keyResults[testPublicKeyUrl].verified);
-              assert.isBoolean(result.keyResults[testPublicKeyUrl2].verified);
-              assert.isTrue(result.keyResults[testPublicKeyUrl].verified);
-              assert.isTrue(result.keyResults[testPublicKeyUrl2].verified);
+              assert.isTrue(result.verified,'signature verification failed');
+              assert.isArray(result.keyResults);
+              assert.equal(result.keyResults.length, 2);
+              assert.isObject(result.keyResults[0]);
+              assert.isObject(result.keyResults[1]);
+              assert.isBoolean(result.keyResults[0].verified);
+              assert.isTrue(result.keyResults[0].verified);
+              assert.equal(result.keyResults[0].publicKey, testPublicKeyUrl);
+              assert.isBoolean(result.keyResults[1].verified);
+              assert.isTrue(result.keyResults[1].verified);
+              assert.equal(result.keyResults[1].publicKey, testPublicKeyUrl2);
               done();
             });
           });
@@ -363,13 +366,16 @@ describe('JSON-LD Signatures', function() {
               .then(function(result) {
                 assert.isBoolean(result.verified);
                 assert.isTrue(result.verified,'signature verification failed');
-                assert.isObject(result.keyResults);
-                assert.isObject(result.keyResults[testPublicKeyUrl]);
-                assert.isObject(result.keyResults[testPublicKeyUrl2]);
-                assert.isBoolean(result.keyResults[testPublicKeyUrl].verified);
-                assert.isBoolean(result.keyResults[testPublicKeyUrl2].verified);
-                assert.isTrue(result.keyResults[testPublicKeyUrl].verified);
-                assert.isTrue(result.keyResults[testPublicKeyUrl2].verified);
+                assert.isArray(result.keyResults);
+                assert.equal(result.keyResults.length, 2);
+                assert.isObject(result.keyResults[0]);
+                assert.isObject(result.keyResults[1]);
+                assert.isBoolean(result.keyResults[0].verified);
+                assert.isTrue(result.keyResults[0].verified);
+                assert.equal(result.keyResults[0].publicKey, testPublicKeyUrl);
+                assert.isBoolean(result.keyResults[1].verified);
+                assert.isTrue(result.keyResults[1].verified);
+                assert.equal(result.keyResults[1].publicKey, testPublicKeyUrl2);
               }).catch(function(err) {
                 assert.ifError(err);
               });
