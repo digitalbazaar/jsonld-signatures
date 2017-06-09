@@ -235,6 +235,24 @@ describe('JSON-LD Signatures', function() {
             });
           });
 
+        it('verify local document using getPublicKey and getPublicKeyOwner',
+          function(done) {
+            jsigs.sign(testDocument, {
+              algorithm: 'LinkedDataSignature2015',
+              privateKeyPem: testPrivateKeyPem3,
+              creator: testPublicKeyUrl3
+            }, function(err, signedDocument) {
+              jsigs.verify(signedDocument, {
+                getPublicKey: _publicKeyGetter,
+                getPublicKeyOwner: _publicKeyOwnerGetter
+              }, function(err, result) {
+                assert.ifError(err);
+                assert.isTrue(result.verified, 'signature verification failed');
+                done();
+              });
+            });
+          });
+
         it('should successfully sign a local document w/promises API',
           function() {
             jsigs.promises.sign(testDocument, {
@@ -267,6 +285,21 @@ describe('JSON-LD Signatures', function() {
               assert.ifError(err);
             });
           });
+
+        it('verify local document using getPublicKey and getPublicKeyOwner ' +
+          'w/Promises API',function() {
+          jsigs.promises.sign(testDocument, {
+            algorithm: 'LinkedDataSignature2015',
+            privateKeyPem: testPrivateKeyPem3,
+            creator: testPublicKeyUrl3
+          }).then(function(signedDocument) {
+            return jsigs.promises.verify(signedDocument, {
+              getPublicKey: _publicKeyGetterPromise,
+              getPublicKeyOwner: _publicKeyOwnerGetterPromise});
+          }).then(function(result) {
+            assert.isTrue(result.verified, 'signature verification failed');
+          });
+        });
       }); // end single signature
 
       describe('multiple signatures', function() {
@@ -325,16 +358,26 @@ describe('JSON-LD Signatures', function() {
               done();
             });
           });
-        it('does something',
+        it('return error when publicKey and publicKeyOwner options are used',
           function(done) {
             jsigs.verify(testDocumentSigned, {
               publicKey: testPublicKey,
               publicKeyOwner: testPublicKeyOwner
             }, function(err, result) {
-              console.log('EEEEEEEE', err, result);
-              // assert.ifError(err);
-              // assert.equal(
-              //   result.verified, true, 'signature verification failed');
+              assert.ifError(err);
+              assert.isFalse(result.verified);
+              assert.isArray(result.keyResults);
+              assert.equal(result.keyResults.length, 2);
+              assert.isObject(result.keyResults[0]);
+              assert.isObject(result.keyResults[1]);
+              assert.isBoolean(result.keyResults[0].verified);
+              assert.isTrue(result.keyResults[0].verified);
+              assert.equal(result.keyResults[0].publicKey, testPublicKeyUrl);
+              assert.isBoolean(result.keyResults[1].verified);
+              assert.isFalse(result.keyResults[1].verified);
+              assert.equal(
+                result.keyResults[1].error, 'Error: PublicKey not found.');
+              assert.equal(result.keyResults[1].publicKey, testPublicKeyUrl2);
               done();
             });
           });
@@ -920,6 +963,7 @@ var securityContext = {
 
 var testPublicKeyUrl = 'https://example.com/i/alice/keys/1';
 var testPublicKeyUrl2 = 'https://example.com/i/bob/keys/1';
+var testPublicKeyUrl3 = 'https://example.com/i/sally/keys/1';
 var testPublicKeyPem =
   '-----BEGIN PUBLIC KEY-----\n' +
   'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC4R1AmYYyE47FMZgo708NhFU+t\n' +
@@ -979,6 +1023,44 @@ var testPrivateKeyPem2 = '-----BEGIN RSA PRIVATE KEY-----\r\n' +
   '5pxB4HwKFtDPNtquIQ3UCIVVCJlDZfW7mJJQ9LkD21uqwxXOf1uPH2cb651yeLqd\n' +
   'TSz1b9F4+GFdKxjk8JKywWAD2fIamcx2W0Wfgfyvr6Kd+kJrkyWn+ZM=\n' +
   '-----END RSA PRIVATE KEY-----';
+var testPublicKeyPem3 =
+  '-----BEGIN PUBLIC KEY-----\n' +
+  'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwIjS6bkpr+xR/+JCL0KF\n' +
+  '24ZOHEmX/4ASBhSfKh0vGb5plKFuAOumNj5y/CzdgkqenhtcbrMunHuzPqYdTUJB\n' +
+  'NXDqpVzXh7bZDHDjFcHgHcU8xxCvchL9EDKyFP39JJG9/sTr6SEkKz8OH48lZoFh\n' +
+  'GsXvsYTCMKJRZ0+vECTvEb2gd6OGhXwQqPk402Kk0hMq/5LjceUaxDfcBDJ8WYim\n' +
+  'BWy9YO+xeEu3nFrPk2I1aMFDdD6vHO7l7P6tMAY/U+H1wrsDPuv3A/stalSHjZyh\n' +
+  'DaBD1ZoEtAk03kOSvwLQb2LI3kAwYqoNApNsLVI+U9HsP/UuKk2/3kZS8Oa70b97\n' +
+  'RwIDAQAB\n' +
+  '-----END PUBLIC KEY-----';
+var testPrivateKeyPem3 = '-----BEGIN RSA PRIVATE KEY-----\r\n' +
+  'MIIEogIBAAKCAQEAwIjS6bkpr+xR/+JCL0KF24ZOHEmX/4ASBhSfKh0vGb5plKFu\n' +
+  'AOumNj5y/CzdgkqenhtcbrMunHuzPqYdTUJBNXDqpVzXh7bZDHDjFcHgHcU8xxCv\n' +
+  'chL9EDKyFP39JJG9/sTr6SEkKz8OH48lZoFhGsXvsYTCMKJRZ0+vECTvEb2gd6OG\n' +
+  'hXwQqPk402Kk0hMq/5LjceUaxDfcBDJ8WYimBWy9YO+xeEu3nFrPk2I1aMFDdD6v\n' +
+  'HO7l7P6tMAY/U+H1wrsDPuv3A/stalSHjZyhDaBD1ZoEtAk03kOSvwLQb2LI3kAw\n' +
+  'YqoNApNsLVI+U9HsP/UuKk2/3kZS8Oa70b97RwIDAQABAoIBADJKCr0drjPTSD/L\n' +
+  '+3mYqJoEZJai6l7ENvD7pe88HDdfMvitiawX4Rw+B46ysVD86J1njCcmCkC5VsJA\n' +
+  'ZVruuVWaHs/+hhVevyauvcHLGBzujcd5Jjpnl04Jz9YH2X0ZzESlbvE/xNC+8ZNw\n' +
+  'slYp6REzLj5x7L8DRrvzZkiTPRamuiDQrxr6d27TWPZIAwfPYuoy/OMx9hMgZyKk\n' +
+  'pxsAvMmVRyy2NZK428oU5rwF/mWsURS05oWyBqicgaeWlqJ9swnak1OnF5z0N196\n' +
+  'fU4bVHjtyAMS/DCNI+4qjpg7G+PPUfK4RXtJ/0AC0ZRDu35khXeI5u1U3F5Ks6ms\n' +
+  'XUTQDhECgYEA/gltTiKTlZhGxx9K1P5DQ+ZFHns+NsonbBS1i9Io6dFK0QfS4xOa\n' +
+  'TjP1nOKFIlB1TS2kqOylkxbS/Jf1bzSOk/rwIFfDnE0q4zIfiGEnlmnqefmJ4Qac\n' +
+  'LXsfwTQ4WiHuQcqOMlM3PgWm8r1zhPQaY2yFXzgCBpsD82cLcaPa8R0CgYEAwgW5\n' +
+  'US/UBB+j8OLyjeDgZvhvIfsgL8hREaS3U+Uk72ei+UT2XhjdV4mVyiQ3N5cTHyXC\n' +
+  'vkamozmp90zHSnAyjDq+GNt04A1n3nz45VKNlstG/NfrqP5QCfCjEwiJfuclD2+q\n' +
+  'VRrpbHbWBJ9B/8e+andl5rixNoI72n44n/k7NLMCgYB/6HM20kYJHoEUpXbiQ5vO\n' +
+  'xlSrAlbS83ph+xNl8U1UXWMUWKIgX7BkC9lxQsTSADzvvTmZLH45z1YwhLq5YXcg\n' +
+  'n0rkngwJ2PjtKEGkQ3bRT0cWX0TDHrboV4QnnYl6KHd0fO6X/DpmaiYjNqzBlr7q\n' +
+  'rKuCxAqRFOAqYAntEBmfKQKBgDjYNnhL3AEtR/nudAQPa4+fn+fDzKVTOjVCHhgt\n' +
+  'XYnqwjvn8YqWHFtmSwWDYM4frBGHHaxjxLSz01FKJGVxw82D9GgR/Accxl7QHJgL\n' +
+  'fMI+Ylj35eqIP+j5oL2V1brhe+Eu5Se0D8mgc4m9IzgOTIKi4q8bU4hV1bVpH6v2\n' +
+  '+FqzAoGAHM2v90bEbN/TNFv7OODWeK7HBRKBNigMVktXBpfCAFOm+cSfMlsoQTr3\n' +
+  '4xiV0oxUFjPHA6qt0hGsk7/0P1Pe15Kg5n6+w2JzFpN5ix7DWus57PBKbMUkE64y\n' +
+  'KBFLr5ANLqWLaVrSw5Uep1s5VvXyOrltUN/1SUoCoNZuM/FakRc=\n' +
+  '-----END RSA PRIVATE KEY-----';
+
 var testPublicKey = {
   '@context': jsigs.SECURITY_CONTEXT_URL,
   id: testPublicKeyUrl,
@@ -1003,5 +1085,40 @@ var testPublicKeyOwner2 = {
   id: 'https://example.com/i/bob',
   publicKey: [testPublicKey2]
 };
+var testPublicKey3 = {
+  '@context': jsigs.SECURITY_CONTEXT_URL,
+  id: testPublicKeyUrl3,
+  type: 'CryptographicKey',
+  owner: 'https://example.com/i/sally',
+  publicKeyPem: testPublicKeyPem3
+};
+var testPublicKeyOwner3 = {
+  '@context': jsigs.SECURITY_CONTEXT_URL,
+  id: 'https://example.com/i/sally',
+  publicKey: [testPublicKey3]
+};
+var getterDocs = {};
+getterDocs[testPublicKey3.id] = testPublicKey3;
+getterDocs[testPublicKeyOwner3.id] = testPublicKeyOwner3;
+
+function _publicKeyGetter(keyId, options, callback) {
+  return getterDocs[keyId] ? callback(null, getterDocs[keyId]) :
+    callback(new Error('PublicKey not found.'));
+}
+
+function _publicKeyOwnerGetter(owner, options, callback) {
+  return getterDocs[owner] ? callback(null, getterDocs[owner]) :
+    callback(new Error('PublicKey owner not found.'));
+}
+
+function _publicKeyGetterPromise(keyId) {
+  return getterDocs[keyId] ? Promise.resolve(getterDocs[keyId]) :
+    Promise.resolve(new Error('PublicKey not found.'));
+}
+
+function _publicKeyOwnerGetterPromise(owner) {
+  return getterDocs[owner] ? Promise.resolve(getterDocs[owner]) :
+    Promise.reject(new Error('PublicKey owner not found.'));
+}
 
 })();
