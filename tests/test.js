@@ -325,6 +325,19 @@ describe('JSON-LD Signatures', function() {
               done();
             });
           });
+        it('does something',
+          function(done) {
+            jsigs.verify(testDocumentSigned, {
+              publicKey: testPublicKey,
+              publicKeyOwner: testPublicKeyOwner
+            }, function(err, result) {
+              console.log('EEEEEEEE', err, result);
+              // assert.ifError(err);
+              // assert.equal(
+              //   result.verified, true, 'signature verification failed');
+              done();
+            });
+          });
         it('should successfully sign a local document w/promises API',
           function() {
             jsigs.promises.sign(testDocument, {
