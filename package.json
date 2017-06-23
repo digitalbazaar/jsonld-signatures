@@ -38,7 +38,7 @@
     "commander": "~2.9.0",
     "es6-promise": "^4.0.5",
     "jsonld": "0.4.3",
-    "node-forge": "~0.6.45"
+    "node-forge": "~0.7.1"
   },
   "devDependencies": {
     "chai": "^4.0.2",
