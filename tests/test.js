@@ -466,7 +466,7 @@ describe('JSON-LD Signatures', function() {
 
         testDocumentSigned = clone(testDocument);
         testDocumentSigned["https://w3id.org/security#signature"] = {
-          "@type": "EcdsaKoblitzSignature2016",
+          "@type": "https://w3id.org/security#EcdsaKoblitzSignature2016",
           "http://purl.org/dc/terms/created": {
             "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
             "@value": "2017-03-25T22:01:04Z"
