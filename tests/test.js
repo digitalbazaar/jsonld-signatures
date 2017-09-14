@@ -6,7 +6,6 @@
  *
  * Copyright (c) 2014-2017 Digital Bazaar, Inc. All rights reserved.
  */
-/* globals jsonldjs */
 (function() {
 
 'use strict';
@@ -82,10 +81,11 @@ if(_nodejs) {
   var bitcoreMessage = require(
     '../node_modules/bitcore-message/dist/bitcore-message.js');
   window.bitcoreMessage = bitcoreMessage;
-  require('../node_modules/jsonld');
-  jsonld = jsonldjs;
+  jsonld = require('../node_modules/jsonld/dist/jsonld.js');
   require('../' + _jsdir + '/jsonld-signatures');
   jsigs = window.jsigs;
+  jsigs.use('jsonld', jsonld);
+  jsigs.promises({api: jsigs.promises});
   assert = require('chai').assert;
   require('mocha/mocha');
   require('mocha-phantomjs/lib/mocha-phantomjs/core_extensions');
