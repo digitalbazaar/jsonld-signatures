@@ -757,8 +757,8 @@ describe('JSON-LD Signatures', function() {
           }, function(err) {
             assert.exists(err);
             assert.equal(err.details.cause.message,
-              '[jsigs.sign] A property was found in the input ' +
-            'that was not defined in the context.');
+              '[jsigs.sign] The property "foo" in the input ' +
+              'was not defined in the context.');
             done();
           });
         });
