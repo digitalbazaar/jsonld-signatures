@@ -14,6 +14,7 @@ module.exports = function(options) {
 const assert = options.assert;
 const jsonld = options.jsonld;
 const jsigs = options.jsigs;
+const jws = options.jws;
 
 var testLoader = function(url, callback) {
   if(url === 'https://w3id.org/security/v1') {
@@ -64,6 +65,105 @@ function clone(obj) {
 
 // run tests
 describe('JSON-LD Signatures', function() {
+  context('common', function() {
+    const forge = jsigs.use('forge');
+
+    var testDocument = {
+      '@context': {
+        schema: 'http://schema.org/',
+        name: 'schema:name',
+        homepage: 'schema:url',
+        image: 'schema:image'
+      },
+      name: 'Manu Sporny',
+      homepage: 'https://manu.sporny.org/',
+      image: 'https://manu.sporny.org/images/manu.png'
+    };
+
+    var testBadDocument = clone(testDocument);
+    testBadDocument['https://w3id.org/security#signature'] = {
+      '@type': 'https://w3id.org/security#BogusSignature3000',
+      'http://purl.org/dc/terms/created': {
+        '@type': 'http://www.w3.org/2001/XMLSchema#dateTime',
+        '@value': '2017-03-25T22:01:04Z'
+      },
+      'http://purl.org/dc/terms/creator': {
+        '@id': 'test:1234'
+      },
+      'https://w3id.org/security#signatureValue': 'test'
+    };
+
+    it('should fail sign with unknown algorithm', function(done) {
+      jsigs.sign(testDocument, {
+        algorithm: 'BogusSignature3000',
+        privateKeyPem: '',
+        creator: ''
+      }, function(err, signedDocument) {
+        assert(err);
+        done();
+      });
+    });
+
+    it('should fail verify with unknown algorithm', function(done) {
+      jsigs.verify(testBadDocument, {}, function(err, result) {
+        assert.ifError(err);
+        assert.equal(result.verified, false, 'signature verification passed');
+        done();
+      });
+    });
+
+    it('should base64url encode', function(done) {
+      var inputs = [
+        '',
+        '1',
+        '12',
+        '123',
+        '1234',
+        '12345',
+        Buffer.from([0xc3,0xbb,0xc3,0xb0,0x00]).toString(),
+        Buffer.from([0xc3,0xbb,0xc3,0xb0]).toString(),
+        Buffer.from([0xc3,0xbb]).toString()
+      ];
+      inputs.forEach(function(input) {
+        var enc = jsigs._encodeBase64Url(input, {forge});
+        var dec = jsigs._decodeBase64Url(enc, {forge});
+        /*
+        console.log('E', input, '|', Buffer.from(input));
+        console.log('  enc', enc, '|', Buffer.from(enc));
+        console.log('  dec', dec, '|', Buffer.from(dec));
+        */
+        assert.equal(enc.indexOf('+'), -1);
+        assert.equal(enc.indexOf('/'), -1);
+        assert.equal(enc.indexOf('='), -1);
+        assert.equal(input, dec);
+      });
+      done()
+    });
+
+    it('should base64url decode', function(done) {
+      var inputs = [
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_',
+        '_-E',
+        '_-E=',
+        'AA',
+        'eA',
+        'eA=',
+        'eA==',
+      ];
+      inputs.forEach(function(input) {
+        var dec = jsigs._decodeBase64Url(input, {forge});
+        var enc = jsigs._encodeBase64Url(dec, {forge});
+        /*
+        console.log('D', input, '|', Buffer.from(input));
+        console.log('  dec', dec, '|', Buffer.from(dec));
+        console.log('  enc', enc, '|', Buffer.from(enc));
+        */
+        assert.equal(input.replace(/=/g, ''), enc);
+      });
+      done()
+    });
+  });
+
   context('with NO security context', function() {
     // the test document that will be signed
     var testDocument = {
@@ -570,6 +670,162 @@ describe('JSON-LD Signatures', function() {
         }).then(done, done);
       });
     });
+
+    describe('signing and verify RsaSignature2017', function() {
+
+      var testDocument;
+      var testDocumentSigned;
+      var testDocumentSignedAltered;
+      var testInvalidPublicKey;
+
+      beforeEach(function() {
+        testDocument = {
+          '@context': {
+            schema: 'http://schema.org/',
+            name: 'schema:name',
+            homepage: 'schema:url',
+            image: 'schema:image'
+          },
+          name: 'Manu Sporny',
+          homepage: 'https://manu.sporny.org/',
+          image: 'https://manu.sporny.org/images/manu.png'
+        };
+
+        testDocumentSigned = clone(testDocument);
+        testDocumentSigned["https://w3id.org/security#signature"] = {
+          "@type": "https://w3id.org/security#RsaSignature2017",
+          "http://purl.org/dc/terms/created": {
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+            "@value": "2017-09-27T03:12:26Z"
+          },
+          "http://purl.org/dc/terms/creator": {
+            "@id": testPublicKeyUrl
+          },
+          "https://w3id.org/security#signatureValue":
+            "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19" +
+            ".." +
+            "Vewb2R5LWN2T5_8lFTE6hYqu7MyrUaIBCLE55DDGGtEUFZOfFnW0sxft5TiEdm" +
+            "BIYhYveNY9LTAqhRLTIzYG2ZOi9WpMI3DsfApEuz9GkZLIkPC0rQZVMW9ssP17" +
+            "Cxiim9imGA5dyHn2pZ98C_Cd_ptqHMFyjKHluKhG4HpfNaM"
+        };
+        testDocumentSignedAltered = clone(testDocumentSigned);
+        testDocumentSignedAltered.name = 'Manu Spornoneous';
+
+        testInvalidPublicKey = clone(testPublicKey);
+        testInvalidPublicKey.id = testPublicKeyUrl2;
+      });
+
+      it('should successfully sign a local document', function(done) {
+        jsigs.sign(testDocument, {
+          algorithm: 'RsaSignature2017',
+          creator: testPublicKeyUrl,
+          privateKeyPem: testPrivateKeyPem,
+        }, function(err, signedDocument) {
+          assert.ifError(err);
+          assert.notEqual(
+            signedDocument['https://w3id.org/security#signature'], undefined,
+            'signature was not created');
+          assert.equal(
+            signedDocument['https://w3id.org/security#signature']
+              ['http://purl.org/dc/terms/creator']['@id'],
+            testPublicKeyUrl,
+            'creator key for signature is wrong');
+          done();
+        });
+      });
+
+      it('should successfully verify a local signed document', function(done) {
+        jsigs.verify(testDocumentSigned, {
+          publicKey: testPublicKey,
+          publicKeyOwner: testPublicKeyOwner,
+          // timestamp is quite old, do not check it, it is used to ensure
+          // a static document is being checked
+          checkTimestamp: false
+        }, function(err, result) {
+          assert.ifError(err);
+          assert.equal(result.verified, true, 'signature verification failed');
+          done();
+        });
+      });
+
+      it('verify should return false if the document was signed by a ' +
+        'different private key', function(done) {
+        jsigs.verify(testDocumentSigned, {
+          publicKey: testInvalidPublicKey,
+          publicKeyOwner: testPublicKeyOwner,
+          // timestamp is quite old, do not check it, it is used to ensure
+          // a static document is being checked
+          checkTimestamp: false
+        }, function(err, result) {
+          assert.ifError(err);
+          assert.equal(
+            result.verified, false,
+            'signature verification should have failed');
+          done();
+        });
+      });
+
+      it('verify returns false if the document was altered after signing',
+        function(done) {
+          jsigs.verify(testDocumentSignedAltered, {
+            publicKey: testPublicKey,
+            publicKeyOwner: testPublicKeyOwner,
+            // timestamp is quite old, do not check it, it is used to ensure
+            // a static document is being checked
+            checkTimestamp: false
+          }, function(err, result) {
+            assert.ifError(err);
+            assert.equal(
+              result.verified, false,
+              'signature verification should have failed');
+            done();
+          });
+        });
+
+      it('should successfully sign a local document' +
+        ' w/promises API', function(done) {
+        jsigs.sign(testDocument, {
+          algorithm: 'RsaSignature2017',
+          privateKeyPem: testPrivateKeyPem,
+          creator: testPublicKeyUrl
+        }).then(function(signedDocument) {
+          assert.notEqual(
+            signedDocument['https://w3id.org/security#signature'], undefined,
+            'signature was not created');
+          assert.equal(
+            signedDocument['https://w3id.org/security#signature']
+              ['http://purl.org/dc/terms/creator']['@id'],
+            testPublicKeyUrl, 'creator key for signature is wrong');
+        }).then(done, done);
+      });
+
+      it('should successfully verify a local signed document' +
+        ' w/promises API', function(done) {
+        jsigs.verify(testDocumentSigned, {
+          publicKey: testPublicKey,
+          publicKeyOwner: testPublicKeyOwner,
+          // timestamp is quite old, do not check it, it is used to ensure
+          // a static document is being checked
+          checkTimestamp: false
+        }).then(function(result) {
+          assert.equal(result.verified, true, 'signature verification failed');
+        }).then(done, done);
+      });
+
+      it('verify should return false if the document was signed by' +
+        ' a different private key w/promises API', function(done) {
+        jsigs.verify(testDocumentSigned, {
+          publicKey: testInvalidPublicKey,
+          publicKeyOwner: testPublicKeyOwner,
+          // timestamp is quite old, do not check it, it is used to ensure
+          // a static document is being checked
+          checkTimestamp: false
+        }).then(function(result) {
+          assert.equal(result.verified, false,
+            'signature verification should have failed but did not');
+        }).then(done, done);
+      });
+    });
   });
 
   context('with security context', function() {
@@ -784,7 +1040,7 @@ describe('JSON-LD Signatures', function() {
           },
           "https://w3id.org/security#signatureValue":
             "IOoF0rMmpcdxNZFoirTpRMCyLr8kGHLqXFl7v+m3naetCx+OLNhVY/6SCUwDGZf" +
-              "Fs4yPXeAl6Tj1WgtLIHOVZmw="
+            "Fs4yPXeAl6Tj1WgtLIHOVZmw="
         };
         testDocumentSignedAltered = clone(testDocumentSigned);
         testDocumentSignedAltered.name = 'Manu Spornoneous';
@@ -917,9 +1173,7 @@ describe('JSON-LD Signatures', function() {
             'signature verification should have failed but did not');
         }).then(done, done);
       });
-
     });
-
   });
 });
 
@@ -938,6 +1192,7 @@ var securityContext = {
     "GraphSignature2012": "sec:GraphSignature2012",
     "LinkedDataSignature2015": "sec:LinkedDataSignature2015",
     "LinkedDataSignature2016": "sec:LinkedDataSignature2016",
+    "RsaSignature2017": "sec:RsaSignature2017",
     "CryptographicKey": "sec:Key",
 
     "authenticationTag": "sec:authenticationTag",
