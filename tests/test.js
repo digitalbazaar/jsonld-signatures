@@ -10,11 +10,13 @@ const assert = require('chai').assert;
 const common = require('./test-common');
 const jsonld = require('../node_modules/jsonld');
 const jsigs = require('..');
+const jws = require('../node_modules/jws');
 
 const options = {
   assert: assert,
   jsigs: jsigs,
   jsonld: jsonld,
+  jws: jws,
   nodejs: true
 };
 
