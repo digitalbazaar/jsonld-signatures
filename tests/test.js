@@ -287,7 +287,7 @@ describe('JSON-LD Signatures', function() {
             }).then(done, done);
           });
 
-        it.skip('verify local document using getPublicKey and getPublicKeyOwner ' +
+        it('verify local document using getPublicKey and getPublicKeyOwner ' +
           'w/Promises API',function(done) {
           jsigs.promises.sign(testDocument, {
             algorithm: 'LinkedDataSignature2015',
