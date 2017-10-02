@@ -756,7 +756,9 @@ describe('JSON-LD Signatures', function() {
             creator: testPublicKeyUrl
           }, function(err) {
             assert.exists(err);
-            assert.equal(err.details.cause.message,
+            const message = (err.details && err.details.cause) ?
+              err.details.cause.message : err.message;
+            assert.equal(message,
               '[jsigs.sign] The property "foo" in the input ' +
               'was not defined in the context.');
             done();
