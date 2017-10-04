@@ -201,7 +201,7 @@ describe('JSON-LD Signatures', function() {
 
     });
 
-    describe('signing and verify Graph2015', function() {
+    describe('signing and verify LinkedDataSignature2015', function() {
       describe('single signature', function() {
         it('should successfully sign a local document', function(done) {
           jsigs.sign(testDocument, {
@@ -229,6 +229,7 @@ describe('JSON-LD Signatures', function() {
               publicKeyOwner: testPublicKeyOwner
             }, function(err, result) {
               assert.ifError(err);
+              assert.equal(result.keyResults[0].error, undefined);
               assert.equal(
                 result.verified, true, 'signature verification failed');
               done();
@@ -248,6 +249,7 @@ describe('JSON-LD Signatures', function() {
                 getPublicKeyOwner: _publicKeyOwnerGetter
               }, function(err, result) {
                 assert.ifError(err);
+                assert.equal(result.keyResults[0].error, undefined);
                 assert.isTrue(result.verified, 'signature verification failed');
                 done();
               });
@@ -256,7 +258,7 @@ describe('JSON-LD Signatures', function() {
 
         it('should successfully sign a local document w/promises API',
           function(done) {
-            jsigs.promises.sign(testDocument, {
+            jsigs.sign(testDocument, {
               algorithm: 'LinkedDataSignature2015',
               privateKeyPem: testPrivateKeyPem,
               creator: testPublicKeyUrl
@@ -276,7 +278,7 @@ describe('JSON-LD Signatures', function() {
 
         it('should successfully verify a local signed document w/promises API',
           function(done) {
-            jsigs.promises.verify(testDocumentSigned, {
+            jsigs.verify(testDocumentSigned, {
               publicKey: testPublicKey,
               publicKeyOwner: testPublicKeyOwner
             }).then(function(result) {
@@ -289,7 +291,7 @@ describe('JSON-LD Signatures', function() {
 
         it('verify local document using getPublicKey and getPublicKeyOwner ' +
           'w/Promises API',function(done) {
-          jsigs.promises.sign(testDocument, {
+          jsigs.sign(testDocument, {
             algorithm: 'LinkedDataSignature2015',
             privateKeyPem: testPrivateKeyPem3,
             creator: testPublicKeyUrl3
@@ -298,6 +300,7 @@ describe('JSON-LD Signatures', function() {
               getPublicKey: _publicKeyGetterPromise,
               getPublicKeyOwner: _publicKeyOwnerGetterPromise});
           }).then(function(result) {
+            assert.equal(result.keyResults[0].error, undefined);
             assert.isTrue(result.verified, 'signature verification failed');
           }).then(done, done);
         });
@@ -344,6 +347,7 @@ describe('JSON-LD Signatures', function() {
           function(done) {
             jsigs.verify(testDocumentSigned, {}, function(err, result) {
               assert.ifError(err);
+              assert.equal(result.keyResults[0].error, undefined);
               assert.isBoolean(result.verified);
               assert.isTrue(result.verified,'signature verification failed');
               assert.isArray(result.keyResults);
@@ -366,6 +370,8 @@ describe('JSON-LD Signatures', function() {
               publicKeyOwner: testPublicKeyOwner
             }, function(err, result) {
               assert.ifError(err);
+              assert.equal(result.keyResults[0].error, undefined);
+              assert.notEqual(result.keyResults[1].error, undefined);
               assert.isFalse(result.verified);
               assert.isArray(result.keyResults);
               assert.equal(result.keyResults.length, 2);
@@ -377,19 +383,20 @@ describe('JSON-LD Signatures', function() {
               assert.isBoolean(result.keyResults[1].verified);
               assert.isFalse(result.keyResults[1].verified);
               assert.equal(
-                result.keyResults[1].error, 'Error: PublicKey not found.');
+                result.keyResults[1].error.toString(),
+                'Error: Public key not found.');
               assert.equal(result.keyResults[1].publicKey, testPublicKeyUrl2);
               done();
             });
           });
         it('should successfully sign a local document w/promises API',
           function(done) {
-            jsigs.promises.sign(testDocument, {
+            jsigs.sign(testDocument, {
               algorithm: 'LinkedDataSignature2015',
               privateKeyPem: testPrivateKeyPem,
               creator: testPublicKeyUrl
             }).then(function(signedDocument) {
-              return jsigs.promises.sign(signedDocument, {
+              return jsigs.sign(signedDocument, {
                 algorithm: 'LinkedDataSignature2015',
                 privateKeyPem: testPrivateKeyPem2,
                 creator: testPublicKeyUrl2
@@ -419,7 +426,7 @@ describe('JSON-LD Signatures', function() {
           });
         it('should successfully verify a local signed document w/promises API',
           function(done) {
-            jsigs.promises.verify(testDocumentSigned, {})
+            jsigs.verify(testDocumentSigned, {})
               .then(function(result) {
                 assert.isBoolean(result.verified);
                 assert.isTrue(result.verified,'signature verification failed');
@@ -440,7 +447,7 @@ describe('JSON-LD Signatures', function() {
       }); // end multiple signatures
     }); // end signing and verify Graph2015
 
-    describe('signing and verify EcdsaKoblitzSignature2016', function() {
+    describe.only('signing and verify EcdsaKoblitzSignature2016', function() {
 
       var testDocument;
       var testDocumentSigned;
@@ -526,8 +533,12 @@ describe('JSON-LD Signatures', function() {
       it('should successfully verify a local signed document', function(done) {
         jsigs.verify(testDocumentSigned, {
           publicKey: testPublicKeyBtc,
-          publicKeyOwner: testPublicKeyBtcOwner
+          publicKeyOwner: testPublicKeyBtcOwner,
+          // timestamp is quite old, do not check it, it is used to ensure
+          // a static document is being checked
+          checkTimestamp: false
         }, function(err, result) {
+          console.log('err', err);
           assert.ifError(err);
           assert.equal(result.verified, true, 'signature verification failed');
           done();
@@ -540,7 +551,10 @@ describe('JSON-LD Signatures', function() {
 
         jsigs.verify(testDocumentSigned, {
           publicKey: testPublicKeyBtc,
-          publicKeyOwner: testPublicKeyBtcOwner
+          publicKeyOwner: testPublicKeyBtcOwner,
+          // timestamp is quite old, do not check it, it is used to ensure
+          // a static document is being checked
+          checkTimestamp: false
         }, function(err, result) {
           assert.ifError(err);
           assert.equal(
@@ -554,7 +568,10 @@ describe('JSON-LD Signatures', function() {
         function(done) {
           jsigs.verify(testDocumentSignedAltered, {
             publicKey: testPublicKeyBtc,
-            publicKeyOwner: testPublicKeyBtcOwner
+            publicKeyOwner: testPublicKeyBtcOwner,
+            // timestamp is quite old, do not check it, it is used to ensure
+            // a static document is being checked
+            checkTimestamp: false
           }, function(err, result) {
             assert.ifError(err);
             assert.equal(
@@ -585,7 +602,10 @@ describe('JSON-LD Signatures', function() {
         ' w/promises API', function(done) {
         jsigs.promises.verify(testDocumentSigned, {
           publicKey: testPublicKeyBtc,
-          publicKeyOwner: testPublicKeyBtcOwner
+          publicKeyOwner: testPublicKeyBtcOwner,
+          // timestamp is quite old, do not check it, it is used to ensure
+          // a static document is being checked
+          checkTimestamp: false
         }).then(function(result) {
           assert.equal(result.verified, true, 'signature verification failed');
         }).then(done, done);
@@ -597,7 +617,10 @@ describe('JSON-LD Signatures', function() {
 
         jsigs.promises.verify(testDocumentSigned, {
           publicKey: testPublicKeyBtc,
-          publicKeyOwner: testPublicKeyBtcOwner
+          publicKeyOwner: testPublicKeyBtcOwner,
+          // timestamp is quite old, do not check it, it is used to ensure
+          // a static document is being checked
+          checkTimestamp: false
         }).then(function(result) {
           assert.equal(result.verified, false,
             'signature verification should have failed but did not');
