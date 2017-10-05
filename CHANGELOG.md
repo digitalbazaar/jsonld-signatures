@@ -1,5 +1,9 @@
 # jsonld-signatures ChangeLog
 
+### Removed
+- **BREAKING**: Removed bower support. Use npm and the bundles in the `dist`
+  directory
+
 ## 1.2.1 - 2017-04-14
 
 ### Changed
