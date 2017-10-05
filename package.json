@@ -33,7 +33,7 @@
   ],
   "dependencies": {
     "bitcore-message": "github:CoMakery/bitcore-message#dist",
-    "jsonld": "^0.5.11",
+    "jsonld": "^0.5.12",
     "node-forge": "^0.7.1"
   },
   "devDependencies": {
