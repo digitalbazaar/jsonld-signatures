@@ -447,7 +447,7 @@ describe('JSON-LD Signatures', function() {
       }); // end multiple signatures
     }); // end signing and verify Graph2015
 
-    describe.only('signing and verify EcdsaKoblitzSignature2016', function() {
+    describe('signing and verify EcdsaKoblitzSignature2016', function() {
 
       var testDocument;
       var testDocumentSigned;
@@ -538,7 +538,6 @@ describe('JSON-LD Signatures', function() {
           // a static document is being checked
           checkTimestamp: false
         }, function(err, result) {
-          console.log('err', err);
           assert.ifError(err);
           assert.equal(result.verified, true, 'signature verification failed');
           done();
@@ -782,7 +781,7 @@ describe('JSON-LD Signatures', function() {
             const message = (err.details && err.details.cause) ?
               err.details.cause.message : err.message;
             assert.equal(message,
-              '[jsigs.sign] The property "foo" in the input ' +
+              'The property "foo" in the input ' +
               'was not defined in the context.');
             done();
           });
@@ -887,7 +886,10 @@ describe('JSON-LD Signatures', function() {
       it('should successfully verify a local signed document', function(done) {
         jsigs.verify(testDocumentSigned, {
           publicKey: testPublicKeyBtc,
-          publicKeyOwner: testPublicKeyBtcOwner
+          publicKeyOwner: testPublicKeyBtcOwner,
+          // timestamp is quite old, do not check it, it is used to ensure
+          // a static document is being checked
+          checkTimestamp: false
         }, function(err, result) {
           assert.ifError(err);
           assert.equal(result.verified, true, 'signature verification failed');
@@ -901,7 +903,10 @@ describe('JSON-LD Signatures', function() {
 
         jsigs.verify(testDocumentSigned, {
           publicKey: testPublicKeyBtc,
-          publicKeyOwner: testPublicKeyBtcOwner
+          publicKeyOwner: testPublicKeyBtcOwner,
+          // timestamp is quite old, do not check it, it is used to ensure
+          // a static document is being checked
+          checkTimestamp: false
         }, function(err, result) {
           assert.ifError(err);
           assert.equal(
@@ -930,7 +935,10 @@ describe('JSON-LD Signatures', function() {
         ' w/promises API', function(done) {
         jsigs.promises.verify(testDocumentSigned, {
           publicKey: testPublicKeyBtc,
-          publicKeyOwner: testPublicKeyBtcOwner
+          publicKeyOwner: testPublicKeyBtcOwner,
+          // timestamp is quite old, do not check it, it is used to ensure
+          // a static document is being checked
+          checkTimestamp: false
         }).then(function(result) {
           assert.equal(result.verified, true, 'signature verification failed');
         }).then(done, done);
@@ -942,7 +950,10 @@ describe('JSON-LD Signatures', function() {
 
         jsigs.promises.verify(testDocumentSigned, {
           publicKey: testPublicKeyBtc,
-          publicKeyOwner: testPublicKeyBtcOwner
+          publicKeyOwner: testPublicKeyBtcOwner,
+          // timestamp is quite old, do not check it, it is used to ensure
+          // a static document is being checked
+          checkTimestamp: false
         }).then(function(result) {
           assert.equal(result.verified, false,
             'signature verification should have failed but did not');
@@ -953,7 +964,10 @@ describe('JSON-LD Signatures', function() {
         ' signing w/promises API', function(done) {
         jsigs.promises.verify(testDocumentSignedAltered, {
           publicKey: testPublicKeyBtc,
-          publicKeyOwner: testPublicKeyBtcOwner
+          publicKeyOwner: testPublicKeyBtcOwner,
+          // timestamp is quite old, do not check it, it is used to ensure
+          // a static document is being checked
+          checkTimestamp: false
         }).then(function(result) {
           assert.equal(result.verified, false,
             'signature verification should have failed but did not');
