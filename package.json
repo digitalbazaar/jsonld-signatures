@@ -84,7 +84,7 @@
     "prepublish": "npm run build",
     "build": "npm run build-webpack && npm run build-node6",
     "build-webpack": "webpack",
-    "build-node6": "babel --no-babelrc --out-dir dist/node6 --presets=node6-es6 lib/*.js",
+    "build-node6": "babel --no-babelrc --out-dir dist/node6 --presets=node6-es6 lib/*.js lib/**/*.js",
     "test": "npm run test-node",
     "test-node": "NODE_ENV=test mocha --delay -t 30000 -A -R ${REPORTER:-spec} tests/test.js",
     "test-karma": "karma start",
