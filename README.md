@@ -11,20 +11,24 @@ This software works in all modern browsers as well as node.js via [npm](https://
 Introduction
 ------------
 
-In node.js, include the library like this:
+Install with npm:
+
+```
+npm install jsonld-signatures
+```
+
+In Node.js, include the library like this:
 ```js
 var jsonld = require('jsonld');
 var jsig = require('jsonld-signatures');
 jsig.use('jsonld', jsonld);
 ```
 
-In a browser environment, include the library like this:
+In a browser environment, include `jsonld`, `forge`, and
+`dist/jsonld-signatures.min.js` via script tag or other mechanism.
 
-You will need to bower install jsonld-signatures and then serve it and
-its dependencies from your server and include each via a script tag, or other
-mechanism, in the order: es6-promise, async, jsonld, forge, jsonld-signatures.
-
-Here are some examples on using the library:
+Examples
+--------
 
 ```js
 // to generate the next two lines, run the following command:
@@ -124,15 +128,17 @@ the [jsonld-signatures repository][jsonld-signatures] hosted on GitHub.
 
 https://github.com/digitalbazaar/jsonld-signatures/
 
-Run the tests using the following command:
+Run the Node.js tests using the following command:
 
     npm run test
 
-The standard tests will run node and browser tests. Just one type can also
-be run:
+Run browser tests using PhantomJS using the following command:
 
-    npm run test-node
-    npm run test-browser
+    npm run test-karma
+
+Run browser tests using a selection of browsers using the following command:
+
+    npm run test-karma -- --browsers Firefox,Chrome,PhantomJS
 
 Code coverage of node tests can be generated in `coverage/`:
 
