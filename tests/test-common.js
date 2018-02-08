@@ -23,6 +23,13 @@ var testLoader = function(url, callback) {
       documentUrl: 'https://web-payments.org/contexts/security-v1.jsonld'
     });
   }
+  if(url === 'https://w3id.org/security/v2') {
+    return callback(null, {
+      contextUrl: null,
+      document: securityContext_v2,
+      documentUrl: 'https://web-payments.org/contexts/security-v2.jsonld'
+    });
+  }
   if(url === testPublicKeyUrl) {
     return callback(null, {
       contextUrl: null,
@@ -692,20 +699,22 @@ describe('JSON-LD Signatures', function() {
 
         testDocumentSigned = clone(testDocument);
         testDocumentSigned["https://w3id.org/security#proof"] = {
-          "@type": "https://w3id.org/security#RsaSignature2018",
-          "http://purl.org/dc/terms/created": {
-            "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
-            "@value": "2018-02-08T21:40:45Z"
-          },
-          "http://purl.org/dc/terms/creator": {
-            "@id": testPublicKeyUrl
-          },
-          "https://w3id.org/security#jws":
-            "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19" +
-            ".." +
-            "Pr1IEhlhMhnu8VU7Vkmjc6ZjsjGRsRsmgvYC5BXBh4PjMypxI7C9UUAhg-_-75" +
-            "jIeFtRUJLtT5ZsTs8sRftVfkN1TVrgn7_Rj5K4dXfCReSWhUqgYqeYEHqaSn56" +
-            "qwQIRVXH-YxcHwCvNXeeDT6T8ir53dK9bTagxrBHryWOaUo"
+          "@graph": {
+            "@type": "https://w3id.org/security#RsaSignature2018",
+            "http://purl.org/dc/terms/created": {
+              "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+              "@value": "2018-02-08T22:34:34Z"
+            },
+            "http://purl.org/dc/terms/creator": {
+              "@id": testPublicKeyUrl
+            },
+            "https://w3id.org/security#jws":
+              "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19" +
+              ".." +
+              "lnIJh_mN8ZmbgK7cNc0BTbkIkBDGUNoGdPhteCl6qm-ftc_yFegyyCiFf4ts" +
+              "o3hF8avIkxUYWaiSPiK0x7t7hbIiSj__6uUBG8JxM5sOAanQGRgfhR1IMcvX" +
+              "LhNTKnMvW0RGaGfsHycJNb0854yjzxC9NnRfr4mOTjOk1RTVNno"
+          }
         };
         testDocumentSignedAltered = clone(testDocumentSigned);
         testDocumentSignedAltered.name = 'Manu Spornoneous';
@@ -726,7 +735,7 @@ describe('JSON-LD Signatures', function() {
             'signature was not created');
           assert.equal(
             signedDocument['https://w3id.org/security#proof']
-              ['http://purl.org/dc/terms/creator']['@id'],
+              ['@graph']['http://purl.org/dc/terms/creator']['@id'],
             testPublicKeyUrl,
             'creator key for signature is wrong');
           done();
@@ -793,7 +802,7 @@ describe('JSON-LD Signatures', function() {
             'signature was not created');
           assert.equal(
             signedDocument['https://w3id.org/security#proof']
-              ['http://purl.org/dc/terms/creator']['@id'],
+              ['@graph']['http://purl.org/dc/terms/creator']['@id'],
             testPublicKeyUrl, 'creator key for signature is wrong');
         }).then(done, done);
       });
@@ -831,6 +840,8 @@ describe('JSON-LD Signatures', function() {
     // the test document that will be signed
     var testDocument = {
       '@context': [{
+        '@version': 1.1
+      }, {
         schema: 'http://schema.org/',
         name: 'schema:name',
         homepage: 'schema:url',
@@ -1017,6 +1028,8 @@ describe('JSON-LD Signatures', function() {
       beforeEach(function() {
         testDocument = {
           '@context': [{
+              '@version': 1.1
+            }, {
             schema: 'http://schema.org/',
             name: 'schema:name',
             homepage: 'schema:url',
@@ -1192,7 +1205,6 @@ var securityContext = {
     "LinkedDataSignature2015": "sec:LinkedDataSignature2015",
     "LinkedDataSignature2016": "sec:LinkedDataSignature2016",
     "RsaSignature2017": "sec:RsaSignature2017",
-    "RsaSignature2018": "sec:RsaSignature2018",
     "CryptographicKey": "sec:Key",
 
     "authenticationTag": "sec:authenticationTag",
@@ -1210,15 +1222,12 @@ var securityContext = {
     "expires": {"@id": "sec:expiration", "@type": "xsd:dateTime"},
     "initializationVector": "sec:initializationVector",
     "iterationCount": "sec:iterationCount",
-    "jws": "sec:jws",
     "nonce": "sec:nonce",
     "normalizationAlgorithm": "sec:normalizationAlgorithm",
     "owner": {"@id": "sec:owner", "@type": "@id"},
     "password": "sec:password",
     "privateKey": {"@id": "sec:privateKey", "@type": "@id"},
     "privateKeyPem": "sec:privateKeyPem",
-    // TODO: needs to use @container: @graph
-    "proof": {"@id": "sec:proof", "@type": "@id"},
     "publicKey": {"@id": "sec:publicKey", "@type": "@id"},
     "publicKeyPem": "sec:publicKeyPem",
     "publicKeyService": {"@id": "sec:publicKeyService", "@type": "@id"},
@@ -1228,6 +1237,20 @@ var securityContext = {
     "signatureAlgorithm": "sec:signingAlgorithm",
     "signatureValue": "sec:signatureValue"
   }
+};
+
+// the security context that is used when loading https://w3id.org/security/v1
+var securityContext_v2 = {
+  "@context": [{
+    "@version": 1.1
+    },
+    "https://w3id.org/security/v1", {
+
+    "RsaSignature2018": "sec:RsaSignature2018",
+
+    "jws": "sec:jws",
+    "proof": {"@id": "sec:proof", "@type": "@id", "@container": "@graph"}
+  }]
 };
 
 var testPublicKeyUrl = 'https://example.com/i/alice/keys/1';
