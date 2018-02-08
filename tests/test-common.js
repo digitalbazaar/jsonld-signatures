@@ -4,7 +4,7 @@
  * @author Dave Longley <dlongley@digitalbazaar.com>
  * @author Manu Sporny <msporny@digitalbazaar.com>
  *
- * Copyright (c) 2014-2017 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2018 Digital Bazaar, Inc. All rights reserved.
  */
 
 module.exports = function(options) {
@@ -14,7 +14,6 @@ module.exports = function(options) {
 const assert = options.assert;
 const jsonld = options.jsonld;
 const jsigs = options.jsigs;
-const jws = options.jws;
 
 var testLoader = function(url, callback) {
   if(url === 'https://w3id.org/security/v1') {
@@ -671,7 +670,7 @@ describe('JSON-LD Signatures', function() {
       });
     });
 
-    describe('signing and verify RsaSignature2017', function() {
+    describe('signing and verify RsaSignature2018', function() {
 
       var testDocument;
       var testDocumentSigned;
@@ -692,21 +691,21 @@ describe('JSON-LD Signatures', function() {
         };
 
         testDocumentSigned = clone(testDocument);
-        testDocumentSigned["https://w3id.org/security#signature"] = {
-          "@type": "https://w3id.org/security#RsaSignature2017",
+        testDocumentSigned["https://w3id.org/security#proof"] = {
+          "@type": "https://w3id.org/security#RsaSignature2018",
           "http://purl.org/dc/terms/created": {
             "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
-            "@value": "2017-09-27T03:12:26Z"
+            "@value": "2018-02-08T21:40:45Z"
           },
           "http://purl.org/dc/terms/creator": {
             "@id": testPublicKeyUrl
           },
-          "https://w3id.org/security#signatureValue":
+          "https://w3id.org/security#jws":
             "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19" +
             ".." +
-            "Vewb2R5LWN2T5_8lFTE6hYqu7MyrUaIBCLE55DDGGtEUFZOfFnW0sxft5TiEdm" +
-            "BIYhYveNY9LTAqhRLTIzYG2ZOi9WpMI3DsfApEuz9GkZLIkPC0rQZVMW9ssP17" +
-            "Cxiim9imGA5dyHn2pZ98C_Cd_ptqHMFyjKHluKhG4HpfNaM"
+            "Pr1IEhlhMhnu8VU7Vkmjc6ZjsjGRsRsmgvYC5BXBh4PjMypxI7C9UUAhg-_-75" +
+            "jIeFtRUJLtT5ZsTs8sRftVfkN1TVrgn7_Rj5K4dXfCReSWhUqgYqeYEHqaSn56" +
+            "qwQIRVXH-YxcHwCvNXeeDT6T8ir53dK9bTagxrBHryWOaUo"
         };
         testDocumentSignedAltered = clone(testDocumentSigned);
         testDocumentSignedAltered.name = 'Manu Spornoneous';
@@ -717,16 +716,16 @@ describe('JSON-LD Signatures', function() {
 
       it('should successfully sign a local document', function(done) {
         jsigs.sign(testDocument, {
-          algorithm: 'RsaSignature2017',
+          algorithm: 'RsaSignature2018',
           creator: testPublicKeyUrl,
           privateKeyPem: testPrivateKeyPem,
         }, function(err, signedDocument) {
           assert.ifError(err);
           assert.notEqual(
-            signedDocument['https://w3id.org/security#signature'], undefined,
+            signedDocument['https://w3id.org/security#proof'], undefined,
             'signature was not created');
           assert.equal(
-            signedDocument['https://w3id.org/security#signature']
+            signedDocument['https://w3id.org/security#proof']
               ['http://purl.org/dc/terms/creator']['@id'],
             testPublicKeyUrl,
             'creator key for signature is wrong');
@@ -785,15 +784,15 @@ describe('JSON-LD Signatures', function() {
       it('should successfully sign a local document' +
         ' w/promises API', function(done) {
         jsigs.sign(testDocument, {
-          algorithm: 'RsaSignature2017',
+          algorithm: 'RsaSignature2018',
           privateKeyPem: testPrivateKeyPem,
           creator: testPublicKeyUrl
         }).then(function(signedDocument) {
           assert.notEqual(
-            signedDocument['https://w3id.org/security#signature'], undefined,
+            signedDocument['https://w3id.org/security#proof'], undefined,
             'signature was not created');
           assert.equal(
-            signedDocument['https://w3id.org/security#signature']
+            signedDocument['https://w3id.org/security#proof']
               ['http://purl.org/dc/terms/creator']['@id'],
             testPublicKeyUrl, 'creator key for signature is wrong');
         }).then(done, done);
@@ -1193,6 +1192,7 @@ var securityContext = {
     "LinkedDataSignature2015": "sec:LinkedDataSignature2015",
     "LinkedDataSignature2016": "sec:LinkedDataSignature2016",
     "RsaSignature2017": "sec:RsaSignature2017",
+    "RsaSignature2018": "sec:RsaSignature2018",
     "CryptographicKey": "sec:Key",
 
     "authenticationTag": "sec:authenticationTag",
@@ -1210,18 +1210,21 @@ var securityContext = {
     "expires": {"@id": "sec:expiration", "@type": "xsd:dateTime"},
     "initializationVector": "sec:initializationVector",
     "iterationCount": "sec:iterationCount",
+    "jws": "sec:jws",
     "nonce": "sec:nonce",
     "normalizationAlgorithm": "sec:normalizationAlgorithm",
     "owner": {"@id": "sec:owner", "@type": "@id"},
     "password": "sec:password",
     "privateKey": {"@id": "sec:privateKey", "@type": "@id"},
     "privateKeyPem": "sec:privateKeyPem",
+    // TODO: needs to use @container: @graph
+    "proof": {"@id": "sec:proof", "@type": "@id"},
     "publicKey": {"@id": "sec:publicKey", "@type": "@id"},
     "publicKeyPem": "sec:publicKeyPem",
     "publicKeyService": {"@id": "sec:publicKeyService", "@type": "@id"},
     "revoked": {"@id": "sec:revoked", "@type": "xsd:dateTime"},
     "salt": "sec:salt",
-    "signature": "sec:signature",
+    "signature": {"@id": "sec:signature", "@type": "@id"},
     "signatureAlgorithm": "sec:signingAlgorithm",
     "signatureValue": "sec:signatureValue"
   }

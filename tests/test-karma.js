@@ -13,7 +13,7 @@
  * @author Dave Longley
  * @author David I. Lehn
  *
- * Copyright (c) 2011-2017 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2011-2018 Digital Bazaar, Inc. All rights reserved.
  */
 // FIXME: hack to ensure delay is set first
 //mocha.setup({delay: true, ui: 'bdd'});
@@ -28,7 +28,6 @@ const assert = require('chai').assert;
 const common = require('./test-common');
 const jsigs = require('..');
 const jsonld = require('../node_modules/jsonld/dist/jsonld.js');
-const jws = require('jws');
 
 //var system = require('system');
 const forge = require('../node_modules/node-forge');
@@ -43,7 +42,6 @@ const options = {
   assert: assert,
   jsigs: jsigs,
   jsonld: jsonld,
-  jws: jws,
   nodejs: false
 };
 
