@@ -682,7 +682,9 @@ describe('JSON-LD Signatures', function() {
       var testDocument;
       var testDocumentSigned;
       var testDocumentSignedAltered;
+      var testDocumentWithProofPurposeSigned;
       var testInvalidPublicKey;
+      var testProofPurpose;
 
       beforeEach(function() {
         testDocument = {
@@ -719,6 +721,31 @@ describe('JSON-LD Signatures', function() {
         testDocumentSignedAltered = clone(testDocumentSigned);
         testDocumentSignedAltered.name = 'Manu Spornoneous';
 
+        testProofPurpose = 'https://example.org/special-authentication';
+        testDocumentWithProofPurposeSigned = clone(testDocument);
+        testDocumentWithProofPurposeSigned
+          ["https://w3id.org/security#proof"] = {
+          "@graph": {
+            "@type": "https://w3id.org/security#RsaSignature2018",
+            "http://purl.org/dc/terms/created": {
+              "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+              "@value": "2018-02-09T15:43:51Z"
+            },
+            "http://purl.org/dc/terms/creator": {
+              "@id": testPublicKeyUrl
+            },
+            "https://w3id.org/security#jws":
+              "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19" +
+              ".." +
+              "Yt-gd3cAqt8dwarLdHsrtNTv6PB-0YpgYjs8V3Hn9NzYA3Xlp-2N-ae4Ufnb" +
+              "vClAYMzqY3PJYLhxYoIX7o2bgv3DAfS8sLBptmvkXxiPMw2MSD0wpJX8_SVV" +
+              "b9O8_LhhDkr1NdKfdwJ-NPZ796Bwxth4zOjyb5KwJHGIp9FZqAs",
+            "https://w3id.org/security#proofPurpose": {
+              "@id": testProofPurpose
+            }
+          }
+        };
+
         testInvalidPublicKey = clone(testPublicKey);
         testInvalidPublicKey.id = testPublicKeyUrl2;
       });
@@ -744,6 +771,49 @@ describe('JSON-LD Signatures', function() {
 
       it('should successfully verify a local signed document', function(done) {
         jsigs.verify(testDocumentSigned, {
+          publicKey: testPublicKey,
+          publicKeyOwner: testPublicKeyOwner,
+          // timestamp is quite old, do not check it, it is used to ensure
+          // a static document is being checked
+          checkTimestamp: false
+        }, function(err, result) {
+          assert.ifError(err);
+          assert.equal(result.verified, true, 'signature verification failed');
+          done();
+        });
+      });
+
+      it('should successfully sign a local document w/proofPurpose',
+        function(done) {
+        jsigs.sign(testDocument, {
+          algorithm: 'RsaSignature2018',
+          creator: testPublicKeyUrl,
+          privateKeyPem: testPrivateKeyPem,
+          proof: {
+            '@context': 'https://w3id.org/security/v2',
+            proofPurpose: testProofPurpose
+          }
+        }, function(err, signedDocument) {
+          assert.ifError(err);
+          assert.notEqual(
+            signedDocument['https://w3id.org/security#proof'], undefined,
+            'signature was not created');
+          assert.equal(
+            signedDocument['https://w3id.org/security#proof']
+              ['@graph']['http://purl.org/dc/terms/creator']['@id'],
+            testPublicKeyUrl,
+            'creator key for signature is wrong');
+          assert.equal(
+            signedDocument['https://w3id.org/security#proof']
+              ['@graph']['https://w3id.org/security#proofPurpose']['@id'],
+            testProofPurpose, 'proof purpose for signature is wrong');
+          done();
+        });
+      });
+
+      it('should successfully verify a local signed document w/proofPurpose',
+        function(done) {
+        jsigs.verify(testDocumentWithProofPurposeSigned, {
           publicKey: testPublicKey,
           publicKeyOwner: testPublicKeyOwner,
           // timestamp is quite old, do not check it, it is used to ensure
@@ -810,6 +880,44 @@ describe('JSON-LD Signatures', function() {
       it('should successfully verify a local signed document' +
         ' w/promises API', function(done) {
         jsigs.verify(testDocumentSigned, {
+          publicKey: testPublicKey,
+          publicKeyOwner: testPublicKeyOwner,
+          // timestamp is quite old, do not check it, it is used to ensure
+          // a static document is being checked
+          checkTimestamp: false
+        }).then(function(result) {
+          assert.equal(result.verified, true, 'signature verification failed');
+        }).then(done, done);
+      });
+
+      it('should successfully sign a local document w/proofPurpose' +
+        ' w/promises API', function(done) {
+        jsigs.sign(testDocument, {
+          algorithm: 'RsaSignature2018',
+          privateKeyPem: testPrivateKeyPem,
+          creator: testPublicKeyUrl,
+          proof: {
+            '@context': 'https://w3id.org/security/v2',
+            proofPurpose: testProofPurpose
+          }
+        }).then(function(signedDocument) {
+          assert.notEqual(
+            signedDocument['https://w3id.org/security#proof'], undefined,
+            'signature was not created');
+          assert.equal(
+            signedDocument['https://w3id.org/security#proof']
+              ['@graph']['http://purl.org/dc/terms/creator']['@id'],
+            testPublicKeyUrl, 'creator key for signature is wrong');
+          assert.equal(
+            signedDocument['https://w3id.org/security#proof']
+              ['@graph']['https://w3id.org/security#proofPurpose']['@id'],
+            testProofPurpose, 'proof purpose for signature is wrong');
+        }).then(done, done);
+      });
+
+      it('should successfully verify a local signed document w/proofPurpose' +
+        ' w/promises API', function(done) {
+        jsigs.verify(testDocumentWithProofPurposeSigned, {
           publicKey: testPublicKey,
           publicKeyOwner: testPublicKeyOwner,
           // timestamp is quite old, do not check it, it is used to ensure
@@ -1207,7 +1315,6 @@ var securityContext = {
     "RsaSignature2017": "sec:RsaSignature2017",
     "CryptographicKey": "sec:Key",
 
-    "authenticationTag": "sec:authenticationTag",
     "canonicalizationAlgorithm": "sec:canonicalizationAlgorithm",
     "cipherAlgorithm": "sec:cipherAlgorithm",
     "cipherData": "sec:cipherData",
@@ -1249,7 +1356,8 @@ var securityContext_v2 = {
     "RsaSignature2018": "sec:RsaSignature2018",
 
     "jws": "sec:jws",
-    "proof": {"@id": "sec:proof", "@type": "@id", "@container": "@graph"}
+    "proof": {"@id": "sec:proof", "@type": "@id", "@container": "@graph"},
+    "proofPurpose": {"@id": "sec:proofPurpose", "@type": "@vocab"}
   }]
 };
 
@@ -1363,7 +1471,8 @@ var testPublicKey = {
 var testPublicKeyOwner = {
   '@context': jsigs.SECURITY_CONTEXT_URL,
   id: 'https://example.com/i/alice',
-  publicKey: [testPublicKey]
+  publicKey: [testPublicKey],
+  "https://example.org/special-authentication": {id: testPublicKeyUrl}
 };
 var testPublicKey2 = {
   '@context': jsigs.SECURITY_CONTEXT_URL,
