@@ -4,8 +4,14 @@ node_js:
   - "8"
   - "node"
 sudo: false
-# download test suite and run tests... submodule? meta testing project with
-# all of the reference implementations?
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.9
+install:
+  - CC=gcc-4.9 CXX=g++-4.9 npm install
 script:
   - if [ "x$BUNDLER" = "x" ]; then npm run test; fi
   - if [ "x$BUNDLER" != "x" ]; then npm run test-karma; fi
