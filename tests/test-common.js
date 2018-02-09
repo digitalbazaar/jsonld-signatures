@@ -126,9 +126,9 @@ describe('JSON-LD Signatures', function() {
         '123',
         '1234',
         '12345',
-        Buffer.from([0xc3,0xbb,0xc3,0xb0,0x00]).toString(),
-        Buffer.from([0xc3,0xbb,0xc3,0xb0]).toString(),
-        Buffer.from([0xc3,0xbb]).toString()
+        '\xc3\xbb\xc3\xb0\x00',
+        '\xc3\xbb\xc3\xb0',
+        '\xc3\xbb'
       ];
       inputs.forEach(function(input) {
         var enc = jsigs._encodeBase64Url(input, {forge});
