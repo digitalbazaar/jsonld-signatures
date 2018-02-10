@@ -6,6 +6,13 @@
   Used automatically at runtime.
 - Use karma for browser testing.
 - Use node and karma test setup files that use a common test file.
+- **BREAKING**: `verify` now returns an object with `keyResults` and `verified`.
+
+### Added
+- Support for RsaSignature2018.
+- Support for `proof` and `proofPurpose`.
+- Support for attaching and verifying multiple proofs (signatures) as a set on
+  a single document.
 
 ### Removed
 - **BREAKING**: Removed bower support. Use npm and the bundles in the `dist`
