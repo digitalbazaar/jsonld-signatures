@@ -16,20 +16,6 @@ const jsonld = options.jsonld;
 const jsigs = options.jsigs;
 
 var testLoader = function(url, callback) {
-  if(url === 'https://w3id.org/security/v1') {
-    return callback(null, {
-      contextUrl: null,
-      document: securityContext,
-      documentUrl: 'https://web-payments.org/contexts/security-v1.jsonld'
-    });
-  }
-  if(url === 'https://w3id.org/security/v2') {
-    return callback(null, {
-      contextUrl: null,
-      document: securityContext_v2,
-      documentUrl: 'https://web-payments.org/contexts/security-v2.jsonld'
-    });
-  }
   if(url === testPublicKeyUrl) {
     return callback(null, {
       contextUrl: null,
@@ -1296,70 +1282,6 @@ describe('JSON-LD Signatures', function() {
     });
   });
 });
-
-// the security context that is used when loading https://w3id.org/security/v1
-var securityContext = {
-  "@context": {
-    "id": "@id",
-    "type": "@type",
-
-    "dc": "http://purl.org/dc/terms/",
-    "sec": "https://w3id.org/security#",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-
-    "EcdsaKoblitzSignature2016": "sec:EcdsaKoblitzSignature2016",
-    "EncryptedMessage": "sec:EncryptedMessage",
-    "GraphSignature2012": "sec:GraphSignature2012",
-    "LinkedDataSignature2015": "sec:LinkedDataSignature2015",
-    "LinkedDataSignature2016": "sec:LinkedDataSignature2016",
-    "RsaSignature2017": "sec:RsaSignature2017",
-    "CryptographicKey": "sec:Key",
-
-    "canonicalizationAlgorithm": "sec:canonicalizationAlgorithm",
-    "cipherAlgorithm": "sec:cipherAlgorithm",
-    "cipherData": "sec:cipherData",
-    "cipherKey": "sec:cipherKey",
-    "created": {"@id": "dc:created", "@type": "xsd:dateTime"},
-    "creator": {"@id": "dc:creator", "@type": "@id"},
-    "digestAlgorithm": "sec:digestAlgorithm",
-    "digestValue": "sec:digestValue",
-    "domain": "sec:domain",
-    "encryptionKey": "sec:encryptionKey",
-    "expiration": {"@id": "sec:expiration", "@type": "xsd:dateTime"},
-    "expires": {"@id": "sec:expiration", "@type": "xsd:dateTime"},
-    "initializationVector": "sec:initializationVector",
-    "iterationCount": "sec:iterationCount",
-    "nonce": "sec:nonce",
-    "normalizationAlgorithm": "sec:normalizationAlgorithm",
-    "owner": {"@id": "sec:owner", "@type": "@id"},
-    "password": "sec:password",
-    "privateKey": {"@id": "sec:privateKey", "@type": "@id"},
-    "privateKeyPem": "sec:privateKeyPem",
-    "publicKey": {"@id": "sec:publicKey", "@type": "@id"},
-    "publicKeyPem": "sec:publicKeyPem",
-    "publicKeyService": {"@id": "sec:publicKeyService", "@type": "@id"},
-    "revoked": {"@id": "sec:revoked", "@type": "xsd:dateTime"},
-    "salt": "sec:salt",
-    "signature": {"@id": "sec:signature", "@type": "@id"},
-    "signatureAlgorithm": "sec:signingAlgorithm",
-    "signatureValue": "sec:signatureValue"
-  }
-};
-
-// the security context that is used when loading https://w3id.org/security/v1
-var securityContext_v2 = {
-  "@context": [{
-    "@version": 1.1
-    },
-    "https://w3id.org/security/v1", {
-
-    "RsaSignature2018": "sec:RsaSignature2018",
-
-    "jws": "sec:jws",
-    "proof": {"@id": "sec:proof", "@type": "@id", "@container": "@graph"},
-    "proofPurpose": {"@id": "sec:proofPurpose", "@type": "@vocab"}
-  }]
-};
 
 var testPublicKeyUrl = 'https://example.com/i/alice/keys/1';
 var testPublicKeyUrl2 = 'https://example.com/i/bob/keys/1';
