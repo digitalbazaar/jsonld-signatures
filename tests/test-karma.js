@@ -20,7 +20,7 @@
 
 // jsonld compatibility
 //require('core-js/fn/array/includes');
-//require('core-js/fn/object/assign');
+require('core-js/fn/object/assign');
 require('core-js/fn/promise');
 require('regenerator-runtime/runtime');
 
