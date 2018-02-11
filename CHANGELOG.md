@@ -18,6 +18,8 @@
 - **BREAKING**: Removed bower support. Use npm and the bundles in the `dist`
   directory.
 - Remove grunt support in favor of package.json script targets.
+- **BREAKING**: Removed deprecated options in `wrap` function. Use the `use`
+  API instead.
 
 ## 1.2.1 - 2017-04-14
 
