@@ -13,6 +13,8 @@
 - Support for `proof` and `proofPurpose`.
 - Support for attaching and verifying multiple proofs (signatures) as a set on
   a single document.
+- Add embedded security JSON-LD contexts. These are automatically used unless a
+  `documentLoader` option passed to `sign` or `verify` overrides this behavior.
 
 ### Removed
 - **BREAKING**: Removed bower support. Use npm and the bundles in the `dist`
