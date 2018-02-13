@@ -104,6 +104,8 @@
   },
   "browser": {
     "lib/index.js": "./lib/jsonld-signatures.js",
-    "crypto": false
+    "crypto": false,
+    "bs58": false,
+    "ed25519": false
   }
 }
