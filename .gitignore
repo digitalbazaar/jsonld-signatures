@@ -4,6 +4,7 @@
 *~
 .DS_Store
 .cproject
+.nyc_output
 .project
 .settings
 TAGS
