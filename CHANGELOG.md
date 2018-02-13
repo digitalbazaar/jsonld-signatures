@@ -10,6 +10,7 @@
 
 ### Added
 - Support for RsaSignature2018.
+- Support for Ed25519Signature2018.
 - Support for `proof` and `proofPurpose`.
 - Support for attaching and verifying multiple proofs (signatures) as a set on
   a single document.
