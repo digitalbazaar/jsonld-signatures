@@ -44,6 +44,20 @@ var testLoader = function(url, callback) {
       documentUrl: testPublicKeyOwner2.id
     });
   }
+  if(url === testPublicKeyEd25519.id) {
+    return callback(null, {
+      contextUrl: null,
+      document: testPublicKeyEd25519,
+      documentUrl: testPublicKeyEd25519.id
+    });
+  }
+  if(url === testPublicKeyEd25519Owner.id) {
+    return callback(null, {
+      contextUrl: null,
+      document: testPublicKeyEd25519Owner,
+      documentUrl: testPublicKeyEd25519Owner.id
+    });
+  }
 };
 
 // setup
@@ -928,6 +942,275 @@ describe('JSON-LD Signatures', function() {
         }).then(done, done);
       });
     });
+
+    describe('signing and verify Ed25519Signature2018', function() {
+
+      var testDocument;
+      var testDocumentSigned;
+      var testDocumentSignedAltered;
+      var testDocumentWithProofPurposeSigned;
+      var testInvalidPublicKey;
+      var testProofPurpose;
+      let testPublicKey;
+      let testPublicKeyOwner;
+
+      beforeEach(function() {
+        testPublicKey = clone(testPublicKeyEd25519);
+        testPublicKeyOwner = clone(testPublicKeyEd25519Owner);
+
+        testDocument = {
+          '@context': {
+            schema: 'http://schema.org/',
+            name: 'schema:name',
+            homepage: 'schema:url',
+            image: 'schema:image'
+          },
+          name: 'Manu Sporny',
+          homepage: 'https://manu.sporny.org/',
+          image: 'https://manu.sporny.org/images/manu.png'
+        };
+
+        testDocumentSigned = clone(testDocument);
+        testDocumentSigned["https://w3id.org/security#proof"] = {
+          "@graph": {
+            "@type": "https://w3id.org/security#Ed25519Signature2018",
+            "http://purl.org/dc/terms/created": {
+              "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+              "@value": "2018-02-13T21:29:33Z"
+            },
+            "http://purl.org/dc/terms/creator": {
+              "@id": testPublicKey.id
+            },
+            "https://w3id.org/security#jws":
+              "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19" +
+              ".." +
+              "Vxk5grPp62ZpFvJX2M6-If_WUcFQRHzsmiRRLDAAbyr7AQ3_ID-4jYNMejUoh" +
+              "V-eJTO_7huj582RIt6DAk-KAA"
+          }
+        };
+        testDocumentSignedAltered = clone(testDocumentSigned);
+        testDocumentSignedAltered.name = 'Manu Spornoneous';
+
+        testProofPurpose = 'https://example.org/special-authentication';
+        testDocumentWithProofPurposeSigned = clone(testDocument);
+        testDocumentWithProofPurposeSigned
+          ["https://w3id.org/security#proof"] = {
+          "@graph": {
+            "@type": "https://w3id.org/security#Ed25519Signature2018",
+            "http://purl.org/dc/terms/created": {
+              "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+              "@value": "2018-02-13T21:26:08Z"
+            },
+            "http://purl.org/dc/terms/creator": {
+              "@id": testPublicKey.id
+            },
+            "https://w3id.org/security#jws":
+              "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19" +
+              ".." +
+              "UNcNI6x6KDA_hHux2RLM8_i9aoZY34GwcZevOjkSh22WoNB4FcP6dNgf2nKzX" +
+              "XJIr-IqUnEwMYeD36fc8jv1AA",
+            "https://w3id.org/security#proofPurpose": {
+              "@id": testProofPurpose
+            }
+          }
+        };
+
+        testInvalidPublicKey = clone(testPublicKeyEd25519);
+        testInvalidPublicKey.id = testPublicKeyUrl2;
+      });
+
+      it('should successfully sign a local document', function(done) {
+        jsigs.sign(testDocument, {
+          algorithm: 'Ed25519Signature2018',
+          creator: testPublicKey.id,
+          privateKeyBase58: testPrivateKeyEd25519Base58,
+        }, function(err, signedDocument) {
+          assert.ifError(err);
+          assert.notEqual(
+            signedDocument['https://w3id.org/security#proof'], undefined,
+            'signature was not created');
+          assert.equal(
+            signedDocument['https://w3id.org/security#proof']
+              ['@graph']['http://purl.org/dc/terms/creator']['@id'],
+            testPublicKey.id,
+            'creator key for signature is wrong');
+          done();
+        });
+      });
+
+      it('should successfully verify a local signed document', function(done) {
+        jsigs.verify(testDocumentSigned, {
+          publicKey: testPublicKey,
+          publicKeyOwner: testPublicKeyOwner,
+          // timestamp is quite old, do not check it, it is used to ensure
+          // a static document is being checked
+          checkTimestamp: false
+        }, function(err, result) {
+          assert.ifError(err);
+          assert.equal(result.verified, true, 'signature verification failed');
+          done();
+        });
+      });
+
+      it('should successfully sign a local document w/proofPurpose',
+        function(done) {
+        jsigs.sign(testDocument, {
+          algorithm: 'Ed25519Signature2018',
+          creator: testPublicKey.id,
+          privateKeyBase58: testPrivateKeyEd25519Base58,
+          proof: {
+            '@context': 'https://w3id.org/security/v2',
+            proofPurpose: testProofPurpose
+          }
+        }, function(err, signedDocument) {
+          assert.ifError(err);
+          assert.notEqual(
+            signedDocument['https://w3id.org/security#proof'], undefined,
+            'signature was not created');
+          assert.equal(
+            signedDocument['https://w3id.org/security#proof']
+              ['@graph']['http://purl.org/dc/terms/creator']['@id'],
+            testPublicKey.id,
+            'creator key for signature is wrong');
+          assert.equal(
+            signedDocument['https://w3id.org/security#proof']
+              ['@graph']['https://w3id.org/security#proofPurpose']['@id'],
+            testProofPurpose, 'proof purpose for signature is wrong');
+          done();
+        });
+      });
+
+      it('should successfully verify a local signed document w/proofPurpose',
+        function(done) {
+        jsigs.verify(testDocumentWithProofPurposeSigned, {
+          publicKey: testPublicKey,
+          publicKeyOwner: testPublicKeyOwner,
+          // timestamp is quite old, do not check it, it is used to ensure
+          // a static document is being checked
+          checkTimestamp: false
+        }, function(err, result) {
+          assert.ifError(err);
+          assert.equal(result.verified, true, 'signature verification failed');
+          done();
+        });
+      });
+
+      it('verify should return false if the document was signed by a ' +
+        'different private key', function(done) {
+        jsigs.verify(testDocumentSigned, {
+          publicKey: testInvalidPublicKey,
+          publicKeyOwner: testPublicKeyOwner,
+          // timestamp is quite old, do not check it, it is used to ensure
+          // a static document is being checked
+          checkTimestamp: false
+        }, function(err, result) {
+          assert.ifError(err);
+          assert.equal(
+            result.verified, false,
+            'signature verification should have failed');
+          done();
+        });
+      });
+
+      it('verify returns false if the document was altered after signing',
+        function(done) {
+          jsigs.verify(testDocumentSignedAltered, {
+            publicKey: testPublicKey,
+            publicKeyOwner: testPublicKeyOwner,
+            // timestamp is quite old, do not check it, it is used to ensure
+            // a static document is being checked
+            checkTimestamp: false
+          }, function(err, result) {
+            assert.ifError(err);
+            assert.equal(
+              result.verified, false,
+              'signature verification should have failed');
+            done();
+          });
+        });
+
+      it('should successfully sign a local document' +
+        ' w/promises API', function(done) {
+        jsigs.sign(testDocument, {
+          algorithm: 'Ed25519Signature2018',
+          privateKeyBase58: testPrivateKeyEd25519Base58,
+          creator: testPublicKey.id
+        }).then(function(signedDocument) {
+          assert.notEqual(
+            signedDocument['https://w3id.org/security#proof'], undefined,
+            'signature was not created');
+          assert.equal(
+            signedDocument['https://w3id.org/security#proof']
+              ['@graph']['http://purl.org/dc/terms/creator']['@id'],
+            testPublicKey.id, 'creator key for signature is wrong');
+        }).then(done, done);
+      });
+
+      it('should successfully verify a local signed document' +
+        ' w/promises API', function(done) {
+        jsigs.verify(testDocumentSigned, {
+          publicKey: testPublicKey,
+          publicKeyOwner: testPublicKeyOwner,
+          // timestamp is quite old, do not check it, it is used to ensure
+          // a static document is being checked
+          checkTimestamp: false
+        }).then(function(result) {
+          assert.equal(result.verified, true, 'signature verification failed');
+        }).then(done, done);
+      });
+
+      it('should successfully sign a local document w/proofPurpose' +
+        ' w/promises API', function(done) {
+        jsigs.sign(testDocument, {
+          algorithm: 'Ed25519Signature2018',
+          privateKeyBase58: testPrivateKeyEd25519Base58,
+          creator: testPublicKey.id,
+          proof: {
+            '@context': 'https://w3id.org/security/v2',
+            proofPurpose: testProofPurpose
+          }
+        }).then(function(signedDocument) {
+          assert.notEqual(
+            signedDocument['https://w3id.org/security#proof'], undefined,
+            'signature was not created');
+          assert.equal(
+            signedDocument['https://w3id.org/security#proof']
+              ['@graph']['http://purl.org/dc/terms/creator']['@id'],
+            testPublicKey.id, 'creator key for signature is wrong');
+          assert.equal(
+            signedDocument['https://w3id.org/security#proof']
+              ['@graph']['https://w3id.org/security#proofPurpose']['@id'],
+            testProofPurpose, 'proof purpose for signature is wrong');
+        }).then(done, done);
+      });
+
+      it('should successfully verify a local signed document w/proofPurpose' +
+        ' w/promises API', function(done) {
+        jsigs.verify(testDocumentWithProofPurposeSigned, {
+          publicKey: testPublicKey,
+          publicKeyOwner: testPublicKeyOwner,
+          // timestamp is quite old, do not check it, it is used to ensure
+          // a static document is being checked
+          checkTimestamp: false
+        }).then(function(result) {
+          assert.equal(result.verified, true, 'signature verification failed');
+        }).then(done, done);
+      });
+
+      it('verify should return false if the document was signed by' +
+        ' a different private key w/promises API', function(done) {
+        jsigs.verify(testDocumentSigned, {
+          publicKey: testInvalidPublicKey,
+          publicKeyOwner: testPublicKeyOwner,
+          // timestamp is quite old, do not check it, it is used to ensure
+          // a static document is being checked
+          checkTimestamp: false
+        }).then(function(result) {
+          assert.equal(result.verified, false,
+            'signature verification should have failed but did not');
+        }).then(done, done);
+      });
+    });
   });
 
   context('with security context', function() {
@@ -1286,6 +1569,7 @@ describe('JSON-LD Signatures', function() {
 var testPublicKeyUrl = 'https://example.com/i/alice/keys/1';
 var testPublicKeyUrl2 = 'https://example.com/i/bob/keys/1';
 var testPublicKeyUrl3 = 'https://example.com/i/sally/keys/1';
+var testPublicKeyEd25519Url = 'https://example.com/i/carol/keys/1';
 var testPublicKeyPem =
   '-----BEGIN PUBLIC KEY-----\n' +
   'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC4R1AmYYyE47FMZgo708NhFU+t\n' +
@@ -1382,6 +1666,11 @@ var testPrivateKeyPem3 = '-----BEGIN RSA PRIVATE KEY-----\r\n' +
   '4xiV0oxUFjPHA6qt0hGsk7/0P1Pe15Kg5n6+w2JzFpN5ix7DWus57PBKbMUkE64y\n' +
   'KBFLr5ANLqWLaVrSw5Uep1s5VvXyOrltUN/1SUoCoNZuM/FakRc=\n' +
   '-----END RSA PRIVATE KEY-----';
+const testPublicKeyEd25519Base58 =
+  'GycSSui454dpYRKiFdsQ5uaE8Gy3ac6dSMPcAoQsk8yq';
+const testPrivateKeyEd25519Base58 =
+  '3Mmk4UzTRJTEtxaKk61LxtgUxAa2Dg36jF6VogPtRiKvfpsQWKPCLesKSV182RMmvM' +
+  'JKk6QErH3wgdHp8itkSSiF';
 
 var testPublicKey = {
   '@context': jsigs.SECURITY_CONTEXT_URL,
@@ -1419,6 +1708,19 @@ var testPublicKeyOwner3 = {
   '@context': jsigs.SECURITY_CONTEXT_URL,
   id: 'https://example.com/i/sally',
   publicKey: [testPublicKey3]
+};
+const testPublicKeyEd25519 = {
+  '@context': jsigs.SECURITY_CONTEXT_URL,
+  id: testPublicKeyEd25519Url,
+  type: 'CryptographicKey',
+  owner: 'https://example.com/i/carol',
+  publicKeyBase58: testPublicKeyEd25519Base58
+};
+const testPublicKeyEd25519Owner = {
+  '@context': jsigs.SECURITY_CONTEXT_URL,
+  id: 'https://example.com/i/carol',
+  publicKey: [testPublicKeyEd25519],
+  "https://example.org/special-authentication": {id: testPublicKeyEd25519Url}
 };
 var getterDocs = {};
 getterDocs[testPublicKey3.id] = testPublicKey3;
