@@ -1,7 +1,16 @@
 # jsonld-signatures ChangeLog
 
+### Added
+- Expose `suites` on main API to allow for other libs to
+  create plugins that extend them.
+
+### Changed
+- Do not require `creator` option.
+
 ### Fixed
 - Only include `publicKey` in result if `creator` is present.
+- Do not override `created` in `proof` option if `date` is not
+  given in `options`.
 
 ## 2.0.1 - 2018-02-13
 
