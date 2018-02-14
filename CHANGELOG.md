@@ -1,5 +1,7 @@
 # jsonld-signatures ChangeLog
 
+## 2.0.0 - 2018-02-13
+
 ### Changed
 - Add webpack support. Build and distribute bundles in `dist` directory.
 - Add node6 support. Use babel to generate files in `dist/node6` directory.
