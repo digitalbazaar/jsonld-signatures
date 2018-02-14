@@ -1,5 +1,7 @@
 # jsonld-signatures ChangeLog
 
+## 2.1.1 - 2018-02-14
+
 ### Fixed
 - Ensure proof node is sanitized prior to use as verification
   data.
