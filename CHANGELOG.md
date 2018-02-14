@@ -1,5 +1,7 @@
 # jsonld-signatures ChangeLog
 
+## 2.1.0 - 2018-02-14
+
 ### Added
 - Expose `suites` on main API to allow for other libs to
   create plugins that extend them.
