@@ -34,7 +34,6 @@
   "dependencies": {
     "bitcore-message": "github:CoMakery/bitcore-message#dist",
     "bs58": "^4.0.1",
-    "cross-env": "^5.1.3",
     "ed25519": "0.0.4",
     "jsonld": "^0.5.20",
     "node-forge": "^0.7.1",
@@ -49,6 +48,7 @@
     "chai": "^4.1.2",
     "commander": "^2.14.1",
     "core-js": "^2.5.3",
+    "cross-env": "^5.1.3",
     "jscs": "^3.0.0",
     "jshint": "^2.9.1",
     "karma": "^2.0.0",
