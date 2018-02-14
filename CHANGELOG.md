@@ -1,5 +1,7 @@
 # jsonld-signatures ChangeLog
 
+## 2.0.1 - 2018-02-13
+
 ### Fixed
 - Move cross-env to devDependencies.
 
