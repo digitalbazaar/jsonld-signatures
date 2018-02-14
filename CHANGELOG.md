@@ -1,5 +1,8 @@
 # jsonld-signatures ChangeLog
 
+### Fixed
+- Only include `publicKey` in result if `creator` is present.
+
 ## 2.0.1 - 2018-02-13
 
 ### Fixed
