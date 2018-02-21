@@ -1,5 +1,7 @@
 # jsonld-signatures ChangeLog
 
+## 2.1.3 - 2018-02-21
+
 ### Fixed
 - Ensure `proofPurpose` property's objects are framed as
   application suites containing references to public keys
