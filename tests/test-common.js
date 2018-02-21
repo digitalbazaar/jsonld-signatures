@@ -1678,7 +1678,7 @@ const testPrivateKeyEd25519Base58 =
 var testPublicKey = {
   '@context': jsigs.SECURITY_CONTEXT_URL,
   id: testPublicKeyUrl,
-  type: 'CryptographicKey',
+  type: ['CryptographicKey', 'RsaVerificationKey2018'],
   owner: 'https://example.com/i/alice',
   publicKeyPem: testPublicKeyPem
 };
@@ -1691,7 +1691,7 @@ var testPublicKeyOwner = {
 var testPublicKey2 = {
   '@context': jsigs.SECURITY_CONTEXT_URL,
   id: testPublicKeyUrl2,
-  type: 'CryptographicKey',
+  type: ['CryptographicKey', 'RsaVerificationKey2018'],
   owner: 'https://example.com/i/bob',
   publicKeyPem: testPublicKeyPem2
 };
@@ -1703,7 +1703,7 @@ var testPublicKeyOwner2 = {
 var testPublicKey3 = {
   '@context': jsigs.SECURITY_CONTEXT_URL,
   id: testPublicKeyUrl3,
-  type: 'CryptographicKey',
+  type: ['CryptographicKey', 'RsaVerificationKey2018'],
   owner: 'https://example.com/i/sally',
   publicKeyPem: testPublicKeyPem3
 };
@@ -1715,7 +1715,7 @@ var testPublicKeyOwner3 = {
 const testPublicKeyEd25519 = {
   '@context': jsigs.SECURITY_CONTEXT_URL,
   id: testPublicKeyEd25519Url,
-  type: 'CryptographicKey',
+  type: 'Ed25519VerificationKey2018',
   owner: 'https://example.com/i/carol',
   publicKeyBase58: testPublicKeyEd25519Base58
 };
