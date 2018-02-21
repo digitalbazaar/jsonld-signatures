@@ -1686,7 +1686,9 @@ var testPublicKeyOwner = {
   '@context': jsigs.SECURITY_CONTEXT_URL,
   id: 'https://example.com/i/alice',
   publicKey: [testPublicKey],
-  "https://example.org/special-authentication": {id: testPublicKeyUrl}
+  "https://example.org/special-authentication": {
+    publicKey: testPublicKeyUrl
+  }
 };
 var testPublicKey2 = {
   '@context': jsigs.SECURITY_CONTEXT_URL,
@@ -1723,7 +1725,9 @@ const testPublicKeyEd25519Owner = {
   '@context': jsigs.SECURITY_CONTEXT_URL,
   id: 'https://example.com/i/carol',
   publicKey: [testPublicKeyEd25519],
-  "https://example.org/special-authentication": {id: testPublicKeyEd25519Url}
+  "https://example.org/special-authentication": {
+    publicKey: testPublicKeyEd25519Url
+  }
 };
 var getterDocs = {};
 getterDocs[testPublicKey3.id] = testPublicKey3;
