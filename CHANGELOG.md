@@ -1,5 +1,7 @@
 # jsonld-signatures ChangeLog
 
+## 2.1.2 - 2018-02-21
+
 ### Fixed
 - Ensure key types are validated.
 
