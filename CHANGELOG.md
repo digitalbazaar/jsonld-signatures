@@ -1,5 +1,12 @@
 # jsonld-signatures ChangeLog
 
+## 2.1.4 - 2018-02-22
+
+### Fixed
+- Use RSASSA-PSS with `RsaSignature2018`, not RSASSA-PKCS1-v1_5. Uses
+  PS256 JWS algorithm (sha256 for all hashing including mgf1 and
+  a salt length that matches the digest length, i.e. 32 bytes).
+
 ## 2.1.3 - 2018-02-21
 
 ### Fixed
