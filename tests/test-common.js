@@ -705,17 +705,17 @@ describe('JSON-LD Signatures', function() {
             "@type": "https://w3id.org/security#RsaSignature2018",
             "http://purl.org/dc/terms/created": {
               "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
-              "@value": "2018-02-08T22:34:34Z"
+              "@value": "2018-02-22T15:15:31Z"
             },
             "http://purl.org/dc/terms/creator": {
               "@id": testPublicKeyUrl
             },
             "https://w3id.org/security#jws":
-              "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19" +
-              ".." +
-              "lnIJh_mN8ZmbgK7cNc0BTbkIkBDGUNoGdPhteCl6qm-ftc_yFegyyCiFf4ts" +
-              "o3hF8avIkxUYWaiSPiK0x7t7hbIiSj__6uUBG8JxM5sOAanQGRgfhR1IMcvX" +
-              "LhNTKnMvW0RGaGfsHycJNb0854yjzxC9NnRfr4mOTjOk1RTVNno"
+            "eyJhbGciOiJQUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19" +
+            ".." +
+            "jP1w5x9XutIkoEqNI7tfbPbq0XK0JHRLtUWIiydIWDRVjG35CC4JTNY3P6j6Wx" +
+            "FxIo2jS1UA0GFfxyHrwbIa0BnmP-pM-zAWyi0vtmUmHprw7tG5vSTeUBauly9i" +
+            "m4Dto6NE7FgUrLAn8xfz6JbPPTJn9VMMT2frXQtnd0oYJs8"
           }
         };
         testDocumentSignedAltered = clone(testDocumentSigned);
@@ -729,17 +729,17 @@ describe('JSON-LD Signatures', function() {
             "@type": "https://w3id.org/security#RsaSignature2018",
             "http://purl.org/dc/terms/created": {
               "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
-              "@value": "2018-02-09T15:43:51Z"
+              "@value": "2018-02-22T15:16:04Z"
             },
             "http://purl.org/dc/terms/creator": {
               "@id": testPublicKeyUrl
             },
             "https://w3id.org/security#jws":
-              "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19" +
+              "eyJhbGciOiJQUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19" +
               ".." +
-              "Yt-gd3cAqt8dwarLdHsrtNTv6PB-0YpgYjs8V3Hn9NzYA3Xlp-2N-ae4Ufnb" +
-              "vClAYMzqY3PJYLhxYoIX7o2bgv3DAfS8sLBptmvkXxiPMw2MSD0wpJX8_SVV" +
-              "b9O8_LhhDkr1NdKfdwJ-NPZ796Bwxth4zOjyb5KwJHGIp9FZqAs",
+              "KbIsIghAzxk5cs2uBYGO60RgV342Fppcz5AYy9u-BgbEbRwBlh0sB3wCvbKL" +
+              "eUlMyccltvqLUvhJTiW0mrM9TC-JAk4-Cr0zIQ9zrZ2g3SAHEe5hxT5dpCEg" +
+              "PB8uIZZV3XqxDgJRWgd1BvrA3hqHMqqh3CTh85KNa8wZqlTnjkM",
             "https://w3id.org/security#proofPurpose": {
               "@id": testProofPurpose
             }
