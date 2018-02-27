@@ -1,5 +1,11 @@
 # jsonld-signatures ChangeLog
 
+## 2.1.5 - 2018-02-27
+
+### Changed
+- Use `chloride`, a faster and better maintained implementation
+  of `Ed25519`.
+
 ## 2.1.4 - 2018-02-22
 
 ### Fixed
