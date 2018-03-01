@@ -1,5 +1,7 @@
 # jsonld-signatures ChangeLog
 
+## 2.2.0 - 2018-03-01
+
 ### Changed
 - Update jsonld to 1.0.0.
 
