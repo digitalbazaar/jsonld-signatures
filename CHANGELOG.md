@@ -1,5 +1,8 @@
 # jsonld-signatures ChangeLog
 
+### Fixed
+- Fix 1.0 compatibility issue with update of jsonld to 1.0.1.
+
 ## 2.2.0 - 2018-03-01
 
 ### Changed
