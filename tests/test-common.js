@@ -955,9 +955,6 @@ describe('JSON-LD Signatures', function() {
       let testPublicKeyOwner;
 
       beforeEach(function() {
-        if(!options.nodejs) {
-          this.skip();
-        }
         testPublicKey = clone(testPublicKeyEd25519);
         testPublicKeyOwner = clone(testPublicKeyEd25519Owner);
 
