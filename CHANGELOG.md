@@ -1,5 +1,10 @@
 # jsonld-signatures ChangeLog
 
+## 2.2.2 - 2018-03-08
+
+### Fixed
+- Fix bug with explicitly passed `undefined` options.
+
 ## 2.2.1 - 2018-03-01
 
 ### Fixed
