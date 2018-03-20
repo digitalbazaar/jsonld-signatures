@@ -1,5 +1,10 @@
 # jsonld-signatures ChangeLog
 
+## 2.3.0 - 2018-03-20
+
+### Added
+- Add in-browser support for ed25519.
+
 ## 2.2.2 - 2018-03-08
 
 ### Fixed
