@@ -36,7 +36,7 @@
     "bs58": "^4.0.1",
     "chloride": "^2.2.8",
     "jsonld": "^1.0.1",
-    "node-forge": "^0.7.3",
+    "node-forge": "^0.7.4",
     "semver": "^5.5.0"
   },
   "devDependencies": {
