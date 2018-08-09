@@ -681,6 +681,7 @@ describe('JSON-LD Signatures', function() {
 
       var testDocument;
       var testDocumentSigned;
+      var testDocumentWithNonceSigned;
       var testDocumentSignedAltered;
       var testDocumentWithProofPurposeSigned;
       var testInvalidPublicKey;
@@ -720,6 +721,28 @@ describe('JSON-LD Signatures', function() {
         };
         testDocumentSignedAltered = clone(testDocumentSigned);
         testDocumentSignedAltered.name = 'Manu Spornoneous';
+
+        testDocumentWithNonceSigned = clone(testDocument);
+        testDocumentWithNonceSigned
+          ["https://w3id.org/security#proof"] = {
+          "@graph": {
+            "@type": "https://w3id.org/security#RsaSignature2018",
+            "http://purl.org/dc/terms/created": {
+              "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+              "@value": "2018-08-09T00:41:58Z"
+            },
+            "http://purl.org/dc/terms/creator": {
+              "@id": "https://example.com/i/alice/keys/1"
+            },
+            "https://w3id.org/security#jws":
+              "eyJhbGciOiJQUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19" +
+              ".." +
+              "UeLIzScbCKv8czp-qiGMQ_OjhL_ZtilK--ChgkLjpXRKAKcahXGtU8QGz31r" +
+              "yWsSM3mbAdDj4jl74v9kLpc6UkNoYxf2GDq-gmr_3PU7JExnPznVwedRC7Fv" +
+              "vvDlPrNFwDkhU8m2lYAtD62RrKhgv_qMorGdVCIv9CnrQ1Swh90",
+            "https://w3id.org/security#nonce": "this-is-a-nonce"
+          }
+        };
 
         testProofPurpose = 'https://example.org/special-authentication';
         testDocumentWithProofPurposeSigned = clone(testDocument);
@@ -776,6 +799,43 @@ describe('JSON-LD Signatures', function() {
           // timestamp is quite old, do not check it, it is used to ensure
           // a static document is being checked
           checkTimestamp: false
+        }, function(err, result) {
+          assert.ifError(err);
+          assert.equal(result.verified, true, 'signature verification failed');
+          done();
+        });
+      });
+
+      it('should successfully sign a local document w/nonce', function(done) {
+        jsigs.sign(testDocument, {
+          algorithm: 'RsaSignature2018',
+          creator: testPublicKeyUrl,
+          privateKeyPem: testPrivateKeyPem,
+          nonce: 'this-is-a-nonce'
+        }, function(err, signedDocument) {
+          assert.ifError(err);
+          assert.notEqual(
+            signedDocument['https://w3id.org/security#proof'], undefined,
+            'signature was not created');
+          assert.equal(
+            signedDocument['https://w3id.org/security#proof']
+              ['@graph']['http://purl.org/dc/terms/creator']['@id'],
+            testPublicKeyUrl,
+            'creator key for signature is wrong');
+          done();
+        });
+      });
+
+      it('should successfully verify a document w/nonce', function(done){
+        jsigs.verify(testDocumentWithNonceSigned, {
+          publicKey: testPublicKey,
+          publicKeyOwner: testPublicKeyOwner,
+          // timestamp is quite old, do not check it, it is used to ensure
+          // a static document is being checked
+          checkTimestamp: false,
+          checkNonce: function(nonce, options, callback) {
+            callback(null, nonce === 'this-is-a-nonce');
+          }
         }, function(err, result) {
           assert.ifError(err);
           assert.equal(result.verified, true, 'signature verification failed');
