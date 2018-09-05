@@ -1,5 +1,7 @@
 # jsonld-signatures ChangeLog
 
+## 2.3.1 - 2018-09-05
+
 ### Changed
 - Optimize `LinkedDataSignature` `createVerifyData` to remove
   one round of compaction and one round of expansion. This
