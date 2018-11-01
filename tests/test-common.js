@@ -86,6 +86,8 @@ class NoOpProofPurpose extends ProofPurpose {
   }
 }
 
+jsigs.proofPurposes['NoOpProofPurpose'] = NoOpProofPurpose;
+
 // run tests
 describe('JSON-LD Signatures', function() {
   context('common', function() {
@@ -866,7 +868,7 @@ describe('JSON-LD Signatures', function() {
           algorithm: 'RsaSignature2018',
           creator: testPublicKeyUrl,
           privateKeyPem: testPrivateKeyPem,
-          proofPurpose: NoOpProofPurpose,
+          proofPurpose: 'NoOpProofPurpose',
         }, function(err, signedDocument) {
           assert.ifError(err);
           assert.notEqual(
@@ -893,7 +895,7 @@ describe('JSON-LD Signatures', function() {
           // timestamp is quite old, do not check it, it is used to ensure
           // a static document is being checked
           checkTimestamp: false,
-          proofPurpose: NoOpProofPurpose,
+          proofPurpose: 'NoOpProofPurpose',
         }, function(err, result) {
           assert.ifError(err);
           assert.equal(result.verified, true, 'signature verification failed');
@@ -971,7 +973,7 @@ describe('JSON-LD Signatures', function() {
           algorithm: 'RsaSignature2018',
           privateKeyPem: testPrivateKeyPem,
           creator: testPublicKeyUrl,
-          proofPurpose: NoOpProofPurpose,
+          proofPurpose: 'NoOpProofPurpose',
         }).then(function(signedDocument) {
           assert.notEqual(
             signedDocument['https://w3id.org/security#proof'], undefined,
@@ -995,7 +997,7 @@ describe('JSON-LD Signatures', function() {
           // timestamp is quite old, do not check it, it is used to ensure
           // a static document is being checked
           checkTimestamp: false,
-          proofPurpose: NoOpProofPurpose,
+          proofPurpose: 'NoOpProofPurpose',
         }).then(function(result) {
           assert.equal(result.verified, true, 'signature verification failed');
         }).then(done, done);
@@ -1131,7 +1133,7 @@ describe('JSON-LD Signatures', function() {
           algorithm: 'Ed25519Signature2018',
           creator: testPublicKey.id,
           privateKeyBase58: testPrivateKeyEd25519Base58,
-          proofPurpose: NoOpProofPurpose,
+          proofPurpose: 'NoOpProofPurpose',
         }, function(err, signedDocument) {
           assert.ifError(err);
           assert.notEqual(
@@ -1158,7 +1160,7 @@ describe('JSON-LD Signatures', function() {
           // timestamp is quite old, do not check it, it is used to ensure
           // a static document is being checked
           checkTimestamp: false,
-          proofPurpose: NoOpProofPurpose,
+          proofPurpose: 'NoOpProofPurpose',
         }, function(err, result) {
           assert.ifError(err);
           assert.equal(result.verified, true, 'signature verification failed');
@@ -1236,7 +1238,7 @@ describe('JSON-LD Signatures', function() {
           algorithm: 'Ed25519Signature2018',
           privateKeyBase58: testPrivateKeyEd25519Base58,
           creator: testPublicKey.id,
-          proofPurpose: NoOpProofPurpose,
+          proofPurpose: 'NoOpProofPurpose',
         }).then(function(signedDocument) {
           assert.notEqual(
             signedDocument['https://w3id.org/security#proof'], undefined,
@@ -1260,7 +1262,7 @@ describe('JSON-LD Signatures', function() {
           // timestamp is quite old, do not check it, it is used to ensure
           // a static document is being checked
           checkTimestamp: false,
-          proofPurpose: NoOpProofPurpose,
+          proofPurpose: 'NoOpProofPurpose',
         }).then(function(result) {
           assert.equal(result.verified, true, 'signature verification failed');
         }).then(done, done);
