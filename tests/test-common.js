@@ -78,10 +78,10 @@ class NoOpProofPurpose extends ProofPurpose {
     // TODO: We need a more permanent URI for this.  Where would it go?
     this.uri = noOpPpUri;
   }
-  async verify(document, proof, ppOptions) {
+  async verify(document, proof, proofPurposeOptions) {
     return true;
   }
-  async addFieldsToProof(proof, ppOptions) {
+  async addFieldsToProof(proof, proofPurposeOptions) {
     return proof;
   }
 }
