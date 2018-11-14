@@ -5,7 +5,6 @@
  * @author Manu Sporny <msporny@digitalbazaar.com>
  *
  * Copyright (c) 2014-2018 Digital Bazaar, Inc. All rights reserved.
-
  */
 
 module.exports = function(options) {
@@ -76,11 +75,12 @@ const noOpPpUri = 'https://example.org/special-authentication';
 class NoOpProofPurpose extends ProofPurpose {
   constructor(injector) {
     super(injector);
-    // TODO: We need a more permanent URI for this.  Where would it go?
+    // if the value of `uri` is *not* defined in SECURITY_CONTEXT then it must
+    // be in expanded form as demonstrated here
     this.uri = noOpPpUri;
   }
   async verify({document, proof, purpose}) {
-    return true;
+    return {verified: true};
   }
   // the proof provided here is compacted into the SECURITY_CONTEXT
   async createProof({proof, purpose}) {
@@ -768,6 +768,7 @@ describe('JSON-LD Signatures', function() {
         };
 
         testProofPurpose = noOpPpUri;
+
         testDocumentWithProofPurposeSigned = clone(testDocument);
         testDocumentWithProofPurposeSigned
           ["https://w3id.org/security#proof"] = {
@@ -899,7 +900,7 @@ describe('JSON-LD Signatures', function() {
           // timestamp is quite old, do not check it, it is used to ensure
           // a static document is being checked
           checkTimestamp: false,
-          proofPurpose: 'NoOpProofPurpose',
+          purpose: {proofPurpose: 'NoOpProofPurpose'},
         }, function(err, result) {
           assert.ifError(err);
           assert.equal(result.verified, true, 'signature verification failed');
