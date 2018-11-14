@@ -5,6 +5,7 @@
  * @author Manu Sporny <msporny@digitalbazaar.com>
  *
  * Copyright (c) 2014-2018 Digital Bazaar, Inc. All rights reserved.
+
  */
 
 module.exports = function(options) {
