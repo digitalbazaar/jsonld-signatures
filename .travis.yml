@@ -19,7 +19,8 @@ script:
 # only run karma tests for one node version
 matrix:
   include:
-  - node_js: "6"
+  - name: "Browser Unit Tests"
+    node_js: "6"
     env: BUNDLER=webpack
 #  - node_js: "6"
 #    env: BUNDLER=browserify
