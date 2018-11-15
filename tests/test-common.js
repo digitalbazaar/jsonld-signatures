@@ -7,6 +7,18 @@
  * Copyright (c) 2014-2018 Digital Bazaar, Inc. All rights reserved.
  */
 
+/* eslint-disable indent */
+
+// endsWith polyfill
+if(!String.prototype.endsWith) {
+	String.prototype.endsWith = function(search, this_len) {
+		if(this_len === undefined || this_len > this.length) {
+			this_len = this.length;
+		}
+		return this.substring(this_len - search.length, this_len) === search;
+	};
+}
+
 module.exports = function(options) {
 
 'use strict';
@@ -821,6 +833,40 @@ describe('JSON-LD Signatures', function() {
         });
       });
 
+      it('signs a local document using a custom signer', async () => {
+        let err;
+        let signedDocument;
+        const testSignatureValue = 'ABCDEFG122345';
+        try {
+          signedDocument = await jsigs.sign(testDocument, {
+            algorithm: 'RsaSignature2018',
+            signer: {
+              creator: testPublicKeyUrl,
+              sign: async ({message}) => {
+                assert.ok(message);
+                assert.equal(typeof message, 'object');
+                // the return value must be base64 encoded
+                return testSignatureValue;
+              }
+            }
+          });
+        } catch(e) {
+          err = e;
+        }
+        assert.ifError(err);
+        assert.notEqual(
+          signedDocument['https://w3id.org/security#proof'], undefined,
+          'signature was not created');
+        assert.equal(
+          signedDocument['https://w3id.org/security#proof']
+            ['@graph']['http://purl.org/dc/terms/creator']['@id'],
+          testPublicKeyUrl,
+          'creator key for signature is wrong');
+        assert.ok(signedDocument['https://w3id.org/security#proof']
+          ['@graph']['https://w3id.org/security#jws']
+          .endsWith(testSignatureValue));
+      });
+
       it('should successfully verify a local signed document', function(done) {
         jsigs.verify(testDocumentSigned, {
           publicKey: testPublicKey,
@@ -1131,6 +1177,40 @@ describe('JSON-LD Signatures', function() {
           );
           done();
         });
+      });
+
+      it('signs a local document using a custom signer', async () => {
+        let err;
+        let signedDocument;
+        const testSignatureValue = 'ABCDEFG122345';
+        try {
+          signedDocument = await jsigs.sign(testDocument, {
+            algorithm: 'Ed25519Signature2018',
+            signer: {
+              creator: testPublicKey.id,
+              sign: async ({message}) => {
+                assert.ok(message);
+                assert.equal(typeof message, 'object');
+                // the return value must be base64 encoded
+                return testSignatureValue;
+              }
+            }
+          });
+        } catch(e) {
+          err = e;
+        }
+        assert.ifError(err);
+        assert.notEqual(
+          signedDocument['https://w3id.org/security#proof'], undefined,
+          'signature was not created');
+        assert.equal(
+          signedDocument['https://w3id.org/security#proof']
+            ['@graph']['http://purl.org/dc/terms/creator']['@id'],
+          testPublicKey.id,
+          'creator key for signature is wrong');
+        assert.ok(signedDocument['https://w3id.org/security#proof']
+          ['@graph']['https://w3id.org/security#jws']
+          .endsWith(testSignatureValue));
       });
 
       it('should successfully verify a local signed document', function(done) {
