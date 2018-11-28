@@ -90,7 +90,7 @@ class NoOpProofPurpose extends ProofPurpose {
   }
 }
 
-jsigs.proofPurposes['NoOpProofPurpose'] = NoOpProofPurpose;
+jsigs.proofPurposes.use('NoOpProofPurpose', NoOpProofPurpose);
 
 // run tests
 describe('JSON-LD Signatures', function() {
