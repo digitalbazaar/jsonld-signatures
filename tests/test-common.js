@@ -903,7 +903,6 @@ describe('JSON-LD Signatures', function() {
           checkTimestamp: false,
           purpose: 'NoOpProofPurpose',
         }, function(err, result) {
-          console.log({err, result});
           assert.ifError(err);
           assert.equal(result.verified, true, 'signature verification failed');
           done();
@@ -1169,8 +1168,6 @@ describe('JSON-LD Signatures', function() {
           checkTimestamp: false,
           purpose: 'NoOpProofPurpose',
         }, function(err, result) {
-          console.log(JSON.stringify(
-            {err, result, testDocumentWithProofPurposeSigned}, null, 2));
           assert.ifError(err);
           assert.equal(result.verified, true, 'signature verification failed');
           done();
