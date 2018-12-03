@@ -522,6 +522,8 @@ describe('JSON-LD Signatures', function() {
     }); // end signing and verify Graph2015
 
     describe('signing and verify EcdsaKoblitzSignature2016', function() {
+      // We don't compare the signature of the signedDocument against the
+      // static test document since the signature is non-deterministic
 
       var testDocument;
       var testDocumentSigned;
@@ -702,6 +704,8 @@ describe('JSON-LD Signatures', function() {
     });
 
     describe('signing and verify RsaSignature2018', function() {
+      // We don't compare the signature of the signedDocument against the
+      // static test document since the signature is non-deterministic
 
       var testDocument;
       var testDocumentSigned;
@@ -1513,6 +1517,8 @@ describe('JSON-LD Signatures', function() {
       });
 
     describe('signing and verify EcdsaKoblitzSignature2016', function() {
+      // We don't compare the signature of the signedDocument against the
+      // static test document since the signature is non-deterministic
       var testDocument;
       var testDocumentSigned;
       var testPrivateKeyWif;
