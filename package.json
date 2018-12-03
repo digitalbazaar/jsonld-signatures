@@ -37,11 +37,12 @@
     "chloride": "^2.2.8",
     "jsonld": "^1.1.0",
     "node-forge": "^0.7.4",
-    "semver": "^5.6.0"    
+    "semver": "^5.6.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-node6-es6": "^11.2.5",
     "babel-register": "^6.26.0",
