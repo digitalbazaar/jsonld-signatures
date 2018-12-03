@@ -1101,10 +1101,13 @@ describe('JSON-LD Signatures', function() {
       });
 
       it('should successfully sign a local document', function(done) {
+        const date = testDocumentSigned['https://w3id.org/security#proof']
+          ['@graph']['http://purl.org/dc/terms/created']['@value'];
         jsigs.sign(testDocument, {
           algorithm: 'Ed25519Signature2018',
           creator: testPublicKey.id,
           privateKeyBase58: testPrivateKeyEd25519Base58,
+          date
         }, function(err, signedDocument) {
           assert.ifError(err);
           assert.notEqual(
@@ -1115,6 +1118,13 @@ describe('JSON-LD Signatures', function() {
               ['@graph']['http://purl.org/dc/terms/creator']['@id'],
             testPublicKey.id,
             'creator key for signature is wrong');
+          assert.equal(
+            signedDocument['https://w3id.org/security#proof']['@graph']
+            ['https://w3id.org/security#jws'],
+            testDocumentSigned['https://w3id.org/security#proof']['@graph']
+              ['https://w3id.org/security#jws'],
+            'signature is wrong'
+          );
           done();
         });
       });
@@ -1135,11 +1145,15 @@ describe('JSON-LD Signatures', function() {
 
       it('should successfully sign a local document w/proofPurpose',
         function(done) {
+        const date = testDocumentWithProofPurposeSigned
+          ['https://w3id.org/security#proof']['@graph']
+          ['http://purl.org/dc/terms/created']['@value'];
         jsigs.sign(testDocument, {
           algorithm: 'Ed25519Signature2018',
           creator: testPublicKey.id,
           privateKeyBase58: testPrivateKeyEd25519Base58,
           purpose: 'NoOpProofPurpose',
+          date
         }, function(err, signedDocument) {
           assert.ifError(err);
           assert.notEqual(
@@ -1154,6 +1168,14 @@ describe('JSON-LD Signatures', function() {
             signedDocument['https://w3id.org/security#proof']
               ['@graph']['https://w3id.org/security#proofPurpose']['@id'],
             testProofPurpose, 'proof purpose for signature is wrong');
+          assert.equal(
+            signedDocument['https://w3id.org/security#proof']['@graph']
+            ['https://w3id.org/security#jws'],
+            testDocumentWithProofPurposeSigned
+              ['https://w3id.org/security#proof']['@graph']
+              ['https://w3id.org/security#jws'],
+            'signature is wrong'
+          );
           done();
         });
       });
@@ -1210,10 +1232,13 @@ describe('JSON-LD Signatures', function() {
 
       it('should successfully sign a local document' +
         ' w/promises API', function(done) {
+        const date = testDocumentSigned['https://w3id.org/security#proof']
+          ['@graph']['http://purl.org/dc/terms/created']['@value'];
         jsigs.sign(testDocument, {
           algorithm: 'Ed25519Signature2018',
           privateKeyBase58: testPrivateKeyEd25519Base58,
-          creator: testPublicKey.id
+          creator: testPublicKey.id,
+          date
         }).then(function(signedDocument) {
           assert.notEqual(
             signedDocument['https://w3id.org/security#proof'], undefined,
@@ -1222,6 +1247,13 @@ describe('JSON-LD Signatures', function() {
             signedDocument['https://w3id.org/security#proof']
               ['@graph']['http://purl.org/dc/terms/creator']['@id'],
             testPublicKey.id, 'creator key for signature is wrong');
+          assert.equal(
+            signedDocument['https://w3id.org/security#proof']['@graph']
+            ['https://w3id.org/security#jws'],
+            testDocumentSigned['https://w3id.org/security#proof']['@graph']
+              ['https://w3id.org/security#jws'],
+            'signature is wrong'
+          );
         }).then(done, done);
       });
 
@@ -1240,11 +1272,15 @@ describe('JSON-LD Signatures', function() {
 
       it('should successfully sign a local document w/proofPurpose' +
         ' w/promises API', function(done) {
+        const date = testDocumentWithProofPurposeSigned
+          ['https://w3id.org/security#proof']['@graph']
+          ['http://purl.org/dc/terms/created']['@value'];
         jsigs.sign(testDocument, {
           algorithm: 'Ed25519Signature2018',
           privateKeyBase58: testPrivateKeyEd25519Base58,
           creator: testPublicKey.id,
           purpose: 'NoOpProofPurpose',
+          date
         }).then(function(signedDocument) {
           assert.notEqual(
             signedDocument['https://w3id.org/security#proof'], undefined,
@@ -1257,6 +1293,14 @@ describe('JSON-LD Signatures', function() {
             signedDocument['https://w3id.org/security#proof']
               ['@graph']['https://w3id.org/security#proofPurpose']['@id'],
             testProofPurpose, 'proof purpose for signature is wrong');
+          assert.equal(
+            signedDocument['https://w3id.org/security#proof']['@graph']
+            ['https://w3id.org/security#jws'],
+            testDocumentWithProofPurposeSigned
+              ['https://w3id.org/security#proof']['@graph']
+              ['https://w3id.org/security#jws'],
+            'signature is wrong'
+          );
         }).then(done, done);
       });
 
