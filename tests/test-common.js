@@ -1200,6 +1200,25 @@ describe('JSON-LD Signatures', function() {
         });
       });
 
+      it('should fail to verify a local signed document w/ unknown proofPurpose',
+        function(done) {
+        jsigs.verify(testDocumentWithProofPurposeSigned, {
+          publicKey: testPublicKey,
+          publicKeyOwner: testPublicKeyOwner,
+          // timestamp is quite old, do not check it, it is used to ensure
+          // a static document is being checked
+          checkTimestamp: false,
+          purpose: 'UnknownProofPurpose',
+        }, function(err, result) {
+          assert.notEqual(err, undefined);
+          assert.equal(result, undefined);
+          assert.equal(
+            err.message,
+            'Unsupported proof purpose "UnknownProofPurpose".')
+          done();
+        });
+      });
+
       it('verify should return false if the document was signed by a ' +
         'different private key', function(done) {
         jsigs.verify(testDocumentSigned, {
