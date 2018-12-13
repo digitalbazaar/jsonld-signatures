@@ -833,13 +833,15 @@ describe('JSON-LD Signatures', function() {
         });
       });
 
-      it('signs a local document using a custom signer', async () => {
+      it.skip('signs a local document using a custom/injected suite', async () => {
         let err;
         let signedDocument;
+        const suite = {
+          algorithm: 'RsaSignature2018'
+        };
         const testSignatureValue = 'ABCDEFG122345';
         try {
           signedDocument = await jsigs.sign(testDocument, {
-            algorithm: 'RsaSignature2018',
             signer: {
               creator: testPublicKeyUrl,
               sign: async ({message}) => {
@@ -1179,7 +1181,7 @@ describe('JSON-LD Signatures', function() {
         });
       });
 
-      it('signs a local document using a custom signer', async () => {
+      it.skip('signs a local document using a custom signer', async () => {
         let err;
         let signedDocument;
         const testSignatureValue = 'ABCDEFG122345';
