@@ -80,7 +80,7 @@ class NoOpProofPurpose extends ProofPurposeHandler {
     this.uri = noOpPpUri;
   }
   async validate({document, proof, purposeParameters}) {
-    return {verified: true};
+    return {valid: true};
   }
   // the proof provided here is compacted into the SECURITY_CONTEXT
   async createProof({proof, purposeParameters}) {
