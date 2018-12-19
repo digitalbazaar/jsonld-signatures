@@ -21,7 +21,6 @@ const outputs = [
     entry: [
       // 'babel-polyfill' is very large, list features explicitly
       'regenerator-runtime/runtime',
-      //'core-js/fn/array/includes',
       'core-js/fn/object/assign',
       'core-js/fn/promise',
       // main lib
@@ -70,7 +69,7 @@ outputs.forEach((info) => {
             options: {
               presets: ['env'],
               plugins: [
-                ['transform-object-rest-spread', {useBuiltIns: true }]
+                ['transform-object-rest-spread', {useBuiltIns: true}]
               ]
             }
           }

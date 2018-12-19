@@ -10,52 +10,47 @@
  * Bail with tests fail:
  *   BAIL=true
  *
- * @author Dave Longley
- * @author David I. Lehn
- *
  * Copyright (c) 2011-2018 Digital Bazaar, Inc. All rights reserved.
  */
 // FIXME: hack to ensure delay is set first
 //mocha.setup({delay: true, ui: 'bdd'});
 
+// test suite compatibility
+require('core-js/fn/string/ends-with');
+require('core-js/fn/string/starts-with');
+
 // jsonld compatibility
-//require('core-js/fn/array/includes');
+require('core-js/fn/array/from');
+require('core-js/fn/array/includes');
+require('core-js/fn/map');
 require('core-js/fn/object/assign');
 require('core-js/fn/promise');
+require('core-js/fn/set');
+require('core-js/fn/symbol');
 require('regenerator-runtime/runtime');
 
 const assert = require('chai').assert;
 const common = require('./test-common');
 const jsigs = require('..');
-const jsonld = require('../node_modules/jsonld/dist/jsonld.js');
+const mock = require('./mock-data');
+const {suites} = require('../lib/suites');
+const util = require('../lib/util');
 
-//var system = require('system');
-const forge = require('../node_modules/node-forge');
-window.forge = forge;
-const bitcoreMessage = require(
-  '../node_modules/bitcore-message/dist/bitcore-message.js');
-window.bitcoreMessage = bitcoreMessage;
-
-jsigs.promises({api: jsigs.promises});
+// const forge = require('node-forge');
+// window.forge = forge;
+// const bitcoreMessage = require(
+//   '../node_modules/bitcore-message/dist/bitcore-message.js');
+// window.bitcoreMessage = bitcoreMessage;
 
 const options = {
-  assert: assert,
-  jsigs: jsigs,
-  jsonld: jsonld,
+  assert,
+  jsigs,
+  mock,
+  suites,
+  util,
   nodejs: false
 };
 
-common(options).then(() => {
-  //run();
-}).then(() => {
-  // FIXME: karma phantomjs does not expose this API
-  if(window.phantom && window.phantom.exit) {
-    phantom.exit(0);
-  }
-}).catch(err => {
+common(options).catch(err => {
   console.error(err);
-  // FIXME: karma phantomjs does not expose this API
-  if(window.phantom && window.phantom.exit) {
-    phantom.exit(1);
-  }
 });

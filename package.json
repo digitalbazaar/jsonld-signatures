@@ -32,6 +32,7 @@
     "lib/**/*.js"
   ],
   "dependencies": {
+    "base64url": "^3.0.1",
     "bitcore-message": "github:CoMakery/bitcore-message#dist",
     "bs58": "^4.0.1",
     "chloride": "^2.2.8",
@@ -108,6 +109,8 @@
     "lib/index.js": "./lib/jsonld-signatures.js",
     "crypto": false,
     "bs58": false,
+    "base64url": false,
+    "bitcoreMessage": false,
     "chloride": false
   }
 }
