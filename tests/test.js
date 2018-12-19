@@ -19,11 +19,17 @@ const assert = require('chai').assert;
 const common = require('./test-common');
 const jsonld = require('../node_modules/jsonld');
 const jsigs = require('..');
+const mock = require('./mock-data');
+const {suites} = require('../lib/suites');
+const util = require('../lib/util');
 
 const options = {
-  assert: assert,
-  jsigs: jsigs,
-  jsonld: jsonld,
+  assert,
+  jsigs,
+  jsonld,
+  mock,
+  suites,
+  util,
   nodejs: true
 };
 

@@ -1,5 +1,14 @@
 # jsonld-signatures ChangeLog
 
+## 3.0.0 - TBD
+
+### Changed
+- **BREAKING**: `sign` and `verify` APIs require suites and proof purpose
+  instances to be passed.
+
+### Removed
+- **BREAKING**: Removed API `wrap` and injector support.
+
 ## 2.3.1 - 2018-09-05
 
 ### Changed
