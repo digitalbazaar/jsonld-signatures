@@ -32,8 +32,8 @@
     "lib/**/*.js"
   ],
   "dependencies": {
-    "bitcore-message": "github:CoMakery/bitcore-message#dist",
     "base64url": "^3.0.1",
+    "bitcore-message": "github:CoMakery/bitcore-message#dist",
     "bs58": "^4.0.1",
     "chloride": "^2.2.8",
     "jsonld": "^1.1.0",
@@ -110,6 +110,7 @@
     "crypto": false,
     "bs58": false,
     "base64url": false,
+    "bitcoreMessage": false,
     "chloride": false
   }
 }

@@ -1,21 +1,15 @@
 /**
  * Karam configuration for jsonld-signatures.
  *
- * @author Dave Longley
- * @author David I. Lehn
- *
- * Copyright (c) 2011-2017 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2011-2018 Digital Bazaar, Inc. All rights reserved.
  */
-const path = require('path');
-const webpack = require('webpack');
-
 module.exports = function(config) {
   // bundler to test: webpack, browserify
-  var bundler = process.env.BUNDLER || 'webpack';
+  const bundler = process.env.BUNDLER || 'webpack';
 
-  var frameworks = ['mocha'];
+  const frameworks = ['mocha'];
   // main bundle preprocessors
-  var preprocessors = ['babel'];
+  const preprocessors = ['babel'];
 
   if(bundler === 'browserify') {
     frameworks.push(bundler);
@@ -33,7 +27,7 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: frameworks,
+    frameworks,
 
     // list of files / patterns to load in the browser
     files: [
@@ -63,7 +57,7 @@ module.exports = function(config) {
               // exclude node_modules by default
               exclude: /(node_modules)/
             }, {
-              // include rdf-canonize
+              // include jsonld and rdf-canonize
               include: /(node_modules\/jsonld)/,
               include: /(node_modules\/rdf-canonize)/
             }],
@@ -72,7 +66,7 @@ module.exports = function(config) {
               options: {
                 presets: ['env'],
                 plugins: [
-                  ['transform-object-rest-spread', {useBuiltIns: true }]
+                  ['transform-object-rest-spread', {useBuiltIns: true}]
                 ]
               }
             }
