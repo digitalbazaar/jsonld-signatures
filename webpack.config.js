@@ -60,10 +60,10 @@ outputs.forEach((info) => {
           include: [{
             // exclude node_modules by default
             exclude: /(node_modules)/
-          }, {
+          }/*, {
             // include jsonld
-            include: /(node_modules\/jsonld)/
-          }],
+            //include: /(node_modules\/jsonld)/
+          }*/],
           use: {
             loader: 'babel-loader',
             options: {
@@ -86,6 +86,11 @@ outputs.forEach((info) => {
       crypto: false,
       process: false,
       setImmediate: false
+    },
+    resolve: {
+      alias: {
+        jsonld: require.resolve('jsonld/dist/jsonld.js')
+      }
     }
   };
 

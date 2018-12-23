@@ -56,11 +56,11 @@ module.exports = function(config) {
             include: [{
               // exclude node_modules by default
               exclude: /(node_modules)/
-            }, {
+            }/*, {
               // include jsonld and rdf-canonize
               include: /(node_modules\/jsonld)/,
               include: /(node_modules\/rdf-canonize)/
-            }],
+            }*/],
             use: {
               loader: 'babel-loader',
               options: {
@@ -78,6 +78,11 @@ module.exports = function(config) {
         process: false,
         crypto: false,
         setImmediate: false
+      },
+      resolve: {
+        alias: {
+          jsonld: require.resolve('jsonld/dist/jsonld.js')
+        }
       }
     },
 
