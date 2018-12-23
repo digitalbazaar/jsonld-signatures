@@ -48,6 +48,7 @@ module.exports = function(config) {
     },
 
     webpack: {
+      mode: 'production',
       devtool: 'inline-source-map',
       module: {
         rules: [
