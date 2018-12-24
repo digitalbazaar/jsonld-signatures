@@ -31,6 +31,7 @@ require('regenerator-runtime/runtime');
 
 const assert = require('chai').assert;
 const common = require('./test-common');
+const constants = require('../lib/constants');
 const jsigs = require('..');
 const mock = require('./mock-data');
 const {suites} = require('../lib/suites');
@@ -44,6 +45,7 @@ const util = require('../lib/util');
 
 const options = {
   assert,
+  constants,
   jsigs,
   mock,
   suites,
