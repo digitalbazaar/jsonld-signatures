@@ -4,7 +4,7 @@
 'use strict';
 
 const constants = require('../lib/constants');
-const ProofPurposeHandler = require('../lib/proof-purpose/ProofPurposeHandler');
+const ProofPurpose = require('../lib/proof-purpose/ProofPurpose');
 const {Ed25519KeyPair, RSAKeyPair} = require('../lib/suites/LDKeyPair');
 
 const mock = {};
@@ -210,7 +210,7 @@ mock.testLoader = async url => {
 
 mock.NOOP_PROOF_PURPOSE_URI = 'https://example.org/special-authentication';
 
-class NoOpProofPurpose extends ProofPurposeHandler {
+class NoOpProofPurpose extends ProofPurpose {
   constructor(options) {
     super(options);
     // if the value of `uri` is *not* defined in SECURITY_CONTEXT then it must
