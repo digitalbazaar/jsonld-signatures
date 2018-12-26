@@ -211,24 +211,11 @@ mock.testLoader = async url => {
 mock.NOOP_PROOF_PURPOSE_URI = 'https://example.org/special-authentication';
 
 class NoOpProofPurpose extends ProofPurpose {
-  constructor(options) {
-    super(options);
-    // if the value of `uri` is *not* defined in SECURITY_CONTEXT then it must
-    // be in expanded form as demonstrated here
-    this.uri = mock.NOOP_PROOF_PURPOSE_URI;
+  constructor() {
+    super({term: mock.NOOP_PROOF_PURPOSE_URI});
   }
   async validate() {
     return {valid: true};
-  }
-  // the proof provided here is compacted into the SECURITY_CONTEXT
-  async update({proof}) {
-    // TODO: We may not want to mutate the proof passed in
-    proof.proofPurpose = this.uri;
-    // the proof returned here *must* be compacted into the SECURITY_CONTEXT
-    return proof;
-  }
-  async match() {
-    return true;
   }
 }
 
