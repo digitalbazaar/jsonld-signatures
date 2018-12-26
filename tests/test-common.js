@@ -161,7 +161,7 @@ describe('JSON-LD Signatures', () => {
     context(suiteName + ' w/promise API', () => {
       it('should sign a document w/security context', async () => {
         const Suite = suites[suiteName];
-        const suite = new Suite(mock.parameters.sign[suiteName]);
+        const suite = new Suite(mock.suites[suiteName].parameters.sign);
         const testDoc = clone(mock.securityContextTestDoc);
         const signed = await jsigs.sign(testDoc, {
           documentLoader: testLoader,
@@ -169,7 +169,7 @@ describe('JSON-LD Signatures', () => {
           purpose: suite.legacy ?
             new PublicKeyProofPurpose() : new NoOpProofPurpose()
         });
-        let expected = mock.securityContextSigned[suiteName];
+        let expected = mock.suites[suiteName].securityContextSigned;
         if(pseudorandom.includes(suiteName)) {
           expected = clone(expected);
           if(suite.legacy) {
@@ -183,7 +183,7 @@ describe('JSON-LD Signatures', () => {
 
       it('should sign a document w/o security context', async () => {
         const Suite = suites[suiteName];
-        const suite = new Suite(mock.parameters.sign[suiteName]);
+        const suite = new Suite(mock.suites[suiteName].parameters.sign);
         const testDoc = clone(mock.nonSecurityContextTestDoc);
         const signed = await jsigs.sign(testDoc, {
           documentLoader: testLoader,
@@ -191,7 +191,7 @@ describe('JSON-LD Signatures', () => {
           purpose: suite.legacy ?
             new PublicKeyProofPurpose() : new NoOpProofPurpose()
         });
-        let expected = mock.nonSecurityContextSigned[suiteName];
+        let expected = mock.suites[suiteName].nonSecurityContextSigned;
         if(pseudorandom.includes(suiteName)) {
           expected = clone(expected);
           if(suite.legacy) {
@@ -207,8 +207,8 @@ describe('JSON-LD Signatures', () => {
 
       it('should verify a document w/security context', async () => {
         const Suite = suites[suiteName];
-        const suite = new Suite(mock.parameters.verify[suiteName]);
-        const signed = mock.securityContextSigned[suiteName];
+        const suite = new Suite(mock.suites[suiteName].parameters.verify);
+        const signed = mock.suites[suiteName].securityContextSigned;
         const result = await jsigs.verify(signed, {
           documentLoader: testLoader,
           suite,
@@ -231,8 +231,8 @@ describe('JSON-LD Signatures', () => {
 
       it('should verify a document w/o security context', async () => {
         const Suite = suites[suiteName];
-        const suite = new Suite(mock.parameters.verify[suiteName]);
-        const signed = mock.nonSecurityContextSigned[suiteName];
+        const suite = new Suite(mock.suites[suiteName].parameters.verify);
+        const signed = mock.suites[suiteName].nonSecurityContextSigned;
         const result = await jsigs.verify(signed, {
           documentLoader: testLoader,
           suite,
@@ -245,7 +245,7 @@ describe('JSON-LD Signatures', () => {
           results: [{
             proof: {
               '@context': constants.SECURITY_CONTEXT_URL,
-              ...mock.securityContextSigned[suiteName][property]
+              ...mock.suites[suiteName].securityContextSigned[property]
             },
             verified: true
           }]
@@ -256,8 +256,9 @@ describe('JSON-LD Signatures', () => {
       it('should verify a document w/security context w/passed key',
         async () => {
         const Suite = suites[suiteName];
-        const suite = new Suite(mock.parameters.verifyWithPassedKey[suiteName]);
-        const signed = mock.securityContextSigned[suiteName];
+        const suite = new Suite(
+          mock.suites[suiteName].parameters.verifyWithPassedKey);
+        const signed = mock.suites[suiteName].securityContextSigned;
         const result = await jsigs.verify(signed, {
           documentLoader: testLoader,
           suite,
@@ -281,8 +282,9 @@ describe('JSON-LD Signatures', () => {
       it('should verify a document w/o security context w/passed key',
         async () => {
         const Suite = suites[suiteName];
-        const suite = new Suite(mock.parameters.verifyWithPassedKey[suiteName]);
-        const signed = mock.nonSecurityContextSigned[suiteName];
+        const suite = new Suite(
+          mock.suites[suiteName].parameters.verifyWithPassedKey);
+        const signed = mock.suites[suiteName].nonSecurityContextSigned;
         const result = await jsigs.verify(signed, {
           documentLoader: testLoader,
           suite,
@@ -295,7 +297,7 @@ describe('JSON-LD Signatures', () => {
           results: [{
             proof: {
               '@context': constants.SECURITY_CONTEXT_URL,
-              ...mock.securityContextSigned[suiteName][property]
+              ...mock.suites[suiteName].securityContextSigned[property]
             },
             verified: true
           }]
@@ -305,8 +307,8 @@ describe('JSON-LD Signatures', () => {
 
       it('should detect an invalid signature', async () => {
         const Suite = suites[suiteName];
-        const suite = new Suite(mock.parameters.verify[suiteName]);
-        const signed = mock.securityContextInvalidSignature[suiteName];
+        const suite = new Suite(mock.suites[suiteName].parameters.verify);
+        const signed = mock.suites[suiteName].securityContextInvalidSignature;
         const result = await jsigs.verify(signed, {
           documentLoader: testLoader,
           suite,
@@ -337,11 +339,11 @@ describe('JSON-LD Signatures', () => {
       it('should detect an expired date', async () => {
         const Suite = suites[suiteName];
         const suite = new Suite({
-          ...mock.parameters.verify[suiteName],
+          ...mock.suites[suiteName].parameters.verify,
           date: new Date('01-01-1970'),
           maxTimestampDelta: 0
         });
-        const signed = mock.securityContextSigned[suiteName];
+        const signed = mock.suites[suiteName].securityContextSigned;
         const result = await jsigs.verify(signed, {
           documentLoader: testLoader,
           suite,
@@ -371,8 +373,8 @@ describe('JSON-LD Signatures', () => {
 
       it('should sign a document with multiple signatures', async () => {
         const Suite = suites[suiteName];
-        const suite = new Suite(mock.parameters.sign[suiteName]);
-        const testDoc = clone(mock.securityContextSigned[suiteName]);
+        const suite = new Suite(mock.suites[suiteName].parameters.sign);
+        const testDoc = clone(mock.suites[suiteName].securityContextSigned);
         const signed = await jsigs.sign(testDoc, {
           documentLoader: testLoader,
           suite,
@@ -382,7 +384,7 @@ describe('JSON-LD Signatures', () => {
         const property = suite.legacy ? 'signature' : 'proof';
         assert.isArray(signed[property]);
         assert.equal(signed[property].length, 2);
-        const expected = clone(mock.securityContextSigned[suiteName]);
+        const expected = clone(mock.suites[suiteName].securityContextSigned);
         expected[property] = [expected[property], clone(expected[property])];
         if(suite.legacy) {
           expected[property][1].signatureValue =
@@ -395,8 +397,8 @@ describe('JSON-LD Signatures', () => {
 
       it('should verify a document with multiple set signatures', async () => {
         const Suite = suites[suiteName];
-        const suite = new Suite(mock.parameters.verify[suiteName]);
-        const testDoc = clone(mock.securityContextSigned[suiteName]);
+        const suite = new Suite(mock.suites[suiteName].parameters.verify);
+        const testDoc = clone(mock.suites[suiteName].securityContextSigned);
         const property = suite.legacy ? 'signature' : 'proof';
         testDoc[property] = [testDoc[property], clone(testDoc[property])];
         const result = await jsigs.verify(testDoc, {
@@ -410,13 +412,13 @@ describe('JSON-LD Signatures', () => {
           results: [{
             proof: {
               '@context': constants.SECURITY_CONTEXT_URL,
-              ...mock.securityContextSigned[suiteName][property]
+              ...mock.suites[suiteName].securityContextSigned[property]
             },
             verified: true
           }, {
             proof: {
               '@context': constants.SECURITY_CONTEXT_URL,
-              ...mock.securityContextSigned[suiteName][property]
+              ...mock.suites[suiteName].securityContextSigned[property]
             },
             verified: true
           }]
