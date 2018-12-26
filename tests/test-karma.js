@@ -37,12 +37,6 @@ const mock = require('./mock-data');
 const {suites} = require('../lib/suites');
 const util = require('../lib/util');
 
-// const forge = require('node-forge');
-// window.forge = forge;
-// const bitcoreMessage = require(
-//   '../node_modules/bitcore-message/dist/bitcore-message.js');
-// window.bitcoreMessage = bitcoreMessage;
-
 const options = {
   assert,
   constants,
