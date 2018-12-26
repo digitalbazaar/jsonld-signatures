@@ -89,6 +89,8 @@ outputs.forEach((info) => {
     },
     resolve: {
       alias: {
+        'bitcore-message':
+          require.resolve('bitcore-message/dist/bitcore-message.js'),
         jsonld: require.resolve('jsonld/dist/jsonld.js')
       }
     }
