@@ -7,7 +7,8 @@ module.exports = async function(options) {
 'use strict';
 
 const {assert, constants, jsigs, mock, suites, util} = options;
-const {NoOpProofPurpose, NOOP_PROOF_PURPOSE_URI} = mock;
+const {PublicKeyProofPurpose} = jsigs;
+const {NoOpProofPurpose} = mock;
 
 // helper:
 function clone(obj) {
@@ -103,9 +104,7 @@ describe('JSON-LD Signatures', () => {
         err = e;
       }
       assert.exists(err);
-      assert.equal(
-        err.message,
-        'The "Ed25519Signature2018" suite requires "options.purpose".');
+      assert.equal(err.message, '"options.purpose" is required.');
     });
 
     it('should fail to verify a document when missing a suite', async () => {
@@ -131,7 +130,7 @@ describe('JSON-LD Signatures', () => {
         err = e;
       }
       assert.exists(err);
-      assert.equal(err.message, 'The given suites require "options.purpose".');
+      assert.equal(err.message, '"options.purpose" is required.');
     });
   });
 
@@ -144,10 +143,6 @@ describe('JSON-LD Signatures', () => {
   ];
 
   for(const suiteName of suitesToTest) {
-    // FIXME: Note, proof purpose does not work w/GraphSignature2012 or
-    // LinkedDataSignature2015 ... need to work around that... maybe have
-    // suites indicate whether or not they support proof purpose
-
     // FIXME: to test:
     // 1. sign doc w/o security context (will need doc loader for other context)
     // 2. sign doc w/security context (add credentials context for testing)
@@ -171,7 +166,8 @@ describe('JSON-LD Signatures', () => {
         const signed = await jsigs.sign(testDoc, {
           documentLoader: testLoader,
           suite,
-          purpose: suite.legacy ? null : new NoOpProofPurpose()
+          purpose: suite.legacy ?
+            new PublicKeyProofPurpose() : new NoOpProofPurpose()
         });
         let expected = mock.securityContextSigned[suiteName];
         if(pseudorandom.includes(suiteName)) {
@@ -192,7 +188,8 @@ describe('JSON-LD Signatures', () => {
         const signed = await jsigs.sign(testDoc, {
           documentLoader: testLoader,
           suite,
-          purpose: suite.legacy ? null : new NoOpProofPurpose()
+          purpose: suite.legacy ?
+            new PublicKeyProofPurpose() : new NoOpProofPurpose()
         });
         let expected = mock.nonSecurityContextSigned[suiteName];
         if(pseudorandom.includes(suiteName)) {
@@ -215,7 +212,8 @@ describe('JSON-LD Signatures', () => {
         const result = await jsigs.verify(signed, {
           documentLoader: testLoader,
           suite,
-          purpose: suite.legacy ? null : new NoOpProofPurpose()
+          purpose: suite.legacy ?
+            new PublicKeyProofPurpose() : new NoOpProofPurpose()
         });
         const property = suite.legacy ? 'signature' : 'proof';
         const expected = {
@@ -238,7 +236,8 @@ describe('JSON-LD Signatures', () => {
         const result = await jsigs.verify(signed, {
           documentLoader: testLoader,
           suite,
-          purpose: suite.legacy ? null : new NoOpProofPurpose()
+          purpose: suite.legacy ?
+            new PublicKeyProofPurpose() : new NoOpProofPurpose()
         });
         const property = suite.legacy ? 'signature' : 'proof';
         const expected = {
@@ -262,7 +261,8 @@ describe('JSON-LD Signatures', () => {
         const result = await jsigs.verify(signed, {
           documentLoader: testLoader,
           suite,
-          purpose: suite.legacy ? null : new NoOpProofPurpose()
+          purpose: suite.legacy ?
+            new PublicKeyProofPurpose() : new NoOpProofPurpose()
         });
         const property = suite.legacy ? 'signature' : 'proof';
         const expected = {
@@ -286,7 +286,8 @@ describe('JSON-LD Signatures', () => {
         const result = await jsigs.verify(signed, {
           documentLoader: testLoader,
           suite,
-          purpose: suite.legacy ? null : new NoOpProofPurpose()
+          purpose: suite.legacy ?
+            new PublicKeyProofPurpose() : new NoOpProofPurpose()
         });
         const property = suite.legacy ? 'signature' : 'proof';
         const expected = {
@@ -309,7 +310,8 @@ describe('JSON-LD Signatures', () => {
         const result = await jsigs.verify(signed, {
           documentLoader: testLoader,
           suite,
-          purpose: suite.legacy ? null : new NoOpProofPurpose()
+          purpose: suite.legacy ?
+            new PublicKeyProofPurpose() : new NoOpProofPurpose()
         });
         const property = suite.legacy ? 'signature' : 'proof';
         const expected = {
@@ -343,7 +345,8 @@ describe('JSON-LD Signatures', () => {
         const result = await jsigs.verify(signed, {
           documentLoader: testLoader,
           suite,
-          purpose: suite.legacy ? null : new NoOpProofPurpose()
+          purpose: suite.legacy ?
+            new PublicKeyProofPurpose() : new NoOpProofPurpose()
         });
         const property = suite.legacy ? 'signature' : 'proof';
         const expected = {
@@ -373,7 +376,8 @@ describe('JSON-LD Signatures', () => {
         const signed = await jsigs.sign(testDoc, {
           documentLoader: testLoader,
           suite,
-          purpose: suite.legacy ? null : new NoOpProofPurpose()
+          purpose: suite.legacy ?
+            new PublicKeyProofPurpose() : new NoOpProofPurpose()
         });
         const property = suite.legacy ? 'signature' : 'proof';
         assert.isArray(signed[property]);
@@ -398,7 +402,8 @@ describe('JSON-LD Signatures', () => {
         const result = await jsigs.verify(testDoc, {
           documentLoader: testLoader,
           suite,
-          purpose: suite.legacy ? null : new NoOpProofPurpose()
+          purpose: suite.legacy ?
+            new PublicKeyProofPurpose() : new NoOpProofPurpose()
         });
         const expected = {
           verified: true,
