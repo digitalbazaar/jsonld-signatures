@@ -79,29 +79,59 @@ describe('JSON-LD Signatures', () => {
     });
   });
 
-  context.skip('common', () => {
-    it('should fail to sign a document when a missing suite', async () => {
+  context('common', () => {
+    it('should fail to sign a document when missing a suite', async () => {
+      const testDoc = clone(mock.securityContextTestDoc);
+      let err;
+      try {
+        await jsigs.sign(testDoc);
+      } catch(e) {
+        err = e;
+      }
+      assert.exists(err);
+      assert.equal(err.message, '"options.suite" is required.');
     });
 
-    it('should fail to sign a document when a missing purpose', async () => {
+    it('should fail to sign a document when missing a purpose', async () => {
+      const testDoc = clone(mock.securityContextTestDoc);
+      let err;
+      try {
+        await jsigs.sign(testDoc, {
+          suite: new suites.Ed25519Signature2018()
+        });
+      } catch(e) {
+        err = e;
+      }
+      assert.exists(err);
+      assert.equal(
+        err.message,
+        'The "Ed25519Signature2018" suite requires "options.purpose".');
     });
 
-    it('should fail to sign a document with an unknown suite', async () => {
+    it('should fail to verify a document when missing a suite', async () => {
+      const testDoc = clone(mock.securityContextTestDoc);
+      let err;
+      try {
+        await jsigs.verify(testDoc);
+      } catch(e) {
+        err = e;
+      }
+      assert.exists(err);
+      assert.equal(err.message, '"options.suite" is required.');
     });
 
-    it('should fail to sign a document with an unknown purpose', async () => {
-    });
-
-    it('should fail to verify a document when a missing suite', async () => {
-    });
-
-    it('should fail to verify a document when a missing purpose', async () => {
-    });
-
-    it('should fail to verify a document with an unknown suite', async () => {
-    });
-
-    it('should fail to verify a document with an unknown purpose', async () => {
+    it('should fail to verify a document when missing a purpose', async () => {
+      const testDoc = clone(mock.securityContextTestDoc);
+      let err;
+      try {
+        await jsigs.verify(testDoc, {
+          suite: new suites.Ed25519Signature2018()
+        });
+      } catch(e) {
+        err = e;
+      }
+      assert.exists(err);
+      assert.equal(err.message, 'The given suites require "options.purpose".');
     });
   });
 
