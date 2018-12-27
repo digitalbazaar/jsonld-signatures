@@ -463,6 +463,38 @@ describe('JSON-LD Signatures', () => {
         };
         assert.deepEqual(result, expected);
       });
+
+      it('should sign and verify a document w/public key proof purpose',
+        async () => {
+        const Suite = suites[suiteName];
+
+        const signSuite = new Suite(mock.suites[suiteName].parameters.sign);
+        const testDoc = clone(mock.securityContextTestDoc);
+        const signed = await jsigs.sign(testDoc, {
+          documentLoader: testLoader,
+          suite: signSuite,
+          purpose: new PublicKeyProofPurpose()
+        });
+
+        const verifySuite = new Suite(mock.suites[suiteName].parameters.verify);
+        const result = await jsigs.verify(signed, {
+          documentLoader: testLoader,
+          suite: verifySuite,
+          purpose: new PublicKeyProofPurpose()
+        });
+        const property = verifySuite.legacy ? 'signature' : 'proof';
+        const expected = {
+          verified: true,
+          results: [{
+            proof: {
+              '@context': constants.SECURITY_CONTEXT_URL,
+              ...signed[property]
+            },
+            verified: true
+          }]
+        };
+        assert.deepEqual(result, expected);
+      });
     });
   }
 });
