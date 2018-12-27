@@ -22,7 +22,7 @@ mock.testLoader = require('./test-loader');
 ({
   NOOP_PROOF_PURPOSE_URI: mock.NOOP_PROOF_PURPOSE_URI,
   NoOpProofPurpose: mock.NoOpProofPurpose
-} = require('./proof-purpose'));
+} = require('./noop-purpose'));
 
 mock.suites = {
   EcdsaKoblitzSignature2016: require('./EcdsaKoblitzSignature2016'),

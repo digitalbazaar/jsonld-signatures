@@ -3,7 +3,7 @@
  */
 'use strict';
 
-const ProofPurpose = require('../../lib/proof-purpose/ProofPurpose');
+const ProofPurpose = require('../../lib/purposes/ProofPurpose');
 
 const mock = {};
 module.exports = mock;
