@@ -56,6 +56,8 @@ In a browser environment, include `jsonld`, `forge`, and
 Examples
 --------
 
+Signing and verifying a simple assertion:
+
 ```js
 // to generate the next two lines, run the following command:
 //
@@ -64,11 +66,7 @@ Examples
 // for an example of how to specify these keys, look at [key-example]:
 const publicKeyPem = "-----BEGIN PUBLIC KEY-----\r\n...";
 const privateKeyPem = "-----BEGIN PRIVATE KEY-----\r\n...";
-```
 
-Signing and verifying a simple assertion:
-
-```js
 // specify the public key object
 const publicKey = {
   '@context': jsigs.SECURITY_CONTEXT_URL,
