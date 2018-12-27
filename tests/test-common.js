@@ -7,7 +7,8 @@ module.exports = async function(options) {
 'use strict';
 
 const {assert, constants, jsigs, mock, suites, util} = options;
-const {PublicKeyProofPurpose} = jsigs;
+const {PublicKeyProofPurpose} = jsigs.purposes;
+const {LinkedDataProof} = jsigs.suites;
 const {NoOpProofPurpose} = mock;
 
 // helper:
@@ -134,6 +135,56 @@ describe('JSON-LD Signatures', () => {
     });
   });
 
+  context('custom suite', () => {
+    class CustomSuite extends LinkedDataProof {
+      constructor() {
+        super({type: 'example:CustomSuite'});
+      }
+      async createProof() {
+        return {
+          '@context': constants.SECURITY_CONTEXT_URL,
+          type: this.type
+        };
+      }
+      async verifyProof() {
+        return {verified: true};
+      }
+    }
+
+    it('should sign a document with a custom suite', async () => {
+      const testDoc = clone(mock.securityContextTestDoc);
+      const signed = await jsigs.sign(testDoc, {
+        documentLoader: testLoader,
+        suite: new CustomSuite(),
+        purpose: new NoOpProofPurpose()
+      });
+      const expected = clone(mock.securityContextTestDoc);
+      expected.proof = {type: 'example:CustomSuite'};
+      assert.deepEqual(signed, expected);
+    });
+
+    it('should verify a document with a custom suite', async () => {
+      const signed = clone(mock.securityContextTestDoc);
+      signed.proof = {type: 'example:CustomSuite'};
+      const result = await jsigs.verify(signed, {
+        documentLoader: testLoader,
+        suite: new CustomSuite(),
+        purpose: new NoOpProofPurpose()
+      });
+      const expected = {
+        verified: true,
+        results: [{
+          proof: {
+            '@context': constants.SECURITY_CONTEXT_URL,
+            ...signed.proof
+          },
+          verified: true
+        }]
+      };
+      assert.deepEqual(result, expected);
+    });
+  });
+
   const suitesToTest = [
     'Ed25519Signature2018',
     'RsaSignature2018',
@@ -143,18 +194,10 @@ describe('JSON-LD Signatures', () => {
   ];
 
   for(const suiteName of suitesToTest) {
-    // FIXME: to test:
-    // 1. sign doc w/o security context (will need doc loader for other context)
-    // 2. sign doc w/security context (add credentials context for testing)
-    // 3. fail to verify doc w/o security context
-    // 4. verify doc w/security context
-    // 5. verify doc w/custom proof purpose that just looks at `publicKey`
-    // 6. fail to verify bad signature
-    // 7. fail to verify bad date range
-    // 8. custom signer and verifier for jws signature
-    // 9. custom suite
-    // ...do each of these with multiple signatures
-    // ...do each of these w/ and w/o promises
+    // FIXME: still need to test:
+    // custom signer and verifier for jws signature
+    // custom suite
+    // ...once above is added, copy and do each w/callback API
 
     const pseudorandom = ['EcdsaKoblitzSignature2016', 'RsaSignature2018'];
 
@@ -425,9 +468,6 @@ describe('JSON-LD Signatures', () => {
         };
         assert.deepEqual(result, expected);
       });
-    });
-
-    context.skip(suiteName + ' w/callback API', () => {
     });
   }
 });

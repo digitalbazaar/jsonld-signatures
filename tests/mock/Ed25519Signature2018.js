@@ -4,7 +4,7 @@
 'use strict';
 
 const {Ed25519KeyPair} = require('../../lib/suites/LDKeyPair');
-const {NOOP_PROOF_PURPOSE_URI} = require('./proof-purpose');
+const {NOOP_PROOF_PURPOSE_URI} = require('./noop-purpose');
 const {nonSecurityContextTestDoc, securityContextTestDoc} =
   require('./test-document');
 const {publicKeys, privateKeys} = require('./keys');
