@@ -7,7 +7,9 @@ module.exports = async function(options) {
 'use strict';
 
 const {assert, constants, jsigs, mock, suites, util} = options;
-const {AuthenticationProofPurpose, PublicKeyProofPurpose} = jsigs.purposes;
+const {
+  AssertionProofPurpose, AuthenticationProofPurpose,
+  PublicKeyProofPurpose} = jsigs.purposes;
 const {LinkedDataProof} = jsigs.suites;
 const {NoOpProofPurpose} = mock;
 
@@ -774,6 +776,130 @@ describe('JSON-LD Signatures', () => {
             maxTimestampDelta: 0,
             controller: mock.suites[suiteName].parameters
               .authenticationController
+          })
+        });
+        const expected = {
+          verified: true,
+          results: [{
+            proof: {
+              '@context': constants.SECURITY_CONTEXT_URL,
+              ...signed.proof
+            },
+            verified: true
+          }]
+        };
+        assert.deepEqual(result, expected);
+      });
+    });
+
+    context(`AssertionProofPurpose + ${suiteName}`, () => {
+      it('should detect an expired date',
+        async () => {
+        const Suite = suites[suiteName];
+        const signSuite = new Suite({
+          ...mock.suites[suiteName].parameters.sign,
+          date: new Date('01-01-1970')
+        });
+        const testDoc = clone(mock.securityContextTestDoc);
+        const signed = await jsigs.sign(testDoc, {
+          documentLoader: testLoader,
+          suite: signSuite,
+          purpose: new AssertionProofPurpose()
+        });
+
+        const verifySuite = new Suite(mock.suites[suiteName].parameters.verify);
+        const result = await jsigs.verify(signed, {
+          documentLoader: testLoader,
+          suite: verifySuite,
+          purpose: new AssertionProofPurpose({
+            date: new Date('01-01-2018'),
+            maxTimestampDelta: 0
+          })
+        });
+        const expected = {
+          verified: false,
+          results: [{
+            proof: {
+              '@context': constants.SECURITY_CONTEXT_URL,
+              ...signed.proof
+            },
+            verified: false
+          }]
+        };
+        assert.isFalse(result.verified);
+        assert.isArray(result.results);
+        assert.equal(result.results.length, expected.results.length);
+        assert.deepEqual(result.results[0].proof, expected.results[0].proof);
+        assert.equal(result.results[0].verified, expected.results[0].verified);
+        assert.equal(
+          result.results[0].error.message,
+          'The proof\'s created timestamp is out of range.');
+      });
+
+      it('should fail to verify because the purpose is not authorized',
+        async () => {
+        const Suite = suites[suiteName];
+        const signSuite = new Suite({
+          ...mock.suites[suiteName].parameters.sign,
+          date: new Date('01-01-1970')
+        });
+        const testDoc = clone(mock.securityContextTestDoc);
+        const signed = await jsigs.sign(testDoc, {
+          documentLoader: testLoader,
+          suite: signSuite,
+          purpose: new AssertionProofPurpose()
+        });
+
+        const verifySuite = new Suite(mock.suites[suiteName].parameters.verify);
+        const result = await jsigs.verify(signed, {
+          documentLoader: testLoader,
+          suite: verifySuite,
+          purpose: new AssertionProofPurpose()
+        });
+        const expected = {
+          verified: false,
+          results: [{
+            proof: {
+              '@context': constants.SECURITY_CONTEXT_URL,
+              ...signed.proof
+            },
+            verified: false
+          }]
+        };
+        assert.isFalse(result.verified);
+        assert.isArray(result.results);
+        assert.equal(result.results.length, expected.results.length);
+        assert.deepEqual(result.results[0].proof, expected.results[0].proof);
+        assert.equal(result.results[0].verified, expected.results[0].verified);
+        const expectedMessage = 'Verification method';
+        assert.equal(
+          result.results[0].error.message.substr(0, expectedMessage.length),
+          expectedMessage);
+      });
+
+      it('should sign and verify',
+        async () => {
+        const Suite = suites[suiteName];
+        const signSuite = new Suite({
+          ...mock.suites[suiteName].parameters.sign,
+          date: new Date('01-01-1970')
+        });
+        const testDoc = clone(mock.securityContextTestDoc);
+        const signed = await jsigs.sign(testDoc, {
+          documentLoader: testLoader,
+          suite: signSuite,
+          purpose: new AssertionProofPurpose()
+        });
+
+        const verifySuite = new Suite(mock.suites[suiteName].parameters.verify);
+        const result = await jsigs.verify(signed, {
+          documentLoader: testLoader,
+          suite: verifySuite,
+          purpose: new AssertionProofPurpose({
+            date: new Date('01-01-1970'),
+            maxTimestampDelta: 0,
+            controller: mock.suites[suiteName].parameters
+              .assertionController
           })
         });
         const expected = {
