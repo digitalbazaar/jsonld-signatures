@@ -101,11 +101,9 @@ const doc = {
 const {RsaSignature2018} = jsigs.suites;
 const {AuthenticationProofPurpose} = jsigs.purposes;
 const {RSAKeyPair} = jsigs;
+const key = new RSAKeyPair({...publicKey, privateKeyPem});
 const signed = await jsigs.sign(doc, {
-  suite: new RsaSignature2018({
-    verificationMethod: publicKey.id,
-    key: new RSAKeyPair({privateKeyPem})
-  }),
+  suite: new RsaSignature2018({key}),
   purpose: new AssertionProofPurpose()
 });
 
@@ -113,12 +111,8 @@ console.log('Signed document:', signed);
 
 // verify the signed document
 const result = await jsigs.verify(signed, {
-  suite: new RsaSignature2018({
-    key: new RsaKeyPair(publicKey)
-  }),
-  purpose: new AssertionProofPurpose({
-    controller
-  })
+  suite: new RsaSignature2018(key),
+  purpose: new AssertionProofPurpose({controller})
 });
 if(result.verified) {
   console.log('Signature verified.');
