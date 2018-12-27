@@ -194,14 +194,9 @@ describe('JSON-LD Signatures', () => {
   ];
 
   for(const suiteName of suitesToTest) {
-    // FIXME: still need to test:
-    // custom signer and verifier for jws signature
-    // custom suite
-    // ...once above is added, copy and do each w/callback API
-
     const pseudorandom = ['EcdsaKoblitzSignature2016', 'RsaSignature2018'];
 
-    context(suiteName + ' w/promise API', () => {
+    context(suiteName, () => {
       it('should sign a document w/security context', async () => {
         const Suite = suites[suiteName];
         const suite = new Suite(mock.suites[suiteName].parameters.sign);
