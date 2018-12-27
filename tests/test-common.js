@@ -205,7 +205,8 @@ describe('JSON-LD Signatures', () => {
           documentLoader: testLoader,
           suite,
           purpose: suite.legacy ?
-            new PublicKeyProofPurpose() : new NoOpProofPurpose()
+            new PublicKeyProofPurpose() : new NoOpProofPurpose(),
+          proofTermDefined: true
         });
         let expected = mock.suites[suiteName].securityContextSigned;
         if(pseudorandom.includes(suiteName)) {
@@ -227,8 +228,7 @@ describe('JSON-LD Signatures', () => {
           documentLoader: testLoader,
           suite,
           purpose: suite.legacy ?
-            new PublicKeyProofPurpose() : new NoOpProofPurpose(),
-          proofTermDefined: false
+            new PublicKeyProofPurpose() : new NoOpProofPurpose()
         });
         let expected = mock.suites[suiteName].nonSecurityContextSigned;
         if(pseudorandom.includes(suiteName)) {
@@ -256,7 +256,8 @@ describe('JSON-LD Signatures', () => {
           documentLoader: testLoader,
           suite,
           purpose: suite.legacy ?
-            new PublicKeyProofPurpose() : new NoOpProofPurpose()
+            new PublicKeyProofPurpose() : new NoOpProofPurpose(),
+          proofTermDefined: true
         });
         const property = suite.legacy ? 'signature' : 'proof';
         const expected = {
@@ -280,8 +281,7 @@ describe('JSON-LD Signatures', () => {
           documentLoader: testLoader,
           suite,
           purpose: suite.legacy ?
-            new PublicKeyProofPurpose() : new NoOpProofPurpose(),
-          proofTermDefined: false
+            new PublicKeyProofPurpose() : new NoOpProofPurpose()
         });
         const property = suite.legacy ? 'signature' : 'proof';
         const expected = {
@@ -333,8 +333,7 @@ describe('JSON-LD Signatures', () => {
           documentLoader: testLoader,
           suite,
           purpose: suite.legacy ?
-            new PublicKeyProofPurpose() : new NoOpProofPurpose(),
-          proofTermDefined: false
+            new PublicKeyProofPurpose() : new NoOpProofPurpose()
         });
         const property = suite.legacy ? 'signature' : 'proof';
         const expected = {
