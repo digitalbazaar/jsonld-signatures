@@ -10,20 +10,10 @@ module.exports = mock;
 
 mock.nonSecurityContextTestDoc = {
   '@context': {
-    '@version': 1.1,
     schema: 'http://schema.org/',
     name: 'schema:name',
     homepage: 'schema:url',
-    image: 'schema:image',
-    signature: {
-      '@id': 'https://w3id.org/security#signature',
-      '@type': '@id'
-    },
-    proof: {
-      '@id': 'https://w3id.org/security#proof',
-      '@type': '@id',
-      '@container': '@graph'
-    }
+    image: 'schema:image'
   },
   name: 'Manu Sporny',
   homepage: 'https://manu.sporny.org/',
