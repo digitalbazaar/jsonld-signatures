@@ -8,7 +8,7 @@ const {NOOP_PROOF_PURPOSE_URI} = require('./noop-purpose');
 const {nonSecurityContextTestDoc, securityContextTestDoc} =
   require('./test-document');
 const {controllers, publicKeys, privateKeys} = require('./keys');
-const {RSAKeyPair} = require('../../lib/suites/LDKeyPair');
+const {RSAKeyPair} = require('../../lib/LDKeyPair');
 
 const mock = {};
 module.exports = mock;
@@ -92,4 +92,10 @@ mock.parameters.authenticationController = {
   '@context': constants.SECURITY_CONTEXT_URL,
   id: controllers.alice.id,
   authentication: publicKeys.alice.id
+};
+
+mock.parameters.assertionController = {
+  '@context': constants.SECURITY_CONTEXT_URL,
+  id: controllers.alice.id,
+  assertionMethod: publicKeys.alice.id
 };

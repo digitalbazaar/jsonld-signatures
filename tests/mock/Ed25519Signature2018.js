@@ -4,7 +4,7 @@
 'use strict';
 
 const constants = require('../../lib/constants');
-const {Ed25519KeyPair} = require('../../lib/suites/LDKeyPair');
+const {Ed25519KeyPair} = require('../../lib/LDKeyPair');
 const {NOOP_PROOF_PURPOSE_URI} = require('./noop-purpose');
 const {nonSecurityContextTestDoc, securityContextTestDoc} =
   require('./test-document');
@@ -89,4 +89,10 @@ mock.parameters.authenticationController = {
   '@context': constants.SECURITY_CONTEXT_URL,
   id: controllers.carol.id,
   authentication: publicKeys.carol.id
+};
+
+mock.parameters.assertionController = {
+  '@context': constants.SECURITY_CONTEXT_URL,
+  id: controllers.carol.id,
+  assertionMethod: publicKeys.carol.id
 };

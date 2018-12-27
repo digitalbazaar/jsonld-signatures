@@ -19,10 +19,11 @@
 ### Changed
 - **BREAKING**: `sign` and `verify` APIs require suites and proof purpose
   instances to be passed.
-- **BREAKING**: callback-based API is no longer supported.
 
 ### Removed
 - **BREAKING**: Removed API `wrap` and injector support.
+- **BREAKING**: callback-based API is no longer supported.
+- **BREAKING**: Removed exposed utility/helper functions.
 
 ## 2.3.1 - 2018-09-05
 
