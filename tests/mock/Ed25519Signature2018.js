@@ -3,11 +3,12 @@
  */
 'use strict';
 
+const constants = require('../../lib/constants');
 const {Ed25519KeyPair} = require('../../lib/suites/LDKeyPair');
 const {NOOP_PROOF_PURPOSE_URI} = require('./noop-purpose');
 const {nonSecurityContextTestDoc, securityContextTestDoc} =
   require('./test-document');
-const {publicKeys, privateKeys} = require('./keys');
+const {controllers, publicKeys, privateKeys} = require('./keys');
 
 const mock = {};
 module.exports = mock;
@@ -81,3 +82,9 @@ mock.parameters.verify = {
 };
 
 mock.parameters.verifyWithPassedKey = mock.parameters.sign;
+
+mock.parameters.authenticationController = {
+  '@context': constants.SECURITY_CONTEXT_URL,
+  id: controllers.carol.id,
+  authentication: publicKeys.carol.id
+};
