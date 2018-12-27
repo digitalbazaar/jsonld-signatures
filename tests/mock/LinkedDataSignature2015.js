@@ -12,7 +12,7 @@ module.exports = mock;
 
 mock.nonSecurityContextSigned = {
   ...nonSecurityContextTestDoc,
-  "signature": {
+  "https://w3id.org/security#signature": {
     "@type": "https://w3id.org/security#LinkedDataSignature2015",
     "http://purl.org/dc/terms/created": {
       "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
