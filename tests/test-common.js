@@ -482,15 +482,16 @@ describe('JSON-LD Signatures', () => {
       it('should detect an expired date', async () => {
         const Suite = suites[suiteName];
         const suite = new Suite({
-          ...mock.suites[suiteName].parameters.verify,
-          date: new Date('01-01-1970'),
-          maxTimestampDelta: 0
+          ...mock.suites[suiteName].parameters.verify
         });
         const signed = mock.suites[suiteName].securityContextSigned;
         const result = await jsigs.verify(signed, {
           documentLoader: testLoader,
           suite,
-          purpose: new PublicKeyProofPurpose()
+          purpose: new PublicKeyProofPurpose({
+            date: new Date('01-01-1970'),
+            maxTimestampDelta: 0
+          })
         });
         const expected = {
           verified: false,
