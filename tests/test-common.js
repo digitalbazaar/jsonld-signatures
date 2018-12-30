@@ -208,7 +208,7 @@ describe('JSON-LD Signatures', () => {
           suite,
           purpose: suite.legacy ?
             new PublicKeyProofPurpose() : new NoOpProofPurpose(),
-          proofTermDefined: true
+          compactProof: false
         });
         let expected = mock.suites[suiteName].securityContextSigned;
         if(pseudorandom.includes(suiteName)) {
@@ -259,7 +259,7 @@ describe('JSON-LD Signatures', () => {
           suite,
           purpose: suite.legacy ?
             new PublicKeyProofPurpose() : new NoOpProofPurpose(),
-          proofTermDefined: true
+          compactProof: false
         });
         const property = suite.legacy ? 'signature' : 'proof';
         const expected = {
@@ -297,6 +297,22 @@ describe('JSON-LD Signatures', () => {
           }]
         };
         assert.deepEqual(result, expected);
+      });
+
+      it('should fail to verify when `compactProof` is `false`', async () => {
+        const Suite = suites[suiteName];
+        const suite = new Suite(mock.suites[suiteName].parameters.verify);
+        const signed = mock.suites[suiteName].nonSecurityContextSigned;
+        const result = await jsigs.verify(signed, {
+          documentLoader: testLoader,
+          suite,
+          purpose: suite.legacy ?
+            new PublicKeyProofPurpose() : new NoOpProofPurpose(),
+          compactProof: false
+        });
+        assert.isObject(result);
+        assert.equal(result.verified, false);
+        assert.exists(result.error);
       });
 
       it('should verify a document w/security context w/passed key',
