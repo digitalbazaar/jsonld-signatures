@@ -3,18 +3,15 @@
 ## 3.0.0 - TBD
 
 ### Added
-- Add `proofTermDefined` flag to enable skipping early JSON-LD expansion to
-  determine the term to use for `proof` (or `signature` if using a legacy
-  suite). Setting this flag will cause the `sign` and `verify` APIs to expect
-  the term `proof` (or the term `signature` for legacy suites) to be defined in
-  the same way that they are defined in the `https://w3id.org/security/v2`
-  JSON-LD `@context`. Note that setting this flag should not necessarily be
-  considered an optimization as JSON-LD expansion is usually required to
-  perform canonicalization anyway. If the flag is not set, expansion will be
-  performed early and skipped later during canonicalization. Setting this flag
-  is primarily useful for methods that perform specialized canonicalization
-  and that can take advantage of optimizing away the JSON-LD expansion step
-  to determine the `proof` term.
+- Add `compactProof` flag that can be set to `false` to enable skipping
+  compaction of proof(s) when it is known that the input document's (for `sign`
+  or `verify`) JSON-LD `@context` defines all applicable proof terms using the
+  same definitions as the JSON-LD `@context` used internally by the library
+  (i.e. the JSON-LD `@context` defined by `constants.SECURITY_CONTEXT_URL`).
+  This flag should only be set to `false` by advanced users that have ensured
+  their software systems have strictly validated the input to ensure that it
+  is safe and cannot be misinterpreted. If these guarantees can be met, then
+  setting this flag to `false` may be a useful optimization consideration.
 
 ### Changed
 - **BREAKING**: `sign` and `verify` APIs require suites and proof purpose
