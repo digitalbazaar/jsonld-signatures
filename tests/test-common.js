@@ -207,6 +207,28 @@ describe('JSON-LD Signatures', () => {
           documentLoader: testLoader,
           suite,
           purpose: suite.legacy ?
+            new PublicKeyProofPurpose() : new NoOpProofPurpose()
+        });
+        let expected = mock.suites[suiteName].securityContextSigned;
+        if(pseudorandom.includes(suiteName)) {
+          expected = clone(expected);
+          if(suite.legacy) {
+            expected.signature.signatureValue = signed.signature.signatureValue;
+          } else {
+            expected.proof.jws = signed.proof.jws;
+          }
+        }
+        assert.deepEqual(signed, expected);
+      });
+
+      it('should sign a document when `compactProof` is `false`', async () => {
+        const Suite = suites[suiteName];
+        const suite = new Suite(mock.suites[suiteName].parameters.sign);
+        const testDoc = clone(mock.securityContextTestDoc);
+        const signed = await jsigs.sign(testDoc, {
+          documentLoader: testLoader,
+          suite,
+          purpose: suite.legacy ?
             new PublicKeyProofPurpose() : new NoOpProofPurpose(),
           compactProof: false
         });
@@ -251,6 +273,31 @@ describe('JSON-LD Signatures', () => {
       });
 
       it('should verify a document w/security context', async () => {
+        const Suite = suites[suiteName];
+        const suite = new Suite(mock.suites[suiteName].parameters.verify);
+        const signed = mock.suites[suiteName].securityContextSigned;
+        const result = await jsigs.verify(signed, {
+          documentLoader: testLoader,
+          suite,
+          purpose: suite.legacy ?
+            new PublicKeyProofPurpose() : new NoOpProofPurpose()
+        });
+        const property = suite.legacy ? 'signature' : 'proof';
+        const expected = {
+          verified: true,
+          results: [{
+            proof: {
+              '@context': constants.SECURITY_CONTEXT_URL,
+              ...signed[property]
+            },
+            verified: true
+          }]
+        };
+        assert.deepEqual(result, expected);
+      });
+
+      it('should verify a document when `compactProof` is `false`',
+        async () => {
         const Suite = suites[suiteName];
         const suite = new Suite(mock.suites[suiteName].parameters.verify);
         const signed = mock.suites[suiteName].securityContextSigned;
