@@ -1,6 +1,5 @@
 {
   "env": {
-    "mocha": true,
-    "phantomjs": true
+    "mocha": true
   }
 }

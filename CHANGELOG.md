@@ -21,6 +21,8 @@
 - **BREAKING**: Removed API `wrap` and injector support.
 - **BREAKING**: callback-based API is no longer supported.
 - **BREAKING**: Removed exposed utility/helper functions.
+- Karma PhantomJS support. Upstream deprecated PhantomJS and suggests headless
+  Chrome or similar.
 
 ## 2.3.1 - 2018-09-05
 

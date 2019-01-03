@@ -217,13 +217,13 @@ Run the Node.js tests using the following command:
 
     npm run test
 
-Run browser tests using PhantomJS using the following command:
+Run browser tests using ChromeHeadless using the following command:
 
     npm run test-karma
 
 Run browser tests using a selection of browsers using the following command:
 
-    npm run test-karma -- --browsers Firefox,Chrome,PhantomJS
+    npm run test-karma -- --browsers Firefox,Chrome,ChromeHeadless
 
 Code coverage of node tests can be generated in `coverage/`:
 
