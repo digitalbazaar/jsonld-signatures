@@ -87,12 +87,10 @@ outputs.forEach((info) => {
       process: false,
       setImmediate: false
     },
-    resolve: {
-      alias: {
-        'bitcore-message':
-          require.resolve('bitcore-message/dist/bitcore-message.js'),
-        jsonld: require.resolve('jsonld/dist/jsonld.js')
-      }
+    externals: {
+      'bitcore-message': 'bitcoreMessage',
+      'node-forge': 'forge',
+      jsonld: 'jsonld'
     }
   };
 
