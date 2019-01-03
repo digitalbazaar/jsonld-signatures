@@ -70,6 +70,7 @@ const privateKeyPem = "-----BEGIN PRIVATE KEY-----\r\n...";
 // specify the public key object
 const publicKey = {
   '@context': jsigs.SECURITY_CONTEXT_URL,
+  type: 'RsaVerificationKey2018',
   id: 'https://example.com/i/alice/keys/1',
   controller: 'https://example.com/i/alice',
   publicKeyPem
@@ -130,6 +131,7 @@ const privateKeyBase58 = '3Mmk4UzTRJTEtxaKk61LxtgUxAa2Dg36jF6Vog...SSiF';
 // specify the public key object
 const publicKey = {
   '@context': jsigs.SECURITY_CONTEXT_URL,
+  type: 'Ed25519VerificationKey2018',
   id: 'https://example.com/i/alice/keys/2',
   controller: 'https://example.com/i/alice',
   publicKeyBase58
@@ -148,7 +150,7 @@ const controller = {
 const doc = {
   '@context': {
     schema: 'http://schema.org/',
-    name: 'schema:action'
+    action: 'schema:action'
   },
   action: 'AuthenticateMe'
 };
@@ -160,7 +162,7 @@ const {Ed25519KeyPair} = jsigs;
 const signed = await jsigs.sign(doc, {
   suite: new Ed25519Signature2018({
     verificationMethod: publicKey.id,
-    key: new Ed25519KeyPair({privateKeyPem})
+    key: new Ed25519KeyPair({privateKeyBase58})
   }),
   purpose: new AuthenticationProofPurpose({
     challenge: 'abc',
