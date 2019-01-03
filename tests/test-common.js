@@ -618,34 +618,36 @@ describe('JSON-LD Signatures', () => {
   ];
 
   for(const suiteName of currentSuiteTests) {
-    context(`AuthenticationProofPurpose + ${suiteName}`, () => {
-      it('should detect an expired date',
+    context(`Current suite tests: ${suiteName}`, () => {
+      it('should fail to verify a document w/public key missing a type',
         async () => {
         const Suite = suites[suiteName];
-        const signSuite = new Suite({
-          ...mock.suites[suiteName].parameters.sign,
-          date: new Date('01-01-1970')
-        });
+
+        const signSuite = new Suite(mock.suites[suiteName].parameters.sign);
         const testDoc = clone(mock.securityContextTestDoc);
         const signed = await jsigs.sign(testDoc, {
           documentLoader: testLoader,
           suite: signSuite,
-          purpose: new AuthenticationProofPurpose({
-            challenge: 'abc',
-            domain: 'example.com'
-          })
+          purpose: new PublicKeyProofPurpose()
         });
 
-        const verifySuite = new Suite(mock.suites[suiteName].parameters.verify);
+        let keyType;
+        const parameters = mock.suites[suiteName].parameters.verify;
+        const verifySuite = new Suite(parameters);
+        const documentLoader = jsigs.extendContextLoader(async url => {
+          if(url === parameters.creator) {
+            const remoteDoc = await testLoader(url);
+            keyType = remoteDoc.document.type;
+            remoteDoc.document = {...remoteDoc.document};
+            delete remoteDoc.document.type;
+            return remoteDoc;
+          }
+          return testLoader(url);
+        });
         const result = await jsigs.verify(signed, {
-          documentLoader: testLoader,
+          documentLoader,
           suite: verifySuite,
-          purpose: new AuthenticationProofPurpose({
-            challenge: 'abc',
-            domain: 'example.com',
-            date: new Date('01-01-2018'),
-            maxTimestampDelta: 0
-          })
+          purpose: new PublicKeyProofPurpose()
         });
         const expected = {
           verified: false,
@@ -661,322 +663,387 @@ describe('JSON-LD Signatures', () => {
         assert.isArray(result.results);
         assert.equal(result.results.length, expected.results.length);
         assert.deepEqual(result.results[0].proof, expected.results[0].proof);
-        assert.equal(result.results[0].verified, expected.results[0].verified);
+        assert.equal(
+          result.results[0].verified, expected.results[0].verified);
         assert.equal(
           result.results[0].error.message,
-          'The proof\'s created timestamp is out of range.');
+          `Invalid key type. Key type must be "${keyType}".`);
       });
 
-      it('should detect a non-matching challenge',
-        async () => {
-        const Suite = suites[suiteName];
-        const signSuite = new Suite({
-          ...mock.suites[suiteName].parameters.sign,
-          date: new Date('01-01-1970')
-        });
-        const testDoc = clone(mock.securityContextTestDoc);
-        const signed = await jsigs.sign(testDoc, {
-          documentLoader: testLoader,
-          suite: signSuite,
-          purpose: new AuthenticationProofPurpose({
-            challenge: 'invalid',
-            domain: 'example.com'
-          })
+      context('AuthenticationProofPurpose', () => {
+        it('should detect an expired date',
+          async () => {
+          const Suite = suites[suiteName];
+          const signSuite = new Suite({
+            ...mock.suites[suiteName].parameters.sign,
+            date: new Date('01-01-1970')
+          });
+          const testDoc = clone(mock.securityContextTestDoc);
+          const signed = await jsigs.sign(testDoc, {
+            documentLoader: testLoader,
+            suite: signSuite,
+            purpose: new AuthenticationProofPurpose({
+              challenge: 'abc',
+              domain: 'example.com'
+            })
+          });
+
+          const verifySuite = new Suite(
+            mock.suites[suiteName].parameters.verify);
+          const result = await jsigs.verify(signed, {
+            documentLoader: testLoader,
+            suite: verifySuite,
+            purpose: new AuthenticationProofPurpose({
+              challenge: 'abc',
+              domain: 'example.com',
+              date: new Date('01-01-2018'),
+              maxTimestampDelta: 0
+            })
+          });
+          const expected = {
+            verified: false,
+            results: [{
+              proof: {
+                '@context': constants.SECURITY_CONTEXT_URL,
+                ...signed.proof
+              },
+              verified: false
+            }]
+          };
+          assert.isFalse(result.verified);
+          assert.isArray(result.results);
+          assert.equal(result.results.length, expected.results.length);
+          assert.deepEqual(result.results[0].proof, expected.results[0].proof);
+          assert.equal(
+            result.results[0].verified, expected.results[0].verified);
+          assert.equal(
+            result.results[0].error.message,
+            'The proof\'s created timestamp is out of range.');
         });
 
-        const verifySuite = new Suite(mock.suites[suiteName].parameters.verify);
-        const result = await jsigs.verify(signed, {
-          documentLoader: testLoader,
-          suite: verifySuite,
-          purpose: new AuthenticationProofPurpose({
-            challenge: 'abc',
-            domain: 'example.com',
-            date: new Date('01-01-2018')
-          })
+        it('should detect a non-matching challenge',
+          async () => {
+          const Suite = suites[suiteName];
+          const signSuite = new Suite({
+            ...mock.suites[suiteName].parameters.sign,
+            date: new Date('01-01-1970')
+          });
+          const testDoc = clone(mock.securityContextTestDoc);
+          const signed = await jsigs.sign(testDoc, {
+            documentLoader: testLoader,
+            suite: signSuite,
+            purpose: new AuthenticationProofPurpose({
+              challenge: 'invalid',
+              domain: 'example.com'
+            })
+          });
+
+          const verifySuite = new Suite(
+            mock.suites[suiteName].parameters.verify);
+          const result = await jsigs.verify(signed, {
+            documentLoader: testLoader,
+            suite: verifySuite,
+            purpose: new AuthenticationProofPurpose({
+              challenge: 'abc',
+              domain: 'example.com',
+              date: new Date('01-01-2018')
+            })
+          });
+          const expected = {
+            verified: false,
+            results: [{
+              proof: {
+                '@context': constants.SECURITY_CONTEXT_URL,
+                ...signed.proof
+              },
+              verified: false
+            }]
+          };
+          assert.isFalse(result.verified);
+          assert.isArray(result.results);
+          assert.equal(result.results.length, expected.results.length);
+          assert.deepEqual(result.results[0].proof, expected.results[0].proof);
+          assert.equal(
+            result.results[0].verified, expected.results[0].verified);
+          const expectedMessage = 'The challenge is not as expected';
+          assert.equal(
+            result.results[0].error.message.substr(0, expectedMessage.length),
+            expectedMessage);
         });
-        const expected = {
-          verified: false,
-          results: [{
-            proof: {
-              '@context': constants.SECURITY_CONTEXT_URL,
-              ...signed.proof
-            },
-            verified: false
-          }]
-        };
-        assert.isFalse(result.verified);
-        assert.isArray(result.results);
-        assert.equal(result.results.length, expected.results.length);
-        assert.deepEqual(result.results[0].proof, expected.results[0].proof);
-        assert.equal(result.results[0].verified, expected.results[0].verified);
-        const expectedMessage = 'The challenge is not as expected';
-        assert.equal(
-          result.results[0].error.message.substr(0, expectedMessage.length),
-          expectedMessage);
+
+        it('should detect a non-matching domain',
+          async () => {
+          const Suite = suites[suiteName];
+          const signSuite = new Suite({
+            ...mock.suites[suiteName].parameters.sign,
+            date: new Date('01-01-1970')
+          });
+          const testDoc = clone(mock.securityContextTestDoc);
+          const signed = await jsigs.sign(testDoc, {
+            documentLoader: testLoader,
+            suite: signSuite,
+            purpose: new AuthenticationProofPurpose({
+              challenge: 'abc',
+              domain: 'invalid.com'
+            })
+          });
+
+          const verifySuite = new Suite(
+            mock.suites[suiteName].parameters.verify);
+          const result = await jsigs.verify(signed, {
+            documentLoader: testLoader,
+            suite: verifySuite,
+            purpose: new AuthenticationProofPurpose({
+              challenge: 'abc',
+              domain: 'example.com',
+              date: new Date('01-01-2018')
+            })
+          });
+          const expected = {
+            verified: false,
+            results: [{
+              proof: {
+                '@context': constants.SECURITY_CONTEXT_URL,
+                ...signed.proof
+              },
+              verified: false
+            }]
+          };
+          assert.isFalse(result.verified);
+          assert.isArray(result.results);
+          assert.equal(result.results.length, expected.results.length);
+          assert.deepEqual(result.results[0].proof, expected.results[0].proof);
+          assert.equal(
+            result.results[0].verified, expected.results[0].verified);
+          const expectedMessage = 'The domain is not as expected';
+          assert.equal(
+            result.results[0].error.message.substr(0, expectedMessage.length),
+            expectedMessage);
+        });
+
+        it('should fail to verify because the purpose is not authorized',
+          async () => {
+          const Suite = suites[suiteName];
+          const signSuite = new Suite({
+            ...mock.suites[suiteName].parameters.sign,
+            date: new Date('01-01-1970')
+          });
+          const testDoc = clone(mock.securityContextTestDoc);
+          const signed = await jsigs.sign(testDoc, {
+            documentLoader: testLoader,
+            suite: signSuite,
+            purpose: new AuthenticationProofPurpose({
+              challenge: 'abc',
+              domain: 'example.com'
+            })
+          });
+
+          const verifySuite = new Suite(
+            mock.suites[suiteName].parameters.verify);
+          const result = await jsigs.verify(signed, {
+            documentLoader: testLoader,
+            suite: verifySuite,
+            purpose: new AuthenticationProofPurpose({
+              challenge: 'abc',
+              domain: 'example.com',
+              date: new Date('01-01-1970'),
+              maxTimestampDelta: 0
+            })
+          });
+          const expected = {
+            verified: false,
+            results: [{
+              proof: {
+                '@context': constants.SECURITY_CONTEXT_URL,
+                ...signed.proof
+              },
+              verified: false
+            }]
+          };
+          assert.isFalse(result.verified);
+          assert.isArray(result.results);
+          assert.equal(result.results.length, expected.results.length);
+          assert.deepEqual(result.results[0].proof, expected.results[0].proof);
+          assert.equal(
+            result.results[0].verified, expected.results[0].verified);
+          const expectedMessage = 'Verification method';
+          assert.equal(
+            result.results[0].error.message.substr(0, expectedMessage.length),
+            expectedMessage);
+        });
+
+        it('should sign and verify',
+          async () => {
+          const Suite = suites[suiteName];
+          const signSuite = new Suite({
+            ...mock.suites[suiteName].parameters.sign,
+            date: new Date('01-01-1970')
+          });
+          const testDoc = clone(mock.securityContextTestDoc);
+          const signed = await jsigs.sign(testDoc, {
+            documentLoader: testLoader,
+            suite: signSuite,
+            purpose: new AuthenticationProofPurpose({
+              challenge: 'abc',
+              domain: 'example.com'
+            })
+          });
+
+          const verifySuite = new Suite(
+            mock.suites[suiteName].parameters.verify);
+          const result = await jsigs.verify(signed, {
+            documentLoader: testLoader,
+            suite: verifySuite,
+            purpose: new AuthenticationProofPurpose({
+              challenge: 'abc',
+              domain: 'example.com',
+              date: new Date('01-01-1970'),
+              maxTimestampDelta: 0,
+              controller: mock.suites[suiteName].parameters
+                .authenticationController
+            })
+          });
+          const expected = {
+            verified: true,
+            results: [{
+              proof: {
+                '@context': constants.SECURITY_CONTEXT_URL,
+                ...signed.proof
+              },
+              verified: true
+            }]
+          };
+          assert.deepEqual(result, expected);
+        });
       });
 
-      it('should detect a non-matching domain',
-        async () => {
-        const Suite = suites[suiteName];
-        const signSuite = new Suite({
-          ...mock.suites[suiteName].parameters.sign,
-          date: new Date('01-01-1970')
-        });
-        const testDoc = clone(mock.securityContextTestDoc);
-        const signed = await jsigs.sign(testDoc, {
-          documentLoader: testLoader,
-          suite: signSuite,
-          purpose: new AuthenticationProofPurpose({
-            challenge: 'abc',
-            domain: 'invalid.com'
-          })
+      context('AssertionProofPurpose', () => {
+        it('should detect an expired date',
+          async () => {
+          const Suite = suites[suiteName];
+          const signSuite = new Suite({
+            ...mock.suites[suiteName].parameters.sign,
+            date: new Date('01-01-1970')
+          });
+          const testDoc = clone(mock.securityContextTestDoc);
+          const signed = await jsigs.sign(testDoc, {
+            documentLoader: testLoader,
+            suite: signSuite,
+            purpose: new AssertionProofPurpose()
+          });
+
+          const verifySuite = new Suite(
+            mock.suites[suiteName].parameters.verify);
+          const result = await jsigs.verify(signed, {
+            documentLoader: testLoader,
+            suite: verifySuite,
+            purpose: new AssertionProofPurpose({
+              date: new Date('01-01-2018'),
+              maxTimestampDelta: 0
+            })
+          });
+          const expected = {
+            verified: false,
+            results: [{
+              proof: {
+                '@context': constants.SECURITY_CONTEXT_URL,
+                ...signed.proof
+              },
+              verified: false
+            }]
+          };
+          assert.isFalse(result.verified);
+          assert.isArray(result.results);
+          assert.equal(result.results.length, expected.results.length);
+          assert.deepEqual(result.results[0].proof, expected.results[0].proof);
+          assert.equal(
+            result.results[0].verified, expected.results[0].verified);
+          assert.equal(
+            result.results[0].error.message,
+            'The proof\'s created timestamp is out of range.');
         });
 
-        const verifySuite = new Suite(mock.suites[suiteName].parameters.verify);
-        const result = await jsigs.verify(signed, {
-          documentLoader: testLoader,
-          suite: verifySuite,
-          purpose: new AuthenticationProofPurpose({
-            challenge: 'abc',
-            domain: 'example.com',
-            date: new Date('01-01-2018')
-          })
-        });
-        const expected = {
-          verified: false,
-          results: [{
-            proof: {
-              '@context': constants.SECURITY_CONTEXT_URL,
-              ...signed.proof
-            },
-            verified: false
-          }]
-        };
-        assert.isFalse(result.verified);
-        assert.isArray(result.results);
-        assert.equal(result.results.length, expected.results.length);
-        assert.deepEqual(result.results[0].proof, expected.results[0].proof);
-        assert.equal(result.results[0].verified, expected.results[0].verified);
-        const expectedMessage = 'The domain is not as expected';
-        assert.equal(
-          result.results[0].error.message.substr(0, expectedMessage.length),
-          expectedMessage);
-      });
+        it('should fail to verify because the purpose is not authorized',
+          async () => {
+          const Suite = suites[suiteName];
+          const signSuite = new Suite({
+            ...mock.suites[suiteName].parameters.sign,
+            date: new Date('01-01-1970')
+          });
+          const testDoc = clone(mock.securityContextTestDoc);
+          const signed = await jsigs.sign(testDoc, {
+            documentLoader: testLoader,
+            suite: signSuite,
+            purpose: new AssertionProofPurpose()
+          });
 
-      it('should fail to verify because the purpose is not authorized',
-        async () => {
-        const Suite = suites[suiteName];
-        const signSuite = new Suite({
-          ...mock.suites[suiteName].parameters.sign,
-          date: new Date('01-01-1970')
-        });
-        const testDoc = clone(mock.securityContextTestDoc);
-        const signed = await jsigs.sign(testDoc, {
-          documentLoader: testLoader,
-          suite: signSuite,
-          purpose: new AuthenticationProofPurpose({
-            challenge: 'abc',
-            domain: 'example.com'
-          })
+          const verifySuite = new Suite(
+            mock.suites[suiteName].parameters.verify);
+          const result = await jsigs.verify(signed, {
+            documentLoader: testLoader,
+            suite: verifySuite,
+            purpose: new AssertionProofPurpose()
+          });
+          const expected = {
+            verified: false,
+            results: [{
+              proof: {
+                '@context': constants.SECURITY_CONTEXT_URL,
+                ...signed.proof
+              },
+              verified: false
+            }]
+          };
+          assert.isFalse(result.verified);
+          assert.isArray(result.results);
+          assert.equal(result.results.length, expected.results.length);
+          assert.deepEqual(result.results[0].proof, expected.results[0].proof);
+          assert.equal(
+            result.results[0].verified, expected.results[0].verified);
+          const expectedMessage = 'Verification method';
+          assert.equal(
+            result.results[0].error.message.substr(0, expectedMessage.length),
+            expectedMessage);
         });
 
-        const verifySuite = new Suite(mock.suites[suiteName].parameters.verify);
-        const result = await jsigs.verify(signed, {
-          documentLoader: testLoader,
-          suite: verifySuite,
-          purpose: new AuthenticationProofPurpose({
-            challenge: 'abc',
-            domain: 'example.com',
-            date: new Date('01-01-1970'),
-            maxTimestampDelta: 0
-          })
-        });
-        const expected = {
-          verified: false,
-          results: [{
-            proof: {
-              '@context': constants.SECURITY_CONTEXT_URL,
-              ...signed.proof
-            },
-            verified: false
-          }]
-        };
-        assert.isFalse(result.verified);
-        assert.isArray(result.results);
-        assert.equal(result.results.length, expected.results.length);
-        assert.deepEqual(result.results[0].proof, expected.results[0].proof);
-        assert.equal(result.results[0].verified, expected.results[0].verified);
-        const expectedMessage = 'Verification method';
-        assert.equal(
-          result.results[0].error.message.substr(0, expectedMessage.length),
-          expectedMessage);
-      });
+        it('should sign and verify',
+          async () => {
+          const Suite = suites[suiteName];
+          const signSuite = new Suite({
+            ...mock.suites[suiteName].parameters.sign,
+            date: new Date('01-01-1970')
+          });
+          const testDoc = clone(mock.securityContextTestDoc);
+          const signed = await jsigs.sign(testDoc, {
+            documentLoader: testLoader,
+            suite: signSuite,
+            purpose: new AssertionProofPurpose()
+          });
 
-      it('should sign and verify',
-        async () => {
-        const Suite = suites[suiteName];
-        const signSuite = new Suite({
-          ...mock.suites[suiteName].parameters.sign,
-          date: new Date('01-01-1970')
+          const verifySuite = new Suite(
+            mock.suites[suiteName].parameters.verify);
+          const result = await jsigs.verify(signed, {
+            documentLoader: testLoader,
+            suite: verifySuite,
+            purpose: new AssertionProofPurpose({
+              date: new Date('01-01-1970'),
+              maxTimestampDelta: 0,
+              controller: mock.suites[suiteName].parameters
+                .assertionController
+            })
+          });
+          const expected = {
+            verified: true,
+            results: [{
+              proof: {
+                '@context': constants.SECURITY_CONTEXT_URL,
+                ...signed.proof
+              },
+              verified: true
+            }]
+          };
+          assert.deepEqual(result, expected);
         });
-        const testDoc = clone(mock.securityContextTestDoc);
-        const signed = await jsigs.sign(testDoc, {
-          documentLoader: testLoader,
-          suite: signSuite,
-          purpose: new AuthenticationProofPurpose({
-            challenge: 'abc',
-            domain: 'example.com'
-          })
-        });
-
-        const verifySuite = new Suite(mock.suites[suiteName].parameters.verify);
-        const result = await jsigs.verify(signed, {
-          documentLoader: testLoader,
-          suite: verifySuite,
-          purpose: new AuthenticationProofPurpose({
-            challenge: 'abc',
-            domain: 'example.com',
-            date: new Date('01-01-1970'),
-            maxTimestampDelta: 0,
-            controller: mock.suites[suiteName].parameters
-              .authenticationController
-          })
-        });
-        const expected = {
-          verified: true,
-          results: [{
-            proof: {
-              '@context': constants.SECURITY_CONTEXT_URL,
-              ...signed.proof
-            },
-            verified: true
-          }]
-        };
-        assert.deepEqual(result, expected);
-      });
-    });
-
-    context(`AssertionProofPurpose + ${suiteName}`, () => {
-      it('should detect an expired date',
-        async () => {
-        const Suite = suites[suiteName];
-        const signSuite = new Suite({
-          ...mock.suites[suiteName].parameters.sign,
-          date: new Date('01-01-1970')
-        });
-        const testDoc = clone(mock.securityContextTestDoc);
-        const signed = await jsigs.sign(testDoc, {
-          documentLoader: testLoader,
-          suite: signSuite,
-          purpose: new AssertionProofPurpose()
-        });
-
-        const verifySuite = new Suite(mock.suites[suiteName].parameters.verify);
-        const result = await jsigs.verify(signed, {
-          documentLoader: testLoader,
-          suite: verifySuite,
-          purpose: new AssertionProofPurpose({
-            date: new Date('01-01-2018'),
-            maxTimestampDelta: 0
-          })
-        });
-        const expected = {
-          verified: false,
-          results: [{
-            proof: {
-              '@context': constants.SECURITY_CONTEXT_URL,
-              ...signed.proof
-            },
-            verified: false
-          }]
-        };
-        assert.isFalse(result.verified);
-        assert.isArray(result.results);
-        assert.equal(result.results.length, expected.results.length);
-        assert.deepEqual(result.results[0].proof, expected.results[0].proof);
-        assert.equal(result.results[0].verified, expected.results[0].verified);
-        assert.equal(
-          result.results[0].error.message,
-          'The proof\'s created timestamp is out of range.');
-      });
-
-      it('should fail to verify because the purpose is not authorized',
-        async () => {
-        const Suite = suites[suiteName];
-        const signSuite = new Suite({
-          ...mock.suites[suiteName].parameters.sign,
-          date: new Date('01-01-1970')
-        });
-        const testDoc = clone(mock.securityContextTestDoc);
-        const signed = await jsigs.sign(testDoc, {
-          documentLoader: testLoader,
-          suite: signSuite,
-          purpose: new AssertionProofPurpose()
-        });
-
-        const verifySuite = new Suite(mock.suites[suiteName].parameters.verify);
-        const result = await jsigs.verify(signed, {
-          documentLoader: testLoader,
-          suite: verifySuite,
-          purpose: new AssertionProofPurpose()
-        });
-        const expected = {
-          verified: false,
-          results: [{
-            proof: {
-              '@context': constants.SECURITY_CONTEXT_URL,
-              ...signed.proof
-            },
-            verified: false
-          }]
-        };
-        assert.isFalse(result.verified);
-        assert.isArray(result.results);
-        assert.equal(result.results.length, expected.results.length);
-        assert.deepEqual(result.results[0].proof, expected.results[0].proof);
-        assert.equal(result.results[0].verified, expected.results[0].verified);
-        const expectedMessage = 'Verification method';
-        assert.equal(
-          result.results[0].error.message.substr(0, expectedMessage.length),
-          expectedMessage);
-      });
-
-      it('should sign and verify',
-        async () => {
-        const Suite = suites[suiteName];
-        const signSuite = new Suite({
-          ...mock.suites[suiteName].parameters.sign,
-          date: new Date('01-01-1970')
-        });
-        const testDoc = clone(mock.securityContextTestDoc);
-        const signed = await jsigs.sign(testDoc, {
-          documentLoader: testLoader,
-          suite: signSuite,
-          purpose: new AssertionProofPurpose()
-        });
-
-        const verifySuite = new Suite(mock.suites[suiteName].parameters.verify);
-        const result = await jsigs.verify(signed, {
-          documentLoader: testLoader,
-          suite: verifySuite,
-          purpose: new AssertionProofPurpose({
-            date: new Date('01-01-1970'),
-            maxTimestampDelta: 0,
-            controller: mock.suites[suiteName].parameters
-              .assertionController
-          })
-        });
-        const expected = {
-          verified: true,
-          results: [{
-            proof: {
-              '@context': constants.SECURITY_CONTEXT_URL,
-              ...signed.proof
-            },
-            verified: true
-          }]
-        };
-        assert.deepEqual(result, expected);
       });
     });
   }
