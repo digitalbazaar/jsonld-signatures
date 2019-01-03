@@ -1,6 +1,6 @@
 # jsonld-signatures ChangeLog
 
-## 3.0.0 - TBD
+## 3.0.0 - 2019-01-03
 
 ### Added
 - Add `compactProof` flag that can be set to `false` to enable skipping
