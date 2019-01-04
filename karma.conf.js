@@ -31,6 +31,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      require.resolve('regenerator-runtime/runtime'),
       {
         pattern: 'tests/test-karma.js',
         watched: false, served: true, included: true
@@ -65,9 +66,13 @@ module.exports = function(config) {
             use: {
               loader: 'babel-loader',
               options: {
-                presets: ['env'],
+                presets: ['@babel/preset-env'],
                 plugins: [
-                  ['transform-object-rest-spread', {useBuiltIns: true}]
+                  '@babel/plugin-transform-regenerator',
+                  [
+                    '@babel/plugin-proposal-object-rest-spread',
+                    {useBuiltIns: true}
+                  ]
                 ]
               }
             }
