@@ -1,5 +1,8 @@
 # jsonld-signatures ChangeLog
 
+### Fixed
+- Move webpack-cli to dev dependency.
+
 ## 3.0.0 - 2019-01-03
 
 ### Added
