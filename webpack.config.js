@@ -94,7 +94,9 @@ outputs.forEach((info) => {
     externals: {
       'bitcore-message': 'bitcoreMessage',
       'node-forge': 'forge',
-      jsonld: 'jsonld'
+      jsonld: 'jsonld',
+      'crypto': false,
+      'ursa': false
     }
   };
 

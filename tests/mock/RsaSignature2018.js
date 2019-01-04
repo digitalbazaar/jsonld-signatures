@@ -8,7 +8,7 @@ const {NOOP_PROOF_PURPOSE_URI} = require('./noop-purpose');
 const {nonSecurityContextTestDoc, securityContextTestDoc} =
   require('./test-document');
 const {controllers, publicKeys, privateKeys} = require('./keys');
-const {RSAKeyPair} = require('../../lib/LDKeyPair');
+const {RSAKeyPair} = require('crypto-ld');
 
 const mock = {};
 module.exports = mock;

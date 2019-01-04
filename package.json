@@ -36,6 +36,7 @@
     "bitcore-message": "github:CoMakery/bitcore-message#dist",
     "bs58": "^4.0.1",
     "chloride": "^2.2.8",
+    "crypto-ld": "digitalbazaar/crypto-ld#signer",
     "jsonld": "^1.1.0",
     "node-forge": "^0.7.4",
     "semver": "^5.6.0"
@@ -112,6 +113,7 @@
     "crypto": false,
     "bs58": false,
     "base64url": false,
-    "chloride": false
+    "chloride": false,
+    "ursa": false
   }
 }
