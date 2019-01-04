@@ -3,6 +3,9 @@
 ### Fixed
 - Move webpack-cli to dev dependency.
 
+### Changed
+- Update to Babel 7.
+
 ## 3.0.0 - 2019-01-03
 
 ### Added
