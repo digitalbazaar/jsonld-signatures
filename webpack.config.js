@@ -19,7 +19,7 @@ const outputs = [
   // core jsonld-signatures library
   {
     entry: [
-      // 'babel-polyfill' is very large, list features explicitly
+      // '@babel/polyfill' is very large, list features explicitly
       'regenerator-runtime/runtime',
       'core-js/fn/object/assign',
       'core-js/fn/promise',
@@ -67,9 +67,12 @@ outputs.forEach((info) => {
           use: {
             loader: 'babel-loader',
             options: {
-              presets: ['env'],
+              presets: ['@babel/preset-env'],
               plugins: [
-                ['transform-object-rest-spread', {useBuiltIns: true}]
+                [
+                  '@babel/plugin-proposal-object-rest-spread',
+                  {useBuiltIns: true}
+                ]
               ]
             }
           }
