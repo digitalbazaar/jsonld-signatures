@@ -27,8 +27,6 @@ require('core-js/fn/object/assign');
 require('core-js/fn/promise');
 require('core-js/fn/set');
 require('core-js/fn/symbol');
-// loaded from karma.conf.js as of babel@7
-//require('regenerator-runtime/runtime');
 
 const assert = require('chai').assert;
 const common = require('./test-common');

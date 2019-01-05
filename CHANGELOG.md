@@ -1,5 +1,8 @@
 # jsonld-signatures ChangeLog
 
+### Changed
+- Improve usage of Babel features.
+
 ## 3.1.0 - 2019-01-04
 
 ### Fixed

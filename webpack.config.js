@@ -20,7 +20,6 @@ const outputs = [
   {
     entry: [
       // '@babel/polyfill' is very large, list features explicitly
-      'regenerator-runtime/runtime',
       'core-js/fn/object/assign',
       'core-js/fn/promise',
       // main lib
@@ -72,7 +71,8 @@ outputs.forEach((info) => {
                 [
                   '@babel/plugin-proposal-object-rest-spread',
                   {useBuiltIns: true}
-                ]
+                ],
+                '@babel/plugin-transform-runtime'
               ]
             }
           }
