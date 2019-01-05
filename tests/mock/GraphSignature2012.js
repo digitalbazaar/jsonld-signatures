@@ -22,9 +22,12 @@ mock.nonSecurityContextSigned = {
       "@id": "https://example.com/i/alice/keys/1"
     },
     "https://w3id.org/security#signatureValue":
-      "BQC/V/0kPugo3fYJlDtu1DdeJwJvjfrdLOwC8cCA6HlXA/DTnfJrOyrki/ors" +
-      "Cxiy3/oPr1y7oTRn6ZD7uuvT9cAB5zWiSqHxVrTL7gPff4FaJK+lvhsFKdlEj" +
-      "0IoFG7Sr2DD6Y5bW01fqcHeeRoPZpUl3nl0oo3Rk8/UAlBE88="
+      "JCsAA1dvXCNR7Ey3qLc4mLAy8JvdE0RSklNTWlIMqVZ8hrCpVSRoq86sJd4HS" +
+      "eRFaor6YwwOiLZ4yQbNPvxkS4b85vlTrivz4OrLPi8XKT4ArUZUreHPEcaHmU" +
+      "6rIVnt3ySwOwMqSjfjzRrpxkoZzQbBnqFbqojF1hul1XuTT6AvFiwXyHY3z2w" +
+      "qAJeetILLzIZoSDnpSrUKEEyZ/erfS7t/BXuSbmGjRm9p/MYXLSHk6oWI7Ydb" +
+      "i8xXhpb4sIOdnCK3EES6CTGVdwWE7gJUPZ8lcGHhLo4fqGrVhqbAuWXvfBow4" +
+      "YWDjiXgvJsVbeDRV1WM+abFMpvBRuvAn8ej2A=="
   }
 };
 
@@ -35,9 +38,12 @@ mock.securityContextSigned = {
     "created": "2018-02-22T15:16:04Z",
     "creator": "https://example.com/i/alice/keys/1",
     "signatureValue":
-      "BQC/V/0kPugo3fYJlDtu1DdeJwJvjfrdLOwC8cCA6HlXA/DTnfJrOyrki/ors" +
-      "Cxiy3/oPr1y7oTRn6ZD7uuvT9cAB5zWiSqHxVrTL7gPff4FaJK+lvhsFKdlEj" +
-      "0IoFG7Sr2DD6Y5bW01fqcHeeRoPZpUl3nl0oo3Rk8/UAlBE88="
+      "JCsAA1dvXCNR7Ey3qLc4mLAy8JvdE0RSklNTWlIMqVZ8hrCpVSRoq86sJd4HS" +
+      "eRFaor6YwwOiLZ4yQbNPvxkS4b85vlTrivz4OrLPi8XKT4ArUZUreHPEcaHmU" +
+      "6rIVnt3ySwOwMqSjfjzRrpxkoZzQbBnqFbqojF1hul1XuTT6AvFiwXyHY3z2w" +
+      "qAJeetILLzIZoSDnpSrUKEEyZ/erfS7t/BXuSbmGjRm9p/MYXLSHk6oWI7Ydb" +
+      "i8xXhpb4sIOdnCK3EES6CTGVdwWE7gJUPZ8lcGHhLo4fqGrVhqbAuWXvfBow4" +
+      "YWDjiXgvJsVbeDRV1WM+abFMpvBRuvAn8ej2A=="
   }
 };
 
@@ -48,9 +54,12 @@ mock.securityContextInvalidSignature = {
     "created": "2018-02-22T15:16:04Z",
     "creator": "https://example.com/i/alice/keys/1",
     "signatureValue":
-      "CQC/V/0kPugo3fYJlDtu1DdeJwJvjfrdLOwC8cCA6HlXA/DTnfJrOyrki/ors" +
-      "Cxiy3/oPr1y7oTRn6ZD7uuvT9cAB5zWiSqHxVrTL7gPff4FaJK+lvhsFKdlEj" +
-      "0IoFG7Sr2DD6Y5bW01fqcHeeRoPZpUl3nl0oo3Rk8/UAlBE88="
+      "jCsAA1dvXCNR7Ey3qLc4mLAy8JvdE0RSklNTWlIMqVZ8hrCpVSRoq86sJd4HS" +
+      "eRFaor6YwwOiLZ4yQbNPvxkS4b85vlTrivz4OrLPi8XKT4ArUZUreHPEcaHmU" +
+      "6rIVnt3ySwOwMqSjfjzRrpxkoZzQbBnqFbqojF1hul1XuTT6AvFiwXyHY3z2w" +
+      "qAJeetILLzIZoSDnpSrUKEEyZ/erfS7t/BXuSbmGjRm9p/MYXLSHk6oWI7Ydb" +
+      "i8xXhpb4sIOdnCK3EES6CTGVdwWE7gJUPZ8lcGHhLo4fqGrVhqbAuWXvfBow4" +
+      "YWDjiXgvJsVbeDRV1WM+abFMpvBRuvAn8ej2A=="
   }
 };
 

@@ -28,9 +28,12 @@ mock.nonSecurityContextSigned = {
       "https://w3id.org/security#jws":
         "eyJhbGciOiJQUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19" +
         ".." +
-        "KbIsIghAzxk5cs2uBYGO60RgV342Fppcz5AYy9u-BgbEbRwBlh0sB3wCvbKL" +
-        "eUlMyccltvqLUvhJTiW0mrM9TC-JAk4-Cr0zIQ9zrZ2g3SAHEe5hxT5dpCEg" +
-        "PB8uIZZV3XqxDgJRWgd1BvrA3hqHMqqh3CTh85KNa8wZqlTnjkM",
+        "dJBMvvFAIC00nSGB6Tn0XKbbF9XrsaJZREWvR2aONYTQQxnyXirtXnlewJMB" +
+        "Bn2h9hfcGZrvnC1b6PgWmukzFJ1IiH1dWgnDIS81BH-IxXnPkbuYDeySorc4" +
+        "QU9MJxdVkY5EL4HYbcIfwKj6X4LBQ2_ZHZIu1jdqLcRZqHcsDF5KKylKc1TH" +
+        "n5VRWy5WhYg_gBnyWny8E6Qkrze53MR7OuAmmNJ1m1nN8SxDrG6a08L78J0-" +
+        "Fbas5OjAQz3c17GY8mVuDPOBIOVjMEghBlgl3nOi1ysxbRGhHLEK4s0KKbeR" +
+        "ogZdgt1DkQxDFxxn41QWDw_mmMCjs9qxg0zcZzqEJw",
       "https://w3id.org/security#proofPurpose": {
         "@id": NOOP_PROOF_PURPOSE_URI
       }
@@ -47,9 +50,12 @@ mock.securityContextSigned = {
     "jws":
       "eyJhbGciOiJQUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19" +
       ".." +
-      "KbIsIghAzxk5cs2uBYGO60RgV342Fppcz5AYy9u-BgbEbRwBlh0sB3wCvbKL" +
-      "eUlMyccltvqLUvhJTiW0mrM9TC-JAk4-Cr0zIQ9zrZ2g3SAHEe5hxT5dpCEg" +
-      "PB8uIZZV3XqxDgJRWgd1BvrA3hqHMqqh3CTh85KNa8wZqlTnjkM",
+      "dJBMvvFAIC00nSGB6Tn0XKbbF9XrsaJZREWvR2aONYTQQxnyXirtXnlewJMB" +
+      "Bn2h9hfcGZrvnC1b6PgWmukzFJ1IiH1dWgnDIS81BH-IxXnPkbuYDeySorc4" +
+      "QU9MJxdVkY5EL4HYbcIfwKj6X4LBQ2_ZHZIu1jdqLcRZqHcsDF5KKylKc1TH" +
+      "n5VRWy5WhYg_gBnyWny8E6Qkrze53MR7OuAmmNJ1m1nN8SxDrG6a08L78J0-" +
+      "Fbas5OjAQz3c17GY8mVuDPOBIOVjMEghBlgl3nOi1ysxbRGhHLEK4s0KKbeR" +
+      "ogZdgt1DkQxDFxxn41QWDw_mmMCjs9qxg0zcZzqEJw",
     "proofPurpose": NOOP_PROOF_PURPOSE_URI
   }
 };
@@ -63,9 +69,12 @@ mock.securityContextInvalidSignature = {
     "jws":
       "eyJhbGciOiJQUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19" +
       ".." +
-      "AbIsIghAzxk5cs2uBYGO60RgV342Fppcz5AYy9u-BgbEbRwBlh0sB3wCvbKL" +
-      "eUlMyccltvqLUvhJTiW0mrM9TC-JAk4-Cr0zIQ9zrZ2g3SAHEe5hxT5dpCEg" +
-      "PB8uIZZV3XqxDgJRWgd1BvrA3hqHMqqh3CTh85KNa8wZqlTnjkM",
+      "DJBMvvFAIC00nSGB6Tn0XKbbF9XrsaJZREWvR2aONYTQQxnyXirtXnlewJMB" +
+      "Bn2h9hfcGZrvnC1b6PgWmukzFJ1IiH1dWgnDIS81BH-IxXnPkbuYDeySorc4" +
+      "QU9MJxdVkY5EL4HYbcIfwKj6X4LBQ2_ZHZIu1jdqLcRZqHcsDF5KKylKc1TH" +
+      "n5VRWy5WhYg_gBnyWny8E6Qkrze53MR7OuAmmNJ1m1nN8SxDrG6a08L78J0-" +
+      "Fbas5OjAQz3c17GY8mVuDPOBIOVjMEghBlgl3nOi1ysxbRGhHLEK4s0KKbeR" +
+      "ogZdgt1DkQxDFxxn41QWDw_mmMCjs9qxg0zcZzqEJw",
     "proofPurpose": NOOP_PROOF_PURPOSE_URI
   }
 };

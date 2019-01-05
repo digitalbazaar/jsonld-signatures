@@ -22,9 +22,12 @@ mock.nonSecurityContextSigned = {
       "@id": "https://example.com/i/alice/keys/1"
     },
     "https://w3id.org/security#signatureValue":
-      "Ah67DfRQVUMpwjnlEo+q3q+LAjA9wN74qDHmhTM28+tW+sRO3qQkp4ipqy+NUt" +
-      "zakDnagmAIULfqoBENkk32HPM66N7xDwzcx3JPAmaHk4TNSAb98ozLohQvbN8h" +
-      "Wc3S7TvBVK8ylhKa59ys6YT4DXzQw71LlYxfUjasnp4hTf4="
+      "hztABpsP4e/emXsUYFUQ8HstjrgMfbMXbVcUhfYBHCCYuIgfsmTTOT4uaL5zwF" +
+      "EpkSBNxskB46IAnqdkIYU2KF+7pDyBbIe7GMm60zIAavmIsAcxh034ENJreUgX" +
+      "eIQhpx/ZPKcQCBPwDHrbxXiBxS/VmkvJLbtjfy0qj96f6Gc2AvaB43ZHwO88TV" +
+      "lzxQFa8gnJt2embI41u4Gz7+jmx2yc/1lEH/iOmm1g3OTmnJu3OmvLGvygLogu" +
+      "n17ueUbTA1Fam2H78V1UI/E90i/PY3Doy1VGDkdLsW8UJGTZOVSpmf0acqik91" +
+      "pS1OuHcvyzN+HdRolszzdkrORzM8mxmg=="
   }
 };
 
@@ -35,9 +38,12 @@ mock.securityContextSigned = {
     "created": "2018-02-22T15:16:04Z",
     "creator": "https://example.com/i/alice/keys/1",
     "signatureValue":
-      "Ah67DfRQVUMpwjnlEo+q3q+LAjA9wN74qDHmhTM28+tW+sRO3qQkp4ipqy+NUt" +
-      "zakDnagmAIULfqoBENkk32HPM66N7xDwzcx3JPAmaHk4TNSAb98ozLohQvbN8h" +
-      "Wc3S7TvBVK8ylhKa59ys6YT4DXzQw71LlYxfUjasnp4hTf4="
+      "hztABpsP4e/emXsUYFUQ8HstjrgMfbMXbVcUhfYBHCCYuIgfsmTTOT4uaL5zwF" +
+      "EpkSBNxskB46IAnqdkIYU2KF+7pDyBbIe7GMm60zIAavmIsAcxh034ENJreUgX" +
+      "eIQhpx/ZPKcQCBPwDHrbxXiBxS/VmkvJLbtjfy0qj96f6Gc2AvaB43ZHwO88TV" +
+      "lzxQFa8gnJt2embI41u4Gz7+jmx2yc/1lEH/iOmm1g3OTmnJu3OmvLGvygLogu" +
+      "n17ueUbTA1Fam2H78V1UI/E90i/PY3Doy1VGDkdLsW8UJGTZOVSpmf0acqik91" +
+      "pS1OuHcvyzN+HdRolszzdkrORzM8mxmg=="
   }
 };
 
@@ -48,9 +54,12 @@ mock.securityContextInvalidSignature = {
     "created": "2018-02-22T15:16:04Z",
     "creator": "https://example.com/i/alice/keys/1",
     "signatureValue":
-      "Bh67DfRQVUMpwjnlEo+q3q+LAjA9wN74qDHmhTM28+tW+sRO3qQkp4ipqy+NUt" +
-      "zakDnagmAIULfqoBENkk32HPM66N7xDwzcx3JPAmaHk4TNSAb98ozLohQvbN8h" +
-      "Wc3S7TvBVK8ylhKa59ys6YT4DXzQw71LlYxfUjasnp4hTf4="
+      "HztABpsP4e/emXsUYFUQ8HstjrgMfbMXbVcUhfYBHCCYuIgfsmTTOT4uaL5zwF" +
+      "EpkSBNxskB46IAnqdkIYU2KF+7pDyBbIe7GMm60zIAavmIsAcxh034ENJreUgX" +
+      "eIQhpx/ZPKcQCBPwDHrbxXiBxS/VmkvJLbtjfy0qj96f6Gc2AvaB43ZHwO88TV" +
+      "lzxQFa8gnJt2embI41u4Gz7+jmx2yc/1lEH/iOmm1g3OTmnJu3OmvLGvygLogu" +
+      "n17ueUbTA1Fam2H78V1UI/E90i/PY3Doy1VGDkdLsW8UJGTZOVSpmf0acqik91" +
+      "pS1OuHcvyzN+HdRolszzdkrORzM8mxmg=="
   }
 };
 
