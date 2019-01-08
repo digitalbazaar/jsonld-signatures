@@ -1,5 +1,9 @@
 # jsonld-signatures ChangeLog
 
+### Fixed
+- Fix ProofSet proof matching.
+- Use 2048-bit RSA keys in tests.
+
 ### Changed
 - Improve usage of Babel features.
 
