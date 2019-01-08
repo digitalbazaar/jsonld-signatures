@@ -167,7 +167,10 @@ describe('JSON-LD Signatures', () => {
 
     it('should verify a document with a custom suite', async () => {
       const signed = clone(mock.securityContextTestDoc);
-      signed.proof = {type: 'example:CustomSuite'};
+      signed.proof = {
+        proofPurpose: 'https://example.org/special-authentication',
+        type: 'example:CustomSuite'
+      };
       const result = await jsigs.verify(signed, {
         documentLoader: testLoader,
         suite: new CustomSuite(),
@@ -184,6 +187,23 @@ describe('JSON-LD Signatures', () => {
         }]
       };
       assert.deepEqual(result, expected);
+    });
+
+    it('should not verify a document with the incorrect purpose', async () => {
+      const signed = clone(mock.securityContextTestDoc);
+      signed.proof = {
+        proofPurpose: 'https://example.org/unknown-authentication',
+        type: 'example:CustomSuite'
+      };
+      const result = await jsigs.verify(signed, {
+        documentLoader: testLoader,
+        suite: new CustomSuite(),
+        purpose: new NoOpProofPurpose()
+      });
+      assert.equal(result.verified, false);
+      assert.ok(result.error);
+      assert.equal(result.error.message.includes(
+        'no proofs matched the required suite and purpose'), true);
     });
   });
 
