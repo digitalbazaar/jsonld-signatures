@@ -1,5 +1,7 @@
 # jsonld-signatures ChangeLog
 
+## 3.1.1 - 2019-01-08
+
 ### Fixed
 - Fix ProofSet proof matching.
 - Use 2048-bit RSA keys in tests.
