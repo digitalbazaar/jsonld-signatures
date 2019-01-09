@@ -1,5 +1,7 @@
 # jsonld-signatures ChangeLog
 
+## 3.1.2 - 2019-01-08
+
 ### Fixed
 - Fix ProofSet suite matching.
 - Ensure proof verification method matches key if given.
