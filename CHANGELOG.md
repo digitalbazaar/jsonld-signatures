@@ -2,6 +2,7 @@
 
 ### Fixed
 - Fix ProofSet suite matching.
+- Ensure proof verification method matches key if given.
 
 ## 3.1.1 - 2019-01-08
 
