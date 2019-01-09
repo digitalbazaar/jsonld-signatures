@@ -139,8 +139,9 @@ describe('JSON-LD Signatures', () => {
 
   context('custom suite', () => {
     class CustomSuite extends LinkedDataProof {
-      constructor() {
+      constructor({match = true} = {}) {
         super({type: 'example:CustomSuite'});
+        this.match = match;
       }
       async createProof() {
         return {
@@ -150,6 +151,9 @@ describe('JSON-LD Signatures', () => {
       }
       async verifyProof() {
         return {verified: true};
+      }
+      async matchProof() {
+        return this.match;
       }
     }
 
@@ -189,7 +193,24 @@ describe('JSON-LD Signatures', () => {
       assert.deepEqual(result, expected);
     });
 
-    it('should not verify a document with the incorrect purpose', async () => {
+    it('should not verify a document with non-matching suite', async () => {
+      const signed = clone(mock.securityContextTestDoc);
+      signed.proof = {
+        proofPurpose: 'https://example.org/unknown-authentication',
+        type: 'example:CustomSuite'
+      };
+      const result = await jsigs.verify(signed, {
+        documentLoader: testLoader,
+        suite: new CustomSuite({match: false}),
+        purpose: new NoOpProofPurpose()
+      });
+      assert.equal(result.verified, false);
+      assert.ok(result.error);
+      assert.equal(result.error.message.includes(
+        'no proofs matched the required suite and purpose'), true);
+    });
+
+    it('should not verify a document with non-matching purpose', async () => {
       const signed = clone(mock.securityContextTestDoc);
       signed.proof = {
         proofPurpose: 'https://example.org/unknown-authentication',

@@ -1,5 +1,8 @@
 # jsonld-signatures ChangeLog
 
+### Fixed
+- Fix ProofSet suite matching.
+
 ## 3.1.1 - 2019-01-08
 
 ### Fixed
