@@ -38,6 +38,7 @@
     "chloride": "^2.2.8",
     "jsonld": "^1.1.0",
     "node-forge": "^0.7.4",
+    "security-context": "^1.0.0",
     "semver": "^5.6.0"
   },
   "devDependencies": {
