@@ -112,8 +112,6 @@
     "lib/index.js": "./lib/jsonld-signatures.js",
     "crypto": false,
     "bs58": false,
-    "base64url": false,
-    "chloride": false,
-    "ursa": false
+    "base64url": false
   }
 }
