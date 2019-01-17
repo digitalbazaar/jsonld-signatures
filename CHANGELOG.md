@@ -1,5 +1,7 @@
 # jsonld-signatures ChangeLog
 
+## 3.2.0 - 2019-01-17
+
 ### Changed
 - Use crypto-ld@2.
 
