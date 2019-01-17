@@ -1,5 +1,8 @@
 # jsonld-signatures ChangeLog
 
+### Changed
+- Use crypto-ld@2.
+
 ### Removed
 - **BREAKING**: Remove Node.js 6.x support. If you need Node.js 6.x support
   please use the 2.x series or setup your own translation.
