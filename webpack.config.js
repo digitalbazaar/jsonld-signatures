@@ -23,7 +23,7 @@ const outputs = [
       'core-js/fn/object/assign',
       'core-js/fn/promise',
       // main lib
-      './lib/index.js'
+      './lib/jsonld-signatures.js'
     ],
     filenameBase: 'jsonld-signatures'
   },

@@ -1,5 +1,9 @@
 # jsonld-signatures ChangeLog
 
+### Removed
+- **BREAKING**: Remove Node.js 6.x support. If you need Node.js 6.x support
+  please use the 2.x series or setup your own translation.
+
 ## 3.1.2 - 2019-01-08
 
 ### Fixed
