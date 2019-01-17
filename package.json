@@ -22,12 +22,11 @@
     "email": "support@digitalbazaar.com"
   },
   "license": "BSD-3-Clause",
-  "main": "lib/index.js",
+  "main": "lib/jsonld-signatures.js",
   "files": [
     "browser/*.js",
     "dist/*.js",
     "dist/*.js.map",
-    "dist/node6/**/*.js",
     "lib/*.js",
     "lib/**/*.js"
   ],
@@ -37,8 +36,7 @@
     "bs58": "^4.0.1",
     "crypto-ld": "^2.0.0",
     "jsonld": "^1.1.0",
-    "node-forge": "^0.7.4",
-    "semver": "^5.6.0"
+    "node-forge": "^0.7.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -78,7 +76,7 @@
     "webpack-merge": "^4.1.1"
   },
   "engines": {
-    "node": ">=6"
+    "node": ">=8"
   },
   "keywords": [
     "JSON",
@@ -91,9 +89,8 @@
   ],
   "scripts": {
     "prepublish": "npm run build",
-    "build": "npm run build-webpack && npm run build-node6",
+    "build": "npm run build-webpack",
     "build-webpack": "webpack",
-    "build-node6": "BROWSERSLIST='node 6' babel --no-babelrc lib --out-dir dist/node6/lib --presets=@babel/preset-env",
     "test": "npm run test-node",
     "test-node": "cross-env NODE_ENV=test mocha --delay -t 30000 -A -R ${REPORTER:-spec} tests/test.js",
     "test-karma": "karma start",
@@ -108,7 +105,6 @@
     ]
   },
   "browser": {
-    "lib/index.js": "./lib/jsonld-signatures.js",
     "crypto": false,
     "bs58": false,
     "base64url": false
