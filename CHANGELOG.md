@@ -1,5 +1,13 @@
 # jsonld-signatures ChangeLog
 
+## 3.3.0 - TBD
+
+### Changed
+- JwsSignatures now default to `verificationMethod` term in the
+  proof unless a legacy public key is being utilized. A legacy public key is
+  one that has the deprecated `owner` property instead of the newer
+  `controller` property.
+
 ## 3.2.0 - 2019-01-17
 
 ### Changed
