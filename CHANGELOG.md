@@ -1,6 +1,6 @@
 # jsonld-signatures ChangeLog
 
-## 3.3.0 - TBD
+## 3.3.0 - 2019-01-22
 
 ### Changed
 - JwsSignatures now default to `verificationMethod` term in the
