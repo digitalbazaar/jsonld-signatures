@@ -3,6 +3,9 @@
 ### Changed
 - Updated jsonld to 1.5.0.
 
+### Added
+- Expose `useNative` option in constructors of suites that use rdf-canonize.
+
 ## 3.3.0 - 2019-01-22
 
 ### Changed
