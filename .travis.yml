@@ -13,9 +13,9 @@ script:
 matrix:
   include:
   - name: "Browser Unit Tests"
-    node_js: "6"
+    node_js: "10"
     env: BUNDLER=webpack
-#  - node_js: "6"
+#  - node_js: "10"
 #    env: BUNDLER=browserify
 notifications:
   email:
