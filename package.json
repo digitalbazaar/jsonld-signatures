@@ -35,7 +35,7 @@
     "bitcore-message": "github:CoMakery/bitcore-message#dist",
     "bs58": "^4.0.1",
     "crypto-ld": "^2.0.0",
-    "jsonld": "^1.1.0",
+    "jsonld": "^1.5.0",
     "node-forge": "^0.7.4"
   },
   "devDependencies": {
