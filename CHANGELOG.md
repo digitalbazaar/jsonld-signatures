@@ -1,7 +1,10 @@
 # jsonld-signatures ChangeLog
 
 ### Changed
-- Updated jsonld to 1.5.0.
+- **NOTE**: Updated jsonld to 1.5.0. May require code updates to continue using
+  the native canonize bindings.
+- **BREAKING**: Updated crypto-ld to 3.0.0. The exposed APIs changed the key
+  fingerprint output encodings.
 - Switch to eslint.
 
 ### Added
