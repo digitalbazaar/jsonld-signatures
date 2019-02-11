@@ -2,6 +2,7 @@
 
 ### Changed
 - Updated jsonld to 1.5.0.
+- Switch to eslint.
 
 ### Added
 - Expose `useNativeCanonize` option in constructors of suites that use
