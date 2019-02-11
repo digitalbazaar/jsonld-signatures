@@ -96,7 +96,7 @@
     "test-karma": "karma start",
     "coverage": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text-summary npm run test-node",
     "coverage-report": "nyc report",
-    "lint": "eslint lib/*.js tests/*.js"
+    "lint": "eslint \"*.js\" \"lib/*.js\" \"lib/**/*.js\" \"tests/*.js\" \"tests/**/*.js\""
   },
   "nyc": {
     "exclude": [
