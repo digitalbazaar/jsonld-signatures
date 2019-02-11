@@ -15,23 +15,23 @@ module.exports = mock;
 
 mock.nonSecurityContextSigned = {
   ...nonSecurityContextTestDoc,
-  "https://w3id.org/security#proof": {
-    "@graph": {
-      "@type": "https://w3id.org/security#Ed25519Signature2018",
-      "http://purl.org/dc/terms/created": {
-        "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
-        "@value": "2018-02-13T21:26:08Z"
+  'https://w3id.org/security#proof': {
+    '@graph': {
+      '@type': 'https://w3id.org/security#Ed25519Signature2018',
+      'http://purl.org/dc/terms/created': {
+        '@type': 'http://www.w3.org/2001/XMLSchema#dateTime',
+        '@value': '2018-02-13T21:26:08Z'
       },
-      "http://purl.org/dc/terms/creator": {
-        "@id": publicKeys.carol.id
+      'http://purl.org/dc/terms/creator': {
+        '@id': publicKeys.carol.id
       },
-      "https://w3id.org/security#jws":
-        "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19" +
-        ".." +
-        "UNcNI6x6KDA_hHux2RLM8_i9aoZY34GwcZevOjkSh22WoNB4FcP6dNgf2nKzX" +
-        "XJIr-IqUnEwMYeD36fc8jv1AA",
-      "https://w3id.org/security#proofPurpose": {
-        "@id": NOOP_PROOF_PURPOSE_URI
+      'https://w3id.org/security#jws':
+        'eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19' +
+        '..' +
+        'UNcNI6x6KDA_hHux2RLM8_i9aoZY34GwcZevOjkSh22WoNB4FcP6dNgf2nKzX' +
+        'XJIr-IqUnEwMYeD36fc8jv1AA',
+      'https://w3id.org/security#proofPurpose': {
+        '@id': NOOP_PROOF_PURPOSE_URI
       }
     }
   }
@@ -39,31 +39,31 @@ mock.nonSecurityContextSigned = {
 
 mock.securityContextSigned = {
   ...securityContextTestDoc,
-  "proof": {
-    "type": "Ed25519Signature2018",
-    "created": "2018-02-13T21:26:08Z",
-    "creator": publicKeys.carol.id,
-    "jws":
-      "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19" +
-      ".." +
-      "UNcNI6x6KDA_hHux2RLM8_i9aoZY34GwcZevOjkSh22WoNB4FcP6dNgf2nKzX" +
-      "XJIr-IqUnEwMYeD36fc8jv1AA",
-    "proofPurpose": NOOP_PROOF_PURPOSE_URI
+  'proof': {
+    'type': 'Ed25519Signature2018',
+    'created': '2018-02-13T21:26:08Z',
+    'creator': publicKeys.carol.id,
+    'jws':
+      'eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19' +
+      '..' +
+      'UNcNI6x6KDA_hHux2RLM8_i9aoZY34GwcZevOjkSh22WoNB4FcP6dNgf2nKzX' +
+      'XJIr-IqUnEwMYeD36fc8jv1AA',
+    'proofPurpose': NOOP_PROOF_PURPOSE_URI
   }
 };
 
 mock.securityContextInvalidSignature = {
   ...securityContextTestDoc,
-  "proof": {
-    "type": "Ed25519Signature2018",
-    "created": "2018-02-13T21:26:08Z",
-    "creator": publicKeys.carol.id,
-    "jws":
-      "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19" +
-      ".." +
-      "ANcNI6x6KDA_hHux2RLM8_i9aoZY34GwcZevOjkSh22WoNB4FcP6dNgf2nKzX" +
-      "XJIr-IqUnEwMYeD36fc8jv1AA",
-    "proofPurpose": NOOP_PROOF_PURPOSE_URI
+  'proof': {
+    'type': 'Ed25519Signature2018',
+    'created': '2018-02-13T21:26:08Z',
+    'creator': publicKeys.carol.id,
+    'jws':
+      'eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19' +
+      '..' +
+      'ANcNI6x6KDA_hHux2RLM8_i9aoZY34GwcZevOjkSh22WoNB4FcP6dNgf2nKzX' +
+      'XJIr-IqUnEwMYeD36fc8jv1AA',
+    'proofPurpose': NOOP_PROOF_PURPOSE_URI
   }
 };
 
