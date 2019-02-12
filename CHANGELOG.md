@@ -1,6 +1,6 @@
 # jsonld-signatures ChangeLog
 
-## 4.0.0 - 2019-xx-xx
+## 4.0.0 - 2019-02-12
 
 ### Changed
 - **NOTE**: Updated jsonld to 1.5.0. Dependency and code updates will be
