@@ -190,6 +190,14 @@ if(result.verified) {
 }
 ```
 
+Node.js Native Canonize Bindings
+--------------------------------
+
+Specialized use cases may wish to use the native canonize bindings. This mode
+can be enabled by setting the `useNativeCanonize` option to `true`. See the
+[jsonld.js notes](https://github.com/digitalbazaar/jsonld.js#nodejs-native-canonize-bindings)
+on this feature and note you should benchmark performance before using it.
+
 Commercial Support
 ------------------
 
