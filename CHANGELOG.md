@@ -15,7 +15,7 @@
 
 ### Changed
 - JwsSignatures now default to `verificationMethod` term in the
-  proof unless a legacy public key is being utilized. A legacy public key is
+  proof unless a legacy public key is being used. A legacy public key is
   one that has the deprecated `owner` property instead of the newer
   `controller` property.
 
