@@ -1,5 +1,7 @@
 # jsonld-signatures ChangeLog
 
+## 4.0.0 - 2019-xx-xx
+
 ### Changed
 - **NOTE**: Updated jsonld to 1.5.0. Dependency and code updates will be
   required to continue using the native canonize bindings. See the
