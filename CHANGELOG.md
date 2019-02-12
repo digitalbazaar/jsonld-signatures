@@ -1,8 +1,9 @@
 # jsonld-signatures ChangeLog
 
 ### Changed
-- **NOTE**: Updated jsonld to 1.5.0. May require code updates to continue using
-  the native canonize bindings.
+- **NOTE**: Updated jsonld to 1.5.0. Dependency and code updates will be
+  required to continue using the native canonize bindings. See the
+  [jsonld.js 1.5.0 notes](https://github.com/digitalbazaar/jsonld.js/blob/master/CHANGELOG.md#150---2019-01-24).
 - **BREAKING**: Updated crypto-ld to 3.0.0. The exposed APIs changed the key
   fingerprint output encodings.
 - Switch to eslint.
