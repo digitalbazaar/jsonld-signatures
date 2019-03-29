@@ -1,5 +1,7 @@
 # jsonld-signatures ChangeLog
 
+## 4.0.2 - 2019-03-29
+
 ### Fixed
 - Update webpack externals to also support amd and commonjs names.
 
