@@ -36,7 +36,8 @@
     "bs58": "^4.0.1",
     "crypto-ld": "^3.0.0",
     "jsonld": "^1.5.1",
-    "node-forge": "^0.8.0"
+    "node-forge": "^0.8.0",
+    "serialize-error": "^4.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",

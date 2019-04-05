@@ -208,6 +208,11 @@ describe('JSON-LD Signatures', () => {
       assert.ok(result.error);
       assert.equal(result.error.message.includes(
         'no proofs matched the required suite and purpose'), true);
+
+      // errors should be serialized properly in the verification report
+      const {error} = JSON.parse(JSON.stringify(result));
+      assert.typeOf(error, 'object');
+      assert.sameMembers(Object.keys(error), ['name', 'message', 'stack']);
     });
 
     it('should not verify a document with non-matching purpose', async () => {
@@ -225,6 +230,11 @@ describe('JSON-LD Signatures', () => {
       assert.ok(result.error);
       assert.equal(result.error.message.includes(
         'no proofs matched the required suite and purpose'), true);
+
+      // errors should be serialized properly in the verification report
+      const {error} = JSON.parse(JSON.stringify(result));
+      assert.typeOf(error, 'object');
+      assert.sameMembers(Object.keys(error), ['name', 'message', 'stack']);
     });
   });
 
@@ -712,8 +722,7 @@ describe('JSON-LD Signatures', () => {
       });
 
       context('AuthenticationProofPurpose', () => {
-        it('should detect an expired date',
-          async () => {
+        it('should detect an expired date', async () => {
           const Suite = suites[suiteName];
           const signSuite = new Suite({
             ...mock.suites[suiteName].parameters.sign,
@@ -760,6 +769,14 @@ describe('JSON-LD Signatures', () => {
           assert.equal(
             result.results[0].error.message,
             'The proof\'s created timestamp is out of range.');
+
+          // errors should be serialized properly in the verification report
+          const {error} = JSON.parse(JSON.stringify(result));
+          assert.typeOf(error, 'array');
+          assert.lengthOf(error, 1);
+          const [e] = error;
+          assert.typeOf(e, 'object');
+          assert.sameMembers(Object.keys(e), ['name', 'message', 'stack']);
         });
 
         it('should detect a non-matching challenge',
