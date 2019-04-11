@@ -1,5 +1,12 @@
 # jsonld-signatures ChangeLog
 
+## 4.1.0 - 2019-04-11
+
+### Added
+- Errors in proof verification reports now have a `toJSON` method that
+  allows the errors to be serialized properly when the report is stringified
+  using `JSON.stringify`.
+
 ## 4.0.2 - 2019-03-29
 
 ### Fixed
