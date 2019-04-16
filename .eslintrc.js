@@ -4,5 +4,8 @@ module.exports = {
     commonjs: true,
     node: true
   },
-  extends: ['eslint-config-digitalbazaar']
+  extends: [
+    'digitalbazaar',
+    'digitalbazaar/jsdoc'
+  ]
 };
