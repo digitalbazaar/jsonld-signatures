@@ -1,5 +1,12 @@
 # jsonld-signatures ChangeLog
 
+## 4.1.1 - 2019-04-17
+
+### Fixed
+- Correct inconsistencies in the LinkedDataSignature APIs that allowed for
+  optional `signer` and `verifier` parameters in some places, but required
+  those parameters in other places.
+
 ## 4.1.0 - 2019-04-11
 
 ### Added
