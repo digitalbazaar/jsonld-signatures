@@ -39,6 +39,14 @@ This library allows for the key and key controller information to be looked up
 via a `documentLoader` or it can be provided directly to the API via the
 signature suite or proof purpose, respectively.
 
+This library's `documentLoader` already contains the security contexts for:
+
+- https://w3id.org/security/v1
+- https://w3id.org/security/v2
+
+If you require other security contexts you will need to provide a `documentLoader`
+that can fetch them. jsonld.js provides both a node and browser `documentLoader` you can use.
+
 Install with npm:
 
 ```
