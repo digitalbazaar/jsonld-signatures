@@ -88,7 +88,7 @@ const publicKey = {
 const controller = {
   '@context': jsigs.SECURITY_CONTEXT_URL,
   id: 'https://example.com/i/alice',
-  publicKey: [publicKey]
+  publicKey: [publicKey],
   // this authorizes this key to be used for making assertions
   assertionMethod: [publicKey.id]
 };
@@ -108,7 +108,7 @@ const doc = {
 
 // sign the document as a simple assertion
 const {RsaSignature2018} = jsigs.suites;
-const {AuthenticationProofPurpose} = jsigs.purposes;
+const {AssertionProofPurpose} = jsigs.purposes;
 const {RSAKeyPair} = require('crypto-ld');
 const key = new RSAKeyPair({...publicKey, privateKeyPem});
 const signed = await jsigs.sign(doc, {
