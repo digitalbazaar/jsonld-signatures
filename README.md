@@ -44,7 +44,7 @@ This library's default `documentLoader` is very strict for security and content 
 - https://w3id.org/security/v1
 - https://w3id.org/security/v2
 
-If you require other security contexts you will need to provide a `documentLoader`
+If you require other documents to be loaded then you will need to provide a `documentLoader`
 that can fetch them. jsonld.js provides both a node and browser `documentLoader` you can use, however, depending on your use case, you may increase security by using a custom `documentLoader` that is similarly strict and will only load a subset of documents that is constrained by some technical, security, or business rules.
 
 Install with npm:
