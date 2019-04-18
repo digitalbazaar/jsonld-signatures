@@ -110,6 +110,8 @@ const doc = {
 const {RsaSignature2018} = jsigs.suites;
 const {AssertionProofPurpose} = jsigs.purposes;
 const {RSAKeyPair} = require('crypto-ld');
+const {documentLoaders} = require('jsonld');
+
 const key = new RSAKeyPair({...publicKey, privateKeyPem});
 const signed = await jsigs.sign(doc, {
   suite: new RsaSignature2018({key}),
@@ -117,9 +119,12 @@ const signed = await jsigs.sign(doc, {
 });
 
 console.log('Signed document:', signed);
+// we will need the documentLoader to verify the controller
+const {node: documentLoader} = documentLoaders;
 
 // verify the signed document
 const result = await jsigs.verify(signed, {
+  documentLoader
   suite: new RsaSignature2018(key),
   purpose: new AssertionProofPurpose({controller})
 });
