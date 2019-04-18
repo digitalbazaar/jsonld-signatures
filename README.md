@@ -154,7 +154,7 @@ const publicKey = {
 const controller = {
   '@context': jsigs.SECURITY_CONTEXT_URL,
   id: 'https://example.com/i/alice',
-  publicKey: [publicKey]
+  publicKey: [publicKey],
   // this authorizes this key to be used for authenticating
   authentication: [publicKey.id]
 };
@@ -172,6 +172,8 @@ const doc = {
 const {Ed25519Signature2018} = jsigs.suites;
 const {AuthenticationProofPurpose} = jsigs.purposes;
 const {Ed25519KeyPair} = require('crypto-ld');
+const {documentLoaders} = require('jsonld');
+
 const signed = await jsigs.sign(doc, {
   suite: new Ed25519Signature2018({
     verificationMethod: publicKey.id,
@@ -184,9 +186,12 @@ const signed = await jsigs.sign(doc, {
 });
 
 console.log('Signed document:', signed);
+// we will need the documentLoader to verify the controller
+const {node: documentLoader} = documentLoaders;
 
 // verify the signed document
 const result = await jsigs.verify(signed, {
+  documentLoader,
   suite: new Ed25519Signature2018({
     key: new Ed25519KeyPair(publicKey)
   }),
