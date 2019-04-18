@@ -39,7 +39,7 @@ This library allows for the key and key controller information to be looked up
 via a `documentLoader` or it can be provided directly to the API via the
 signature suite or proof purpose, respectively.
 
-This library's `documentLoader` already contains the security contexts for:
+This library's default `documentLoader` is very strict for security and content integrity purposes. It will only load locally available copies of the context documents that define the terms it uses internally. Any attempt to load any other documents (including other contexts) will throw an error. If other documents such as verification methods (e.g., public key documents), cannot be provided directly to the API and thus need to be loaded, a custom document loader must be passed. For the sake of clarity, the default document loader will only load locally available copies of the following documents:
 
 - https://w3id.org/security/v1
 - https://w3id.org/security/v2
