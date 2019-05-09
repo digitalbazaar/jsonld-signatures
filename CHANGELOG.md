@@ -1,5 +1,8 @@
 # jsonld-signatures ChangeLog
 
+### Changed
+- Update local copy of security-v2 context.
+
 ## 4.1.1 - 2019-04-17
 
 ### Fixed
