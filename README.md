@@ -52,7 +52,7 @@ will only load locally available copies of the following documents:
 - https://w3id.org/security/v2
 
 If you require other documents to be loaded then you will need to provide a
-`documentLoader` that can fetch them. jsonld.js provides both a node and browser
+`documentLoader` that can provide them. jsonld.js provides both a node and browser
 `documentLoader` you can use, however, depending on your use case, you may
 increase security by using a custom `documentLoader` that is similarly strict
 and will only load a subset of documents that is constrained by some technical,
