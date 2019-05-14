@@ -39,13 +39,24 @@ This library allows for the key and key controller information to be looked up
 via a `documentLoader` or it can be provided directly to the API via the
 signature suite or proof purpose, respectively.
 
-This library's default `documentLoader` is very strict for security and content integrity purposes. It will only load locally available copies of the context documents that define the terms it uses internally. Any attempt to load any other documents (including other contexts) will throw an error. If other documents such as verification methods (e.g., public key documents), cannot be provided directly to the API and thus need to be loaded, a custom document loader must be passed. For the sake of clarity, the default document loader will only load locally available copies of the following documents:
+This library's default `documentLoader` is very strict for security and content
+integrity purposes. It will only load locally available copies of the context
+documents that define the terms it uses internally. Any attempt to load any
+other documents (including other contexts) will throw an error. If other
+documents such as verification methods (e.g., public key documents), cannot
+be provided directly to the API and thus need to be loaded, a custom document
+loader must be passed. For the sake of clarity, the default document loader
+will only load locally available copies of the following documents:
 
 - https://w3id.org/security/v1
 - https://w3id.org/security/v2
 
-If you require other documents to be loaded then you will need to provide a `documentLoader`
-that can fetch them. jsonld.js provides both a node and browser `documentLoader` you can use, however, depending on your use case, you may increase security by using a custom `documentLoader` that is similarly strict and will only load a subset of documents that is constrained by some technical, security, or business rules.
+If you require other documents to be loaded then you will need to provide a
+`documentLoader` that can fetch them. jsonld.js provides both a node and browser
+`documentLoader` you can use, however, depending on your use case, you may
+increase security by using a custom `documentLoader` that is similarly strict
+and will only load a subset of documents that is constrained by some technical,
+security, or business rules.
 
 Install with npm:
 
@@ -69,7 +80,9 @@ Signing and verifying a simple assertion:
 ```js
 // to generate the next two lines, run the following command:
 //
-// openssl genrsa -out key.pem; cat key.pem; openssl rsa -in key.pem -pubout -out pubkey.pem; cat pubkey.pem; rm key.pem pubkey.pem
+// openssl genrsa -out key.pem; cat key.pem; 
+// openssl rsa -in key.pem -pubout -out pubkey.pem;
+// cat pubkey.pem; rm key.pem pubkey.pem
 //
 // for an example of how to specify these keys, look at [key-example]:
 const publicKeyPem = "-----BEGIN PUBLIC KEY-----\r\n...";
@@ -124,7 +137,7 @@ const {node: documentLoader} = documentLoaders;
 
 // verify the signed document
 const result = await jsigs.verify(signed, {
-  documentLoader
+  documentLoader,
   suite: new RsaSignature2018(key),
   purpose: new AssertionProofPurpose({controller})
 });
