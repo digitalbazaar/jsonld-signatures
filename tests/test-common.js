@@ -276,13 +276,12 @@ describe('JSON-LD Signatures', () => {
   const commonSuiteTests = [
     'Ed25519Signature2018',
     'RsaSignature2018',
-    'EcdsaKoblitzSignature2016',
     'LinkedDataSignature2015',
     'GraphSignature2012'
   ];
 
   for(const suiteName of commonSuiteTests) {
-    const pseudorandom = ['EcdsaKoblitzSignature2016', 'RsaSignature2018'];
+    const pseudorandom = ['RsaSignature2018'];
 
     context(suiteName, () => {
       it('should sign a document w/security context', async () => {
@@ -621,7 +620,6 @@ describe('JSON-LD Signatures', () => {
   }
 
   const legacySuiteTests = [
-    'EcdsaKoblitzSignature2016',
     'LinkedDataSignature2015',
     'GraphSignature2012'
   ];

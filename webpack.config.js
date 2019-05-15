@@ -91,12 +91,6 @@ outputs.forEach(info => {
       setImmediate: false
     },
     externals: {
-      'bitcore-message': {
-        amd: 'bitcore-message',
-        commonjs: 'bitcore-message',
-        commonjs2: 'bitcore-message',
-        root: 'bitcoreMessage'
-      },
       'node-forge': {
         amd: 'node-forge',
         commonjs: 'node-forge',
