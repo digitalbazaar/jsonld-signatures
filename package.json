@@ -32,7 +32,6 @@
   ],
   "dependencies": {
     "base64url": "^3.0.1",
-    "bitcore-message": "github:CoMakery/bitcore-message#dist",
     "bs58": "^4.0.1",
     "crypto-ld": "^3.7.0",
     "jsonld": "^2.0.2",

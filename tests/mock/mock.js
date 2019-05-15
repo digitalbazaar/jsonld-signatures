@@ -25,7 +25,6 @@ mock.testLoader = require('./test-loader');
 } = require('./noop-purpose'));
 
 mock.suites = {
-  EcdsaKoblitzSignature2016: require('./EcdsaKoblitzSignature2016'),
   Ed25519Signature2018: require('./Ed25519Signature2018'),
   GraphSignature2012: require('./GraphSignature2012'),
   LinkedDataSignature2015: require('./LinkedDataSignature2015'),

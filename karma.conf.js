@@ -86,13 +86,6 @@ module.exports = function(config) {
         crypto: false,
         setImmediate: false
       },
-      resolve: {
-        alias: {
-          'bitcore-message':
-            require.resolve('bitcore-message/dist/bitcore-message.js'),
-          jsonld: require.resolve('jsonld/dist/jsonld.js')
-        }
-      }
     },
 
     browserify: {
