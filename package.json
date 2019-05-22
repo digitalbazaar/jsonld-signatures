@@ -34,9 +34,9 @@
     "base64url": "^3.0.1",
     "bitcore-message": "github:CoMakery/bitcore-message#dist",
     "bs58": "^4.0.1",
-    "crypto-ld": "^3.0.0",
-    "jsonld": "^1.5.1",
-    "node-forge": "^0.8.0",
+    "crypto-ld": "^3.5.2",
+    "jsonld": "^1.6.2",
+    "node-forge": "^0.8.3",
     "serialize-error": "^4.1.0"
   },
   "devDependencies": {
