@@ -1,6 +1,6 @@
 # jsonld-signatures ChangeLog
 
-## 4.1.3 - 2019-05-xx
+## 4.1.3 - 2019-05-22
 
 ### Fixed
 - Handle compacting proofs that use a type-scoped proof term definition.
