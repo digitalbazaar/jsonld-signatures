@@ -157,7 +157,7 @@ describe('JSON-LD Signatures', () => {
       }
     }
 
-    it('should sign a document with a custom suite', async () => {
+    it('should sign a document', async () => {
       const testDoc = clone(mock.securityContextTestDoc);
       const signed = await jsigs.sign(testDoc, {
         documentLoader: testLoader,
@@ -169,7 +169,40 @@ describe('JSON-LD Signatures', () => {
       assert.deepEqual(signed, expected);
     });
 
-    it('should verify a document with a custom suite', async () => {
+    it('should sign a document w/type-scoped `proof` term', async () => {
+      const testDoc = clone(mock.securityContextTestDoc);
+      const specialCtx = {
+        '@context': {
+          '@version': 1.1,
+          proof: 'ex:invalid',
+          TypedDocument: {
+            '@id': 'ex:TypedDocument',
+            '@context': {
+              '@version': 1.1,
+              proof: {
+                '@id': 'sec:proof',
+                '@type': '@id',
+                '@container': '@graph'
+              }
+            }
+          }
+        }
+      };
+      testDoc['@context'].push(specialCtx);
+      testDoc.type = 'TypedDocument';
+      const signed = await jsigs.sign(testDoc, {
+        documentLoader: testLoader,
+        suite: new CustomSuite(),
+        purpose: new NoOpProofPurpose()
+      });
+      const expected = clone(mock.securityContextTestDoc);
+      expected['@context'].push(specialCtx);
+      expected.type = 'TypedDocument';
+      expected.proof = {type: 'example:CustomSuite'};
+      assert.deepEqual(signed, expected);
+    });
+
+    it('should verify a document', async () => {
       const signed = clone(mock.securityContextTestDoc);
       signed.proof = {
         proofPurpose: 'https://example.org/special-authentication',
