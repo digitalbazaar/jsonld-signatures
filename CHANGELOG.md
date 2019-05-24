@@ -1,7 +1,7 @@
 # jsonld-signatures ChangeLog
 
-### Changed
-- Remove ECDSA Signature
+### Removed
+- Remove ECDSA Signature support.
 
 ### 4.6.0 - 2020-01-17
 
