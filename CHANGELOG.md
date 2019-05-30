@@ -1,6 +1,6 @@
 # jsonld-signatures ChangeLog
 
-## 4.2.0 - TBD
+## 4.2.0 - 2019-05-30
 
 ### Changed
 - Replace local copies of security contexts with `security-context` module.
