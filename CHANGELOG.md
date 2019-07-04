@@ -1,5 +1,13 @@
 # jsonld-signatures ChangeLog
 
+### 4.4.0 - TBD
+
+### Added
+- Export `JwsLinkedDataSignature` in suites.
+
+### Changed
+- Use crypto-ld@3.7.0 with support for Node 12 native Ed25519 crypto.
+
 ### 4.3.0 - 2019-09-03
 
 ### Changed
