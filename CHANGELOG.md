@@ -1,5 +1,10 @@
 # jsonld-signatures ChangeLog
 
+## 4.2.1 - 2019-07-17
+
+### Fixed
+- Use crypto-ld@3.5.3 which properly specifies the Node.js engine.
+
 ## 4.2.0 - 2019-05-30
 
 ### Changed
