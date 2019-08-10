@@ -1,5 +1,13 @@
 # jsonld-signatures ChangeLog
 
+### TBD - TBD
+
+### Changed
+- Use security-context@4:
+  - Add terms for EcdsaSecp256 signature suites.
+  - Add terms for EcdsaSecp256 keys.
+  - Add term DeriveSecretOperation.
+
 ## 4.2.1 - 2019-07-17
 
 ### Fixed
