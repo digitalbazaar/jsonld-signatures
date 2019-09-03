@@ -1,6 +1,6 @@
 # jsonld-signatures ChangeLog
 
-### TBD - TBD
+### 4.3.0 - 2019-09-03
 
 ### Changed
 - Use security-context@4:
