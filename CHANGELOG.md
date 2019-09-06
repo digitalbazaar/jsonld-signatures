@@ -1,6 +1,6 @@
 # jsonld-signatures ChangeLog
 
-### 4.4.0 - TBD
+### 4.4.0 - 2019-09-06
 
 ### Added
 - Export `JwsLinkedDataSignature` in suites.
