@@ -1,7 +1,11 @@
 # jsonld-signatures ChangeLog
 
+## 5.0.0 - 2019-xx-xx
+
 ### Removed
-- Remove ECDSA Signature support.
+- ECDSA signature support.
+  - Remove EcdsaKoblitzSignature2016 suite and tests.
+  - Remove bitcore-message dependency.
 
 ### 4.6.0 - 2020-01-17
 
