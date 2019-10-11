@@ -33,11 +33,11 @@ mock.nonSecurityContextSigned = {
 
 mock.securityContextSigned = {
   ...securityContextTestDoc,
-  'signature': {
-    'type': 'LinkedDataSignature2015',
-    'created': '2018-02-22T15:16:04Z',
-    'creator': 'https://example.com/i/alice/keys/1',
-    'signatureValue':
+  signature: {
+    type: 'LinkedDataSignature2015',
+    created: '2018-02-22T15:16:04Z',
+    creator: 'https://example.com/i/alice/keys/1',
+    signatureValue:
       'hztABpsP4e/emXsUYFUQ8HstjrgMfbMXbVcUhfYBHCCYuIgfsmTTOT4uaL5zwF' +
       'EpkSBNxskB46IAnqdkIYU2KF+7pDyBbIe7GMm60zIAavmIsAcxh034ENJreUgX' +
       'eIQhpx/ZPKcQCBPwDHrbxXiBxS/VmkvJLbtjfy0qj96f6Gc2AvaB43ZHwO88TV' +
@@ -49,11 +49,11 @@ mock.securityContextSigned = {
 
 mock.securityContextInvalidSignature = {
   ...securityContextTestDoc,
-  'signature': {
-    'type': 'LinkedDataSignature2015',
-    'created': '2018-02-22T15:16:04Z',
-    'creator': 'https://example.com/i/alice/keys/1',
-    'signatureValue':
+  signature: {
+    type: 'LinkedDataSignature2015',
+    created: '2018-02-22T15:16:04Z',
+    creator: 'https://example.com/i/alice/keys/1',
+    signatureValue:
       'HztABpsP4e/emXsUYFUQ8HstjrgMfbMXbVcUhfYBHCCYuIgfsmTTOT4uaL5zwF' +
       'EpkSBNxskB46IAnqdkIYU2KF+7pDyBbIe7GMm60zIAavmIsAcxh034ENJreUgX' +
       'eIQhpx/ZPKcQCBPwDHrbxXiBxS/VmkvJLbtjfy0qj96f6Gc2AvaB43ZHwO88TV' +

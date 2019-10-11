@@ -43,11 +43,11 @@ mock.nonSecurityContextSigned = {
 
 mock.securityContextSigned = {
   ...securityContextTestDoc,
-  'proof': {
-    'type': 'RsaSignature2018',
-    'created': '2018-02-22T15:16:04Z',
-    'creator': publicKeys.alice.id,
-    'jws':
+  proof: {
+    type: 'RsaSignature2018',
+    created: '2018-02-22T15:16:04Z',
+    creator: publicKeys.alice.id,
+    jws:
       'eyJhbGciOiJQUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19' +
       '..' +
       'dJBMvvFAIC00nSGB6Tn0XKbbF9XrsaJZREWvR2aONYTQQxnyXirtXnlewJMB' +
@@ -56,17 +56,17 @@ mock.securityContextSigned = {
       'n5VRWy5WhYg_gBnyWny8E6Qkrze53MR7OuAmmNJ1m1nN8SxDrG6a08L78J0-' +
       'Fbas5OjAQz3c17GY8mVuDPOBIOVjMEghBlgl3nOi1ysxbRGhHLEK4s0KKbeR' +
       'ogZdgt1DkQxDFxxn41QWDw_mmMCjs9qxg0zcZzqEJw',
-    'proofPurpose': NOOP_PROOF_PURPOSE_URI
+    proofPurpose: NOOP_PROOF_PURPOSE_URI
   }
 };
 
 mock.securityContextInvalidSignature = {
   ...securityContextTestDoc,
-  'proof': {
-    'type': 'RsaSignature2018',
-    'created': '2018-02-22T15:16:04Z',
-    'creator': publicKeys.alice.id,
-    'jws':
+  proof: {
+    type: 'RsaSignature2018',
+    created: '2018-02-22T15:16:04Z',
+    creator: publicKeys.alice.id,
+    jws:
       'eyJhbGciOiJQUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19' +
       '..' +
       'DJBMvvFAIC00nSGB6Tn0XKbbF9XrsaJZREWvR2aONYTQQxnyXirtXnlewJMB' +
@@ -75,7 +75,7 @@ mock.securityContextInvalidSignature = {
       'n5VRWy5WhYg_gBnyWny8E6Qkrze53MR7OuAmmNJ1m1nN8SxDrG6a08L78J0-' +
       'Fbas5OjAQz3c17GY8mVuDPOBIOVjMEghBlgl3nOi1ysxbRGhHLEK4s0KKbeR' +
       'ogZdgt1DkQxDFxxn41QWDw_mmMCjs9qxg0zcZzqEJw',
-    'proofPurpose': NOOP_PROOF_PURPOSE_URI
+    proofPurpose: NOOP_PROOF_PURPOSE_URI
   }
 };
 
