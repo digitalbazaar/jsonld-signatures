@@ -29,6 +29,7 @@
 
 ### Changed
 - Use crypto-ld@3.7.0 with support for Node 12 native Ed25519 crypto.
+- Update dependencies.
 
 ### 4.3.0 - 2019-09-03
 
