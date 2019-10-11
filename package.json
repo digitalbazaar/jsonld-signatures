@@ -36,7 +36,7 @@
     "jsonld": "^2.0.2",
     "node-forge": "^0.9.1",
     "security-context": "^4.0.0",
-    "serialize-error": "^4.1.0"
+    "serialize-error": "^5.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
