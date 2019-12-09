@@ -1,5 +1,8 @@
 # jsonld-signatures ChangeLog
 
+### Changed
+- Update jsonld.js dependency to 2.0.0.
+
 ### 4.4.0 - 2019-09-06
 
 ### Added
