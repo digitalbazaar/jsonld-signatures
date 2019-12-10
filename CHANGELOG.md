@@ -3,9 +3,10 @@
 ## 5.0.0 - 2019-xx-xx
 
 ### Removed
-- ECDSA signature support.
+- **BREAKING**: ECDSA signature support.
   - Remove EcdsaKoblitzSignature2016 suite and tests.
   - Remove bitcore-message dependency.
+  - Move feature to 'ecdsa-koblitz-signature-2016' package.
 
 ### 4.6.0 - 2020-01-17
 
