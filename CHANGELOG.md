@@ -1,6 +1,6 @@
 # jsonld-signatures ChangeLog
 
-### 4.5.1 - TBD
+### 4.5.1 - 2019-12-11
 
 ### Changed
 - Required jsonld.js >= 2.0.1.
