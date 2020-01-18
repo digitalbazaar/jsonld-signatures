@@ -1,5 +1,8 @@
 # jsonld-signatures ChangeLog
 
+### Changed
+- Update node-forge and jsonld dependencies.
+
 ### 4.5.1 - 2019-12-11
 
 ### Changed
