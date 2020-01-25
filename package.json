@@ -38,7 +38,8 @@
     "jsonld": "^2.0.2",
     "node-forge": "^0.9.1",
     "security-context": "^4.0.0",
-    "serialize-error": "^4.1.0"
+    "serialize-error": "^4.1.0",
+    "snyk": "^1.280.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
@@ -91,7 +92,7 @@
     "digital signatures"
   ],
   "scripts": {
-    "prepublish": "npm run build",
+    "prepublish": "npm run snyk-protect && npm run build",
     "build": "npm run build-webpack",
     "build-webpack": "webpack",
     "test": "npm run test-node",
@@ -99,7 +100,8 @@
     "test-karma": "karma start",
     "coverage": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text-summary npm run test-node",
     "coverage-report": "nyc report",
-    "lint": "eslint '*.js' 'lib/*.js' 'lib/**/*.js' 'tests/*.js' 'tests/**/*.js'"
+    "lint": "eslint '*.js' 'lib/*.js' 'lib/**/*.js' 'tests/*.js' 'tests/**/*.js'",
+    "snyk-protect": "snyk protect"
   },
   "nyc": {
     "exclude": [
@@ -110,5 +112,6 @@
     "crypto": false,
     "bs58": false,
     "base64url": false
-  }
+  },
+  "snyk": true
 }
