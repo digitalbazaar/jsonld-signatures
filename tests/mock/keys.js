@@ -76,6 +76,59 @@ controllers.alice = {
   }
 };
 
+privateKeys.alex = {
+  privateKeyPem: '-----BEGIN RSA PRIVATE KEY-----\r\n' +
+   'MIIEpQIBAAKCAQEA0MG729HDdieuzyFT+vdgMXDjTdCniWv64evMXydjfaYlTsmd\r\n' +
+   '1FfFQYJdrKJaFzB4y9vm37yKvsw7FJFymSzmk4T62yMqCIe19UNGHqk5TDVSKf0X\r\n' +
+   'ZTZX+5i9qhQOaL7yFzzLunI8bNxAzJZ63cGWf4uJI+513SN9IKvh45vWlgsbZ/ek\r\n' +
+   'ELHF0YXrupeTzQZMq4fl2/vQxPPmpooNXZ3Fud9DZLAyWhKg69u996XjYP0QcjkE\r\n' +
+   '7H1PC1Um+CYDGe65pzBQlYlwgYtztK64kK3A2FGVQufyQ+19FlHTJTYdyy/zKtyE\r\n' +
+   '2+22wuANiLkg9JQEWroRQaGBLCmjwaA+AMQmfQIDAQABAoIBAQCezfIZy93UgWWS\r\n' +
+   '/jiDnzHXCphv9r2sZa9Js/YZoL4ntH+HCwr8oPRW3FRkYnEEWQRbmGJua2Bkurpq\r\n' +
+   '8CZsbeLN8AhhMcPlD1AVTuMFqhgDaECj3nuwrAGMTOpjerRnbHJ/yOj2Ybaj3X2R\r\n' +
+   '5Rt8nKrfRgfChMG2wyuJ8hd57W/1XQf0l5Zn3kdRBK5NzUp9fRBJxFEKag8z+Zij\r\n' +
+   'X4ENJmR66gCNLlE87+XMhcyHoJJmmhijC1Hq5Ph4rAsHKN6AMWviW59EyViA2gAb\r\n' +
+   'iwwNlmg0W9qYxsbcrApJo/PAncCiNLvOshr8CwCdY1k9WOvAxPgBtAtEEXoH/01r\r\n' +
+   'SJQ/wSElAoGBAOlUoOn2CQztW+Wm9yyRXGjYxl5a/3Nn3JHCAKj37KX+4aknoIv2\r\n' +
+   'LckuA6pJCbW1Q8VVP8OH1lj43wb3siHzmH2jM6f0GIbSVFn/Z0mfhSGHGRHOuJXK\r\n' +
+   'AXurraSIoPKi5G1ZhMNQB8RBq/Os1LrRCJ9L8pWDQHhsGT9PIp9q7fGLAoGBAOUJ\r\n' +
+   '6Ig/RG/V7NRfoqP8Lupi820Q0EdLL9Jnr6utKtPxaGFSi9MrmCJK+9YD1VWw9XZ8\r\n' +
+   'pFxIkz8aNRPnJgAWT66SLLPiW7wsQezLqpcWprsvfpbusPpfMf6K7FSWHYJJVL1i\r\n' +
+   'pS/MBdeDgl/DBJgfm4OrIuuodaKFvC7jJnUEQrkXAoGBAMPykzQHr7AQgVVKM1dV\r\n' +
+   'N5LBQU2qA87qERzDHITJuA3rD51brwL7GZZSszdFIQddE23b2rGdGNAdKEcUqp7C\r\n' +
+   'kHQqI05Pum02oyn1R8tXUJlIeDAxN2hrfXVbRnbfWrKJQ2XlgI35XpxdPkdkBD5j\r\n' +
+   'H2ePg0g2MmUu+sDk90GDrhFjAoGBAIS//m/hw6fSZScemyTSyNp/KbogUafQ01Hv\r\n' +
+   'WOl3P+iB9k7aSkLF9LKDpX2A0UiOfWcEjTsTsYyUgwkbI3JPfDWhcZl9bFAfksJN\r\n' +
+   'tX1G2rKJr6SJijhDrrVrDdlk/IuEN0Jhh36xkP09svYQEXyebUOekGnoRO5C9zRx\r\n' +
+   '4dtW8dlXAoGAZe/1usB8YV7fOdGCJJ/IBLXG5xbtoSVD8yM/HVllazfr6fKlGqPO\r\n' +
+   'ORhqr5estS7IVwZjcArkqiwJeXXUYPt0m9Oasqf1+g3UibR2SFRs1ZCLq1hSIuwf\r\n' +
+   '4/MYqzY1568+/4+QkLFkjdT18HbkL7cRZrYmAoonb1KeDEbh0THsFHw=\r\n' +
+   '-----END RSA PRIVATE KEY-----\r\n'
+};
+
+publicKeys.alex = {
+  '@context': constants.SECURITY_CONTEXT_URL,
+  id: 'https://example.com/i/alex/keys/1',
+  type: ['RsaVerificationKey2018'],
+  controller: 'https://example.com/i/alex',
+  publicKeyPem: '-----BEGIN PUBLIC KEY-----\r\n' +
+    'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0MG729HDdieuzyFT+vdg\r\n' +
+    'MXDjTdCniWv64evMXydjfaYlTsmd1FfFQYJdrKJaFzB4y9vm37yKvsw7FJFymSzm\r\n' +
+    'k4T62yMqCIe19UNGHqk5TDVSKf0XZTZX+5i9qhQOaL7yFzzLunI8bNxAzJZ63cGW\r\n' +
+    'f4uJI+513SN9IKvh45vWlgsbZ/ekELHF0YXrupeTzQZMq4fl2/vQxPPmpooNXZ3F\r\n' +
+    'ud9DZLAyWhKg69u996XjYP0QcjkE7H1PC1Um+CYDGe65pzBQlYlwgYtztK64kK3A\r\n' +
+    '2FGVQufyQ+19FlHTJTYdyy/zKtyE2+22wuANiLkg9JQEWroRQaGBLCmjwaA+AMQm\r\n' +
+    'fQIDAQAB\r\n-----END PUBLIC KEY-----\r\n'
+};
+
+// RsaKey with an assertionMethod
+controllers.alex = {
+  '@context': constants.SECURITY_CONTEXT_URL,
+  id: publicKeys.alex.controller,
+  assertionMethod: [publicKeys.alex.id],
+  publicKey: [publicKeys.alex]
+};
+
 publicKeys.bob = {
   '@context': constants.SECURITY_CONTEXT_URL,
   id: 'https://example.com/i/bob/keys/1',
@@ -199,4 +252,27 @@ controllers.carol = {
   'https://example.org/special-authentication': {
     publicKey: publicKeys.carol.id
   }
+};
+
+publicKeys.ned = {
+  '@context': constants.SECURITY_CONTEXT_URL,
+  id: 'https://example.com/i/ned/keys/1',
+  type: ['Ed25519VerificationKey2018'],
+  controller: 'https://example.com/i/ned',
+  publicKeyBase58: '39GT26rnBupnnwBhwqHxsCgqoMNYauRStTQCN5JNaPL7'
+};
+
+privateKeys.ned = {
+  privateKeyBase58:
+   '4EyMEq4hqVznTz1uNiuubvC4zach1G2mKMoeWdeN37jvTvCwinrmcBgyoJsgheC9oG' +
+   'uVYVntB4K8ePdmyMfH12vX'
+};
+
+// controller with an assertionMethod on it
+// that's publicKey is in the Ed25519 format.
+controllers.ned = {
+  '@context': constants.SECURITY_CONTEXT_URL,
+  id: publicKeys.ned.controller,
+  assertionMethod: [publicKeys.ned.id],
+  publicKey: [publicKeys.ned]
 };

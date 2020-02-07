@@ -90,6 +90,15 @@ mock.parameters.sign = {
   })
 };
 
+// this links back to a key with an assertionMethod on it
+mock.parameters.assertionMethod = {
+  creator: publicKeys.alex.id,
+  date: '2018-02-13T21:26:08Z',
+  key: new RSAKeyPair({
+    privateKeyPem: privateKeys.alex.privateKeyPem,
+    ...publicKeys.alex
+  })
+};
 mock.parameters.verify = {
   creator: publicKeys.alice.id,
   date: '2018-02-22T15:16:04Z'
