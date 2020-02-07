@@ -78,6 +78,16 @@ mock.parameters.sign = {
   })
 };
 
+// this links back to a key with an assertionMethod on it
+mock.parameters.assertionMethod = {
+  creator: publicKeys.ned.id,
+  date: '2018-02-13T21:26:08Z',
+  key: new Ed25519KeyPair({
+    privateKeyBase58: privateKeys.ned.privateKeyBase58,
+    ...publicKeys.ned
+  })
+};
+
 mock.parameters.verify = {
   creator: publicKeys.carol.id,
   date: '2018-02-13T21:26:08Z'

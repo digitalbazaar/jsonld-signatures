@@ -140,7 +140,6 @@ describe('JSON-LD Signatures', () => {
     });
   });
 
-/**
   context('PublicKeyProofPurpose', async () => {
     it('should validate a verificationMethod with a ' +
       'controller object', async () => {
@@ -168,7 +167,7 @@ describe('JSON-LD Signatures', () => {
       assert.equal(result.valid, true);
     });
   });
-*/
+
   context('custom suite', () => {
     class CustomSuite extends LinkedDataProof {
       constructor({match = true} = {}) {
@@ -1172,7 +1171,7 @@ describe('JSON-LD Signatures', () => {
           async () => {
           const Suite = suites[suiteName];
           const signSuite = new Suite({
-            ...mock.suites[suiteName].parameters.sign,
+            ...mock.suites[suiteName].parameters.assertionMethod,
             date: new Date('01-01-1970')
           });
           const testDoc = clone(mock.securityContextTestDoc);
