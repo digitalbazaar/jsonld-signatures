@@ -140,34 +140,6 @@ describe('JSON-LD Signatures', () => {
     });
   });
 
-  context('PublicKeyProofPurpose', async () => {
-    it('should validate a verificationMethod with a ' +
-      'controller object', async () => {
-      const purpose = new PublicKeyProofPurpose();
-      const verificationMethod = {
-        '@context': 'https://w3id.org/security/v2',
-        id: 'https://example.com/i/alice/keys/1',
-        type: 'RsaVerificationKey2018',
-        controller: {
-          id: 'https://example.com/i/alice'
-        },
-        publicKeyPem: ''
-      };
-      const proof = {
-        '@context': 'https://w3id.org/security/v2',
-        type: 'RsaSignature2018',
-        created: new Date().toISOString(),
-        creator: 'https://example.com/i/alice/keys/1',
-      };
-      const result = await purpose.validate(proof, {
-        verificationMethod,
-        documentLoader: extendContextLoader(testLoader),
-      });
-      assert.exists(result);
-      assert.equal(result.valid, true);
-    });
-  });
-
   context('custom suite', () => {
     class CustomSuite extends LinkedDataProof {
       constructor({match = true} = {}) {
