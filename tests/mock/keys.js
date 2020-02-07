@@ -110,7 +110,8 @@ publicKeys.alex = {
   '@context': constants.SECURITY_CONTEXT_URL,
   id: 'https://example.com/i/alex/keys/1',
   type: ['RsaVerificationKey2018'],
-  controller: 'https://example.com/i/alex',
+  // this test ensures that controller.id works
+  controller: {id: 'https://example.com/i/alex'},
   publicKeyPem: '-----BEGIN PUBLIC KEY-----\r\n' +
     'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0MG729HDdieuzyFT+vdg\r\n' +
     'MXDjTdCniWv64evMXydjfaYlTsmd1FfFQYJdrKJaFzB4y9vm37yKvsw7FJFymSzm\r\n' +
@@ -124,7 +125,7 @@ publicKeys.alex = {
 // RsaKey with an assertionMethod
 controllers.alex = {
   '@context': constants.SECURITY_CONTEXT_URL,
-  id: publicKeys.alex.controller,
+  id: publicKeys.alex.controller.id,
   assertionMethod: [publicKeys.alex.id],
   publicKey: [publicKeys.alex]
 };
@@ -258,7 +259,8 @@ publicKeys.ned = {
   '@context': constants.SECURITY_CONTEXT_URL,
   id: 'https://example.com/i/ned/keys/1',
   type: ['Ed25519VerificationKey2018'],
-  controller: 'https://example.com/i/ned',
+  // this test ensures that controller.id works
+  controller: {id: 'https://example.com/i/ned'},
   publicKeyBase58: '39GT26rnBupnnwBhwqHxsCgqoMNYauRStTQCN5JNaPL7'
 };
 
@@ -272,7 +274,7 @@ privateKeys.ned = {
 // that's publicKey is in the Ed25519 format.
 controllers.ned = {
   '@context': constants.SECURITY_CONTEXT_URL,
-  id: publicKeys.ned.controller,
+  id: publicKeys.ned.controller.id,
   assertionMethod: [publicKeys.ned.id],
   publicKey: [publicKeys.ned]
 };
