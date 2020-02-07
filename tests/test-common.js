@@ -14,7 +14,6 @@ const {
 } = jsigs.purposes;
 const {LinkedDataProof} = jsigs.suites;
 const {NoOpProofPurpose} = mock;
-const {extendContextLoader} = jsigs;
 
 // helper:
 function clone(obj) {
@@ -1009,6 +1008,48 @@ describe('JSON-LD Signatures', () => {
           };
           assert.deepEqual(result, expected);
         });
+        it('should sign and verify with out a controller',
+          async () => {
+          const Suite = suites[suiteName];
+          const signSuite = new Suite({
+            ...mock.suites[suiteName].parameters.assertionMethod,
+            date: new Date('01-01-1970')
+          });
+          const testDoc = clone(mock.securityContextTestDoc);
+          const signed = await jsigs.sign(testDoc, {
+            documentLoader: testLoader,
+            suite: signSuite,
+            purpose: new AuthenticationProofPurpose({
+              challenge: 'abc',
+              domain: 'example.com'
+            })
+          });
+
+          const verifySuite = new Suite(
+            mock.suites[suiteName].parameters.verify);
+          const result = await jsigs.verify(signed, {
+            documentLoader: testLoader,
+            suite: verifySuite,
+            purpose: new AuthenticationProofPurpose({
+              challenge: 'abc',
+              domain: 'example.com',
+              date: new Date('01-01-1970'),
+              maxTimestampDelta: 0,
+            })
+          });
+          const expected = {
+            verified: true,
+            results: [{
+              proof: {
+                '@context': constants.SECURITY_CONTEXT_URL,
+                ...signed.proof
+              },
+              verified: true
+            }]
+          };
+          assert.deepEqual(result, expected);
+        });
+
       });
 
       context('AssertionProofPurpose', () => {
