@@ -127,6 +127,7 @@ controllers.alex = {
   '@context': constants.SECURITY_CONTEXT_URL,
   id: publicKeys.alex.controller.id,
   assertionMethod: [publicKeys.alex.id],
+  authentication: [publicKeys.alex.id],
   publicKey: [publicKeys.alex]
 };
 
@@ -276,5 +277,6 @@ controllers.ned = {
   '@context': constants.SECURITY_CONTEXT_URL,
   id: publicKeys.ned.controller.id,
   assertionMethod: [publicKeys.ned.id],
+  authentication: [publicKeys.ned.id],
   publicKey: [publicKeys.ned]
 };
