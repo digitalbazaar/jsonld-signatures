@@ -1008,7 +1008,7 @@ describe('JSON-LD Signatures', () => {
           };
           assert.deepEqual(result, expected);
         });
-        it('should sign and verify with out a controller',
+        it('should sign and verify with out a controller passed to purpose',
           async () => {
           const Suite = suites[suiteName];
           const signSuite = new Suite({
@@ -1180,7 +1180,7 @@ describe('JSON-LD Signatures', () => {
           assert.deepEqual(result, expected);
         });
 
-        it('should sign and verify with out a controller',
+        it('should sign and verify with out a controller passed to purpose',
           async () => {
           const Suite = suites[suiteName];
           const signSuite = new Suite({
