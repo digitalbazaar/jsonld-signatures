@@ -90,8 +90,8 @@ mock.parameters.sign = {
   })
 };
 
-// this links back to a key with an assertionMethod on it
-mock.parameters.assertionMethod = {
+// this links back to a key with a controller object
+mock.parameters.controllerObject = {
   creator: publicKeys.alex.id,
   date: '2018-02-13T21:26:08Z',
   key: new RSAKeyPair({
