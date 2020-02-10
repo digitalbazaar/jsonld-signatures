@@ -375,21 +375,6 @@ const {NoOpProofPurpose} = mock;
             RsaSignature2018: {
               valid: true
             },
-            EcdsaKoblitzSignature2016: {
-              controller: {
-                'https://example.org/special-authentication': {
-                  publicKey: {
-                    id: 'https://example.com/i/alice/keys/1',
-                    owner: 'https://example.com/i/alice',
-                    publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
-                    type: 'RsaVerificationKey2018'
-                  }
-                },
-                id: 'https://example.com/i/alice',
-                publicKey: 'ecdsa-koblitz-pubkey:1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER'
-              },
-              valid: true
-            },
             LinkedDataSignature2015: {
               controller: {
                 'https://example.org/special-authentication': {
@@ -455,21 +440,6 @@ const {NoOpProofPurpose} = mock;
               RsaSignature2018: {
                 valid: true
               },
-              EcdsaKoblitzSignature2016: {
-                controller: {
-                  'https://example.org/special-authentication': {
-                    publicKey: {
-                      id: 'https://example.com/i/alice/keys/1',
-                      owner: 'https://example.com/i/alice',
-                      publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
-                      type: 'RsaVerificationKey2018'
-                    }
-                  },
-                  id: 'https://example.com/i/alice',
-                  publicKey: 'ecdsa-koblitz-pubkey:1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER'
-                },
-                valid: true
-              },
               LinkedDataSignature2015: {
                 controller: {
                   'https://example.org/special-authentication': {
@@ -531,21 +501,6 @@ const {NoOpProofPurpose} = mock;
               valid: true
             },
             RsaSignature2018: {
-              valid: true
-            },
-            EcdsaKoblitzSignature2016: {
-              controller: {
-                'https://example.org/special-authentication': {
-                  publicKey: {
-                    id: 'https://example.com/i/alice/keys/1',
-                    owner: 'https://example.com/i/alice',
-                    publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
-                    type: 'RsaVerificationKey2018'
-                  }
-                },
-                id: 'https://example.com/i/alice',
-                publicKey: 'ecdsa-koblitz-pubkey:1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER'
-              },
               valid: true
             },
             LinkedDataSignature2015: {
@@ -629,21 +584,6 @@ const {NoOpProofPurpose} = mock;
               RsaSignature2018: {
                 valid: true
               },
-              EcdsaKoblitzSignature2016: {
-                controller: {
-                  'https://example.org/special-authentication': {
-                    publicKey: {
-                      id: 'https://example.com/i/alice/keys/1',
-                      owner: 'https://example.com/i/alice',
-                      publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
-                      type: 'RsaVerificationKey2018'
-                    }
-                  },
-                  id: 'https://example.com/i/alice',
-                  publicKey: 'ecdsa-koblitz-pubkey:1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER'
-                },
-                valid: true
-              },
               LinkedDataSignature2015: {
                 controller: {
                   'https://example.org/special-authentication': {
@@ -707,21 +647,6 @@ const {NoOpProofPurpose} = mock;
                 valid: true
               },
               RsaSignature2018: {
-                valid: true
-              },
-              EcdsaKoblitzSignature2016: {
-                controller: {
-                  'https://example.org/special-authentication': {
-                    publicKey: {
-                      id: 'https://example.com/i/alice/keys/1',
-                      owner: 'https://example.com/i/alice',
-                      publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
-                      type: 'RsaVerificationKey2018'
-                    }
-                  },
-                  id: 'https://example.com/i/alice',
-                  publicKey: 'ecdsa-koblitz-pubkey:1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER'
-                },
                 valid: true
               },
               LinkedDataSignature2015: {
@@ -843,21 +768,6 @@ const {NoOpProofPurpose} = mock;
             RsaSignature2018: {
               valid: true
             },
-            EcdsaKoblitzSignature2016: {
-              controller: {
-                'https://example.org/special-authentication': {
-                  publicKey: {
-                    id: 'https://example.com/i/alice/keys/1',
-                    owner: 'https://example.com/i/alice',
-                    publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
-                    type: 'RsaVerificationKey2018'
-                  }
-                },
-                id: 'https://example.com/i/alice',
-                publicKey: 'ecdsa-koblitz-pubkey:1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER'
-              },
-              valid: true
-            },
             LinkedDataSignature2015: {
               controller: {
                 'https://example.org/special-authentication': {
@@ -957,21 +867,6 @@ const {NoOpProofPurpose} = mock;
                   },
                   id: 'https://example.com/i/carol',
                   publicKey: 'https://example.com/i/carol/keys/1'
-                },
-                valid: true
-              },
-              EcdsaKoblitzSignature2016: {
-                controller: {
-                  'https://example.org/special-authentication': {
-                    publicKey: {
-                      id: 'https://example.com/i/alice/keys/1',
-                      owner: 'https://example.com/i/alice',
-                      publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
-                      type: 'RsaVerificationKey2018'
-                    }
-                  },
-                  id: 'https://example.com/i/alice',
-                  publicKey: 'ecdsa-koblitz-pubkey:1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER'
                 },
                 valid: true
               },
@@ -1415,21 +1310,6 @@ const {NoOpProofPurpose} = mock;
                   },
                   valid: true
                 },
-                EcdsaKoblitzSignature2016: {
-                  controller: {
-                    'https://example.org/special-authentication': {
-                      publicKey: {
-                        id: 'https://example.com/i/alice/keys/1',
-                        owner: 'https://example.com/i/alice',
-                        publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
-                        type: 'RsaVerificationKey2018'
-                      }
-                    },
-                    id: 'https://example.com/i/alice',
-                    publicKey: 'ecdsa-koblitz-pubkey:1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER'
-                  },
-                  valid: true
-                },
                 LinkedDataSignature2015: {
                   controller: {
                     'https://example.org/special-authentication': {
@@ -1605,21 +1485,6 @@ const {NoOpProofPurpose} = mock;
                     '@context': 'https://w3id.org/security/v2',
                     assertionMethod: 'https://example.com/i/carol/keys/1',
                     id: 'https://example.com/i/carol'
-                  },
-                  valid: true
-                },
-                EcdsaKoblitzSignature2016: {
-                  controller: {
-                    'https://example.org/special-authentication': {
-                      publicKey: {
-                        id: 'https://example.com/i/alice/keys/1',
-                        owner: 'https://example.com/i/alice',
-                        publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
-                        type: 'RsaVerificationKey2018'
-                      }
-                    },
-                    id: 'https://example.com/i/alice',
-                    publicKey: 'ecdsa-koblitz-pubkey:1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER'
                   },
                   valid: true
                 },
