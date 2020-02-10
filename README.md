@@ -30,7 +30,7 @@ so that custom extensions can be written. It also provides some commonly
 used signature suites and proof purposes.
 
 This library also supports legacy signature suites such as `GraphSignature2012`,
-`LinkedDataSignature2015`, and `EcdsaKoblitzSignature2016`. These signature
+and `LinkedDataSignature2015`. These signature
 suites must be used with a `PublicKeyProofPurpose` instance as the proof
 purpose as they were created before extensible proof purposes were possible.
 
