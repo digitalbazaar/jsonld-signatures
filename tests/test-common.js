@@ -1012,7 +1012,7 @@ describe('JSON-LD Signatures', () => {
           async () => {
           const Suite = suites[suiteName];
           const signSuite = new Suite({
-            ...mock.suites[suiteName].parameters.assertionMethod,
+            ...mock.suites[suiteName].parameters.controllerObject,
             date: new Date('01-01-1970')
           });
           const testDoc = clone(mock.securityContextTestDoc);
@@ -1184,7 +1184,7 @@ describe('JSON-LD Signatures', () => {
           async () => {
           const Suite = suites[suiteName];
           const signSuite = new Suite({
-            ...mock.suites[suiteName].parameters.assertionMethod,
+            ...mock.suites[suiteName].parameters.controllerObject,
             date: new Date('01-01-1970')
           });
           const testDoc = clone(mock.securityContextTestDoc);
