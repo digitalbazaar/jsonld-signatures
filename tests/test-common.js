@@ -1355,36 +1355,36 @@ describe('JSON-LD Signatures', () => {
           const expectedPurposeResult = {
             RsaSignature2018: {
               controller:{
-                "assertionMethod": [
-                  "https://example.com/i/alex/keys/1"
+                assertionMethod: [
+                  'https://example.com/i/alex/keys/1'
                 ],
-                "authentication": [
-                  "https://example.com/i/alex/keys/1"
+                authentication: [
+                  'https://example.com/i/alex/keys/1'
                 ],
-                "id": "https://example.com/i/alex",
-                "publicKey": {
-                  "controller": "https://example.com/i/alex",
-                  "id": "https://example.com/i/alex/keys/1",
-                  "publicKeyPem": "-----BEGIN PUBLIC KEY-----\r\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0MG729HDdieuzyFT+vdg\r\nMXDjTdCniWv64evMXydjfaYlTsmd1FfFQYJdrKJaFzB4y9vm37yKvsw7FJFymSzm\r\nk4T62yMqCIe19UNGHqk5TDVSKf0XZTZX+5i9qhQOaL7yFzzLunI8bNxAzJZ63cGW\r\nf4uJI+513SN9IKvh45vWlgsbZ/ekELHF0YXrupeTzQZMq4fl2/vQxPPmpooNXZ3F\r\nud9DZLAyWhKg69u996XjYP0QcjkE7H1PC1Um+CYDGe65pzBQlYlwgYtztK64kK3A\r\n2FGVQufyQ+19FlHTJTYdyy/zKtyE2+22wuANiLkg9JQEWroRQaGBLCmjwaA+AMQm\r\nfQIDAQAB\r\n-----END PUBLIC KEY-----\r\n",
-                  "type": "RsaVerificationKey2018"
+                id: 'https://example.com/i/alex',
+                publicKey: {
+                  controller: 'https://example.com/i/alex',
+                  id: 'https://example.com/i/alex/keys/1',
+                  publicKeyPem: '-----BEGIN PUBLIC KEY-----\r\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0MG729HDdieuzyFT+vdg\r\nMXDjTdCniWv64evMXydjfaYlTsmd1FfFQYJdrKJaFzB4y9vm37yKvsw7FJFymSzm\r\nk4T62yMqCIe19UNGHqk5TDVSKf0XZTZX+5i9qhQOaL7yFzzLunI8bNxAzJZ63cGW\r\nf4uJI+513SN9IKvh45vWlgsbZ/ekELHF0YXrupeTzQZMq4fl2/vQxPPmpooNXZ3F\r\nud9DZLAyWhKg69u996XjYP0QcjkE7H1PC1Um+CYDGe65pzBQlYlwgYtztK64kK3A\r\n2FGVQufyQ+19FlHTJTYdyy/zKtyE2+22wuANiLkg9JQEWroRQaGBLCmjwaA+AMQm\r\nfQIDAQAB\r\n-----END PUBLIC KEY-----\r\n',
+                  type: 'RsaVerificationKey2018'
                 }
               },
               valid: true
             },
             Ed25519Signature2018: {
               controller: {
-                "assertionMethod": [
-                  "https://example.com/i/ned/keys/1"
+                assertionMethod: [
+                  'https://example.com/i/ned/keys/1'
                 ],
-                "authentication": [
-                  "https://example.com/i/ned/keys/1"
+                authentication: [
+                  'https://example.com/i/ned/keys/1'
                 ],
-                "id": "https://example.com/i/ned",
-                "publicKey": {
-                  "controller": "https://example.com/i/ned",
-                  "id": "https://example.com/i/ned/keys/1",
-                  "publicKeyBase58": "39GT26rnBupnnwBhwqHxsCgqoMNYauRStTQCN5JNaPL7",
-                  "type": "Ed25519VerificationKey2018"
+                id: 'https://example.com/i/ned',
+                publicKey: {
+                  controller: 'https://example.com/i/ned',
+                  id: 'https://example.com/i/ned/keys/1',
+                  publicKeyBase58: '39GT26rnBupnnwBhwqHxsCgqoMNYauRStTQCN5JNaPL7',
+                  type: 'Ed25519VerificationKey2018'
                 }
               },
               valid: true
@@ -1439,18 +1439,18 @@ describe('JSON-LD Signatures', () => {
             },
             Ed25519Signature2018: {
               controller: {
-                "assertionMethod": [
-                  "https://example.com/i/ned/keys/1"
+                assertionMethod: [
+                  'https://example.com/i/ned/keys/1'
                 ],
-                "authentication": [
-                  "https://example.com/i/ned/keys/1"
+                authentication: [
+                  'https://example.com/i/ned/keys/1'
                 ],
-                "id": "https://example.com/i/ned",
-                "publicKey": {
-                  "controller": "https://example.com/i/ned",
-                  "id": "https://example.com/i/ned/keys/1",
-                  "publicKeyBase58": "39GT26rnBupnnwBhwqHxsCgqoMNYauRStTQCN5JNaPL7",
-                  "type": "Ed25519VerificationKey2018"
+                id: 'https://example.com/i/ned',
+                publicKey: {
+                  controller: 'https://example.com/i/ned',
+                  id: 'https://example.com/i/ned/keys/1',
+                  publicKeyBase58: '39GT26rnBupnnwBhwqHxsCgqoMNYauRStTQCN5JNaPL7',
+                  type: 'Ed25519VerificationKey2018'
                 }
               },
               valid: true
@@ -1577,6 +1577,82 @@ describe('JSON-LD Signatures', () => {
           };
           assert.deepEqual(result, expected);
         });
+
+        it('should sign and verify without a controller passed to purpose',
+          async () => {
+            const Suite = suites[suiteName];
+            const signSuite = new Suite({
+              ...mock.suites[suiteName].parameters.controllerObject,
+              date: new Date('01-01-1970')
+            });
+            const testDoc = clone(mock.securityContextTestDoc);
+            const signed = await jsigs.sign(testDoc, {
+              documentLoader: testLoader,
+              suite: signSuite,
+              purpose: new AssertionProofPurpose()
+            });
+
+            const verifySuite = new Suite(
+              mock.suites[suiteName].parameters.verify);
+            const result = await jsigs.verify(signed, {
+              documentLoader: testLoader,
+              suite: verifySuite,
+              purpose: new AssertionProofPurpose({
+                date: new Date('01-01-1970'),
+                maxTimestampDelta: 0,
+              })
+            });
+            const expectedPurposeResult = {
+              RsaSignature2018: {
+                controller: {
+                  assertionMethod: [
+                    'https://example.com/i/alex/keys/1'
+                  ],
+                  authentication: [
+                    'https://example.com/i/alex/keys/1'
+                  ],
+                  id: 'https://example.com/i/alex',
+                  publicKey: {
+                    controller: 'https://example.com/i/alex',
+                    id: 'https://example.com/i/alex/keys/1',
+                    publicKeyPem: '-----BEGIN PUBLIC KEY-----\r\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0MG729HDdieuzyFT+vdg\r\nMXDjTdCniWv64evMXydjfaYlTsmd1FfFQYJdrKJaFzB4y9vm37yKvsw7FJFymSzm\r\nk4T62yMqCIe19UNGHqk5TDVSKf0XZTZX+5i9qhQOaL7yFzzLunI8bNxAzJZ63cGW\r\nf4uJI+513SN9IKvh45vWlgsbZ/ekELHF0YXrupeTzQZMq4fl2/vQxPPmpooNXZ3F\r\nud9DZLAyWhKg69u996XjYP0QcjkE7H1PC1Um+CYDGe65pzBQlYlwgYtztK64kK3A\r\n2FGVQufyQ+19FlHTJTYdyy/zKtyE2+22wuANiLkg9JQEWroRQaGBLCmjwaA+AMQm\r\nfQIDAQAB\r\n-----END PUBLIC KEY-----\r\n',
+                    type: 'RsaVerificationKey2018'
+                  }
+                },
+                valid: true
+              },
+              Ed25519Signature2018: {
+                controller: {
+                  assertionMethod: [
+                    'https://example.com/i/ned/keys/1'
+                  ],
+                  authentication: [
+                    'https://example.com/i/ned/keys/1'
+                  ],
+                  id: 'https://example.com/i/ned',
+                  publicKey: {
+                    controller: 'https://example.com/i/ned',
+                    id: 'https://example.com/i/ned/keys/1',
+                    publicKeyBase58: '39GT26rnBupnnwBhwqHxsCgqoMNYauRStTQCN5JNaPL7',
+                    type: 'Ed25519VerificationKey2018'
+                  }
+                },
+                valid: true
+              }
+            };
+            const expected = {
+              verified: true,
+              results: [{
+                proof: {
+                  '@context': constants.SECURITY_CONTEXT_URL,
+                  ...signed.proof
+                },
+                purposeResult: expectedPurposeResult[suiteName],
+                verified: true
+              }]
+            };
+            assert.deepEqual(result, expected);
+          });
       });
     });
   }
