@@ -241,13 +241,15 @@ describe('JSON-LD Signatures', () => {
       });
       assert.equal(result.verified, false);
       assert.ok(result.error);
-      assert.equal(result.error.message.includes(
+      assert.equal(result.error.name, 'VerificationError');
+
+      assert.equal(result.error.errors[0].message.includes(
         'no proofs matched the required suite and purpose'), true);
 
       // errors should be serialized properly in the verification report
       const {error} = JSON.parse(JSON.stringify(result));
       assert.typeOf(error, 'object');
-      assert.sameMembers(Object.keys(error), ['name', 'message', 'stack']);
+      assert.sameMembers(Object.keys(error), ['name', 'errors']);
     });
 
     it('should not verify a document with non-matching purpose', async () => {
@@ -263,13 +265,13 @@ describe('JSON-LD Signatures', () => {
       });
       assert.equal(result.verified, false);
       assert.ok(result.error);
-      assert.equal(result.error.message.includes(
+      assert.equal(result.error.errors[0].message.includes(
         'no proofs matched the required suite and purpose'), true);
 
       // errors should be serialized properly in the verification report
       const {error} = JSON.parse(JSON.stringify(result));
       assert.typeOf(error, 'object');
-      assert.sameMembers(Object.keys(error), ['name', 'message', 'stack']);
+      assert.sameMembers(Object.keys(error), ['name', 'errors']);
     });
   });
 
@@ -1104,11 +1106,8 @@ describe('JSON-LD Signatures', () => {
 
           // errors should be serialized properly in the verification report
           const {error} = JSON.parse(JSON.stringify(result));
-          assert.typeOf(error, 'array');
-          assert.lengthOf(error, 1);
-          const [e] = error;
-          assert.typeOf(e, 'object');
-          assert.sameMembers(Object.keys(e), ['name', 'message', 'stack']);
+          assert.typeOf(error, 'object');
+          assert.sameMembers(Object.keys(error), ['name', 'errors']);
         });
 
         it('should detect a non-matching challenge', async () => {
