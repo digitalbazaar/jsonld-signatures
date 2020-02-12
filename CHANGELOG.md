@@ -8,6 +8,11 @@
   - Remove bitcore-message dependency.
   - Move feature to 'ecdsa-koblitz-signature-2016' package.
 
+### Changed
+  - **BREAKING**: `verify()`'s results.error is now always a 
+  `VerificationError` instance where `error.errors` is an array that includes 
+  all of the errors that occurred during the verification process.
+
 ### 4.6.0 - 2020-01-17
 
 ### Changed
