@@ -1,5 +1,10 @@
 # jsonld-signatures ChangeLog
 
+## 5.0.1 - 2020-02-27
+
+### Fixed
+- Re-publish to fix package.json version.
+
 ## 5.0.0 - 2020-02-14
 
 ### Removed
