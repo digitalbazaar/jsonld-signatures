@@ -917,6 +917,27 @@ describe('JSON-LD Signatures', () => {
         };
         assert.deepEqual(result, expected);
       });
+      if(['Ed25519Signature2018', 'RsaSignature2018'].includes(suiteName)) {
+        it('should fail to verify a proof without a "jws" property', async () => {
+          const Suite = suites[suiteName];
+          const suite = new Suite(mock.suites[suiteName].parameters.verify);
+          const signed = clone(mock.suites[suiteName].securityContextSigned);
+          delete signed.proof.jws;
+
+          const result = await jsigs.verify(signed, {
+            documentLoader: testLoader,
+            suite,
+            purpose: suite.legacy ?
+              new PublicKeyProofPurpose() : new NoOpProofPurpose()
+          });
+          assert.isFalse(result.verified);
+          assert.isArray(result.results);
+          assert.equal(result.results.length, 1);
+          assert.equal(
+            result.results[0].error.message,
+            'The proof does not include a valid "jws" property.');
+        });
+      }
     });
   }
 
