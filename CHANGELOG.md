@@ -1,5 +1,11 @@
 # jsonld-signatures ChangeLog
 
+## 5.1.0 - 2020-05-05
+
+### Changed
+- Improve error handling when a JwsLinkedDataSignature is missing a "jws"
+  property.
+
 ## 5.0.1 - 2020-02-27
 
 ### Fixed
@@ -14,8 +20,8 @@
   - Move feature to 'ecdsa-koblitz-signature-2016' package.
 
 ### Changed
-  - **BREAKING**: `verify()`'s results.error is now always a 
-  `VerificationError` instance where `error.errors` is an array that includes 
+  - **BREAKING**: `verify()`'s results.error is now always a
+  `VerificationError` instance where `error.errors` is an array that includes
   all of the errors that occurred during the verification process.
 
 ### 4.6.0 - 2020-01-17
