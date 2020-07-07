@@ -1,5 +1,11 @@
 # jsonld-signatures ChangeLog
 
+## 6.0.0 - TBD
+
+### Changed
+- **BREAKING**: Use latest `ed25519-key-pair` lib instead of `crypto-ld`.
+- Node.js 12+ dependency.
+
 ## 5.1.0 - 2020-05-05
 
 ### Changed

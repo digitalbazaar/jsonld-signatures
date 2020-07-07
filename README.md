@@ -122,7 +122,7 @@ const doc = {
 // sign the document as a simple assertion
 const {RsaSignature2018} = jsigs.suites;
 const {AssertionProofPurpose} = jsigs.purposes;
-const {RSAKeyPair} = require('crypto-ld');
+const RSAKeyPair = require('rsa-key-pair');
 const {documentLoaders} = require('jsonld');
 
 const key = new RSAKeyPair({...publicKey, privateKeyPem});
@@ -184,7 +184,7 @@ const doc = {
 // sign the document for the purpose of authentication
 const {Ed25519Signature2018} = jsigs.suites;
 const {AuthenticationProofPurpose} = jsigs.purposes;
-const {Ed25519KeyPair} = require('crypto-ld');
+const Ed25519KeyPair = require('ed25519-key-pair');
 const {documentLoaders} = require('jsonld');
 
 const signed = await jsigs.sign(doc, {

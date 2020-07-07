@@ -32,9 +32,11 @@
   ],
   "dependencies": {
     "base64url": "^3.0.1",
-    "crypto-ld": "^3.7.0",
+    "crypto-ld": "digitalbazaar/crypto-ld#extract-key-pairs",
+    "ed25519-key-pair": "digitalbazaar/ed25519-key-pair#win10",
     "jsonld": "^2.0.2",
     "node-forge": "^0.9.1",
+    "rsa-key-pair": "digitalbazaar/rsa-key-pair#initial",
     "security-context": "^4.0.0",
     "serialize-error": "^5.0.0"
   },
@@ -74,7 +76,7 @@
     "webpack-merge": "^4.2.2"
   },
   "engines": {
-    "node": ">=8"
+    "node": ">=12"
   },
   "keywords": [
     "JSON",

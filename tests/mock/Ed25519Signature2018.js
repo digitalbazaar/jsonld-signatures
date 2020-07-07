@@ -4,7 +4,7 @@
 'use strict';
 
 const constants = require('../../lib/constants');
-const {Ed25519KeyPair} = require('crypto-ld');
+const Ed25519KeyPair = require('ed25519-key-pair');
 const {NOOP_PROOF_PURPOSE_URI} = require('./noop-purpose');
 const {nonSecurityContextTestDoc, securityContextTestDoc} =
   require('./test-document');
