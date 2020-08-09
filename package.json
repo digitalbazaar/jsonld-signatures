@@ -32,7 +32,7 @@
   ],
   "dependencies": {
     "base64url": "^3.0.1",
-    "crypto-ld": "^3.7.0",
+    "crypto-ld": "^4.0.3",
     "jsonld": "^4.0.1",
     "node-forge": "^0.10.0",
     "security-context": "^4.0.0",
