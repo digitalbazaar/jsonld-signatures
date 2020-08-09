@@ -22,7 +22,7 @@ mock.nonSecurityContextSigned = {
         '@type': 'http://www.w3.org/2001/XMLSchema#dateTime',
         '@value': '2018-02-22T15:16:04Z'
       },
-      'http://purl.org/dc/terms/creator': {
+      'https://w3id.org/security#verificationMethod': {
         '@id': publicKeys.alice.id
       },
       'https://w3id.org/security#jws':
@@ -46,7 +46,7 @@ mock.securityContextSigned = {
   proof: {
     type: 'RsaSignature2018',
     created: '2018-02-22T15:16:04Z',
-    creator: publicKeys.alice.id,
+    verificationMethod: publicKeys.alice.id,
     jws:
       'eyJhbGciOiJQUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19' +
       '..' +
@@ -65,7 +65,7 @@ mock.securityContextInvalidSignature = {
   proof: {
     type: 'RsaSignature2018',
     created: '2018-02-22T15:16:04Z',
-    creator: publicKeys.alice.id,
+    verificationMethod: publicKeys.alice.id,
     jws:
       'eyJhbGciOiJQUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19' +
       '..' +

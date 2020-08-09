@@ -26,7 +26,5 @@ mock.testLoader = require('./test-loader');
 
 mock.suites = {
   Ed25519Signature2018: require('./Ed25519Signature2018'),
-  GraphSignature2012: require('./GraphSignature2012'),
-  LinkedDataSignature2015: require('./LinkedDataSignature2015'),
   RsaSignature2018: require('./RsaSignature2018')
 };

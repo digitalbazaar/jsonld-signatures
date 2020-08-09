@@ -277,9 +277,7 @@ describe('JSON-LD Signatures', () => {
 
   const commonSuiteTests = [
     'Ed25519Signature2018',
-    'RsaSignature2018',
-    'LinkedDataSignature2015',
-    'GraphSignature2012'
+    'RsaSignature2018'
   ];
 
   for(const suiteName of commonSuiteTests) {
@@ -293,17 +291,12 @@ describe('JSON-LD Signatures', () => {
         const signed = await jsigs.sign(testDoc, {
           documentLoader: testLoader,
           suite,
-          purpose: suite.legacy ?
-            new PublicKeyProofPurpose() : new NoOpProofPurpose()
+          purpose: new NoOpProofPurpose()
         });
         let expected = mock.suites[suiteName].securityContextSigned;
         if(pseudorandom.includes(suiteName)) {
           expected = clone(expected);
-          if(suite.legacy) {
-            expected.signature.signatureValue = signed.signature.signatureValue;
-          } else {
-            expected.proof.jws = signed.proof.jws;
-          }
+          expected.proof.jws = signed.proof.jws;
         }
         assert.deepEqual(signed, expected);
       });
@@ -315,18 +308,13 @@ describe('JSON-LD Signatures', () => {
         const signed = await jsigs.sign(testDoc, {
           documentLoader: testLoader,
           suite,
-          purpose: suite.legacy ?
-            new PublicKeyProofPurpose() : new NoOpProofPurpose(),
+          purpose: new NoOpProofPurpose(),
           compactProof: false
         });
         let expected = mock.suites[suiteName].securityContextSigned;
         if(pseudorandom.includes(suiteName)) {
           expected = clone(expected);
-          if(suite.legacy) {
-            expected.signature.signatureValue = signed.signature.signatureValue;
-          } else {
-            expected.proof.jws = signed.proof.jws;
-          }
+          expected.proof.jws = signed.proof.jws;
         }
         assert.deepEqual(signed, expected);
       });
@@ -338,23 +326,15 @@ describe('JSON-LD Signatures', () => {
         const signed = await jsigs.sign(testDoc, {
           documentLoader: testLoader,
           suite,
-          purpose: suite.legacy ?
-            new PublicKeyProofPurpose() : new NoOpProofPurpose()
+          purpose: new NoOpProofPurpose()
         });
         let expected = mock.suites[suiteName].nonSecurityContextSigned;
         if(pseudorandom.includes(suiteName)) {
           expected = clone(expected);
-          if(suite.legacy) {
-            expected[constants.SECURITY_SIGNATURE_URL]
-              ['https://w3id.org/security#signatureValue'] =
-              signed[constants.SECURITY_SIGNATURE_URL]
-                ['https://w3id.org/security#signatureValue'];
-          } else {
-            expected[constants.SECURITY_PROOF_URL]['@graph']
-              ['https://w3id.org/security#jws'] =
-              signed[constants.SECURITY_PROOF_URL]['@graph']
-                ['https://w3id.org/security#jws'];
-          }
+          expected[constants.SECURITY_PROOF_URL]['@graph']
+            ['https://w3id.org/security#jws'] =
+            signed[constants.SECURITY_PROOF_URL]['@graph']
+              ['https://w3id.org/security#jws'];
         }
         assert.deepEqual(signed, expected);
       });
@@ -366,49 +346,14 @@ describe('JSON-LD Signatures', () => {
         const result = await jsigs.verify(signed, {
           documentLoader: testLoader,
           suite,
-          purpose: suite.legacy ?
-            new PublicKeyProofPurpose() : new NoOpProofPurpose()
+          purpose: new NoOpProofPurpose()
         });
-        const property = suite.legacy ? 'signature' : 'proof';
+        const property = 'proof';
         const expectedPurposeResult = {
           Ed25519Signature2018: {
             valid: true
           },
           RsaSignature2018: {
-            valid: true
-          },
-          LinkedDataSignature2015: {
-            controller: {
-              '@context': 'https://w3id.org/security/v2',
-              'https://example.org/special-authentication': {
-                publicKey: {
-                  id: 'https://example.com/i/alice/keys/1',
-                  owner: 'https://example.com/i/alice',
-                  /* eslint-disable-next-line max-len */
-                  publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
-                  type: 'RsaVerificationKey2018'
-                }
-              },
-              id: 'https://example.com/i/alice',
-              publicKey: 'https://example.com/i/alice/keys/1'
-            },
-            valid: true
-          },
-          GraphSignature2012: {
-            controller: {
-              '@context': 'https://w3id.org/security/v2',
-              'https://example.org/special-authentication': {
-                publicKey: {
-                  id: 'https://example.com/i/alice/keys/1',
-                  owner: 'https://example.com/i/alice',
-                  /* eslint-disable-next-line max-len */
-                  publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
-                  type: 'RsaVerificationKey2018'
-                }
-              },
-              id: 'https://example.com/i/alice',
-              publicKey: 'https://example.com/i/alice/keys/1'
-            },
             valid: true
           }
         };
@@ -434,50 +379,15 @@ describe('JSON-LD Signatures', () => {
         const result = await jsigs.verify(signed, {
           documentLoader: testLoader,
           suite,
-          purpose: suite.legacy ?
-            new PublicKeyProofPurpose() : new NoOpProofPurpose(),
+          purpose: new NoOpProofPurpose(),
           compactProof: false
         });
-        const property = suite.legacy ? 'signature' : 'proof';
+        const property = 'proof';
         const expectedPurposeResult = {
           Ed25519Signature2018: {
             valid: true
           },
           RsaSignature2018: {
-            valid: true
-          },
-          LinkedDataSignature2015: {
-            controller: {
-              '@context': 'https://w3id.org/security/v2',
-              'https://example.org/special-authentication': {
-                publicKey: {
-                  id: 'https://example.com/i/alice/keys/1',
-                  owner: 'https://example.com/i/alice',
-                  /* eslint-disable-next-line max-len */
-                  publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
-                  type: 'RsaVerificationKey2018'
-                }
-              },
-              id: 'https://example.com/i/alice',
-              publicKey: 'https://example.com/i/alice/keys/1'
-            },
-            valid: true
-          },
-          GraphSignature2012: {
-            controller: {
-              '@context': 'https://w3id.org/security/v2',
-              'https://example.org/special-authentication': {
-                publicKey: {
-                  id: 'https://example.com/i/alice/keys/1',
-                  owner: 'https://example.com/i/alice',
-                  /* eslint-disable-next-line max-len */
-                  publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
-                  type: 'RsaVerificationKey2018'
-                }
-              },
-              id: 'https://example.com/i/alice',
-              publicKey: 'https://example.com/i/alice/keys/1'
-            },
             valid: true
           }
         };
@@ -502,49 +412,14 @@ describe('JSON-LD Signatures', () => {
         const result = await jsigs.verify(signed, {
           documentLoader: testLoader,
           suite,
-          purpose: suite.legacy ?
-            new PublicKeyProofPurpose() : new NoOpProofPurpose()
+          purpose: new NoOpProofPurpose()
         });
-        const property = suite.legacy ? 'signature' : 'proof';
+        const property = 'proof';
         const expectedPurposeResult = {
           Ed25519Signature2018: {
             valid: true
           },
           RsaSignature2018: {
-            valid: true
-          },
-          LinkedDataSignature2015: {
-            controller: {
-              '@context': 'https://w3id.org/security/v2',
-              'https://example.org/special-authentication': {
-                publicKey: {
-                  id: 'https://example.com/i/alice/keys/1',
-                  owner: 'https://example.com/i/alice',
-                  /* eslint-disable-next-line max-len */
-                  publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
-                  type: 'RsaVerificationKey2018'
-                }
-              },
-              id: 'https://example.com/i/alice',
-              publicKey: 'https://example.com/i/alice/keys/1'
-            },
-            valid: true
-          },
-          GraphSignature2012: {
-            controller: {
-              '@context': 'https://w3id.org/security/v2',
-              'https://example.org/special-authentication': {
-                publicKey: {
-                  id: 'https://example.com/i/alice/keys/1',
-                  owner: 'https://example.com/i/alice',
-                  /* eslint-disable-next-line max-len */
-                  publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
-                  type: 'RsaVerificationKey2018'
-                }
-              },
-              id: 'https://example.com/i/alice',
-              publicKey: 'https://example.com/i/alice/keys/1'
-            },
             valid: true
           }
         };
@@ -569,8 +444,7 @@ describe('JSON-LD Signatures', () => {
         const result = await jsigs.verify(signed, {
           documentLoader: testLoader,
           suite,
-          purpose: suite.legacy ?
-            new PublicKeyProofPurpose() : new NoOpProofPurpose(),
+          purpose: new NoOpProofPurpose(),
           compactProof: false
         });
         assert.isObject(result);
@@ -587,49 +461,14 @@ describe('JSON-LD Signatures', () => {
         const result = await jsigs.verify(signed, {
           documentLoader: testLoader,
           suite,
-          purpose: suite.legacy ?
-            new PublicKeyProofPurpose() : new NoOpProofPurpose()
+          purpose: new NoOpProofPurpose()
         });
-        const property = suite.legacy ? 'signature' : 'proof';
+        const property = 'proof';
         const expectedPurposeResult = {
           Ed25519Signature2018: {
             valid: true
           },
           RsaSignature2018: {
-            valid: true
-          },
-          LinkedDataSignature2015: {
-            controller: {
-              '@context': 'https://w3id.org/security/v2',
-              'https://example.org/special-authentication': {
-                publicKey: {
-                  id: 'https://example.com/i/alice/keys/1',
-                  owner: 'https://example.com/i/alice',
-                  /* eslint-disable-next-line max-len */
-                  publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
-                  type: 'RsaVerificationKey2018'
-                }
-              },
-              id: 'https://example.com/i/alice',
-              publicKey: 'https://example.com/i/alice/keys/1'
-            },
-            valid: true
-          },
-          GraphSignature2012: {
-            controller: {
-              '@context': 'https://w3id.org/security/v2',
-              'https://example.org/special-authentication': {
-                publicKey: {
-                  id: 'https://example.com/i/alice/keys/1',
-                  owner: 'https://example.com/i/alice',
-                  /* eslint-disable-next-line max-len */
-                  publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
-                  type: 'RsaVerificationKey2018'
-                }
-              },
-              id: 'https://example.com/i/alice',
-              publicKey: 'https://example.com/i/alice/keys/1'
-            },
             valid: true
           }
         };
@@ -656,49 +495,14 @@ describe('JSON-LD Signatures', () => {
         const result = await jsigs.verify(signed, {
           documentLoader: testLoader,
           suite,
-          purpose: suite.legacy ?
-            new PublicKeyProofPurpose() : new NoOpProofPurpose()
+          purpose: new NoOpProofPurpose()
         });
-        const property = suite.legacy ? 'signature' : 'proof';
+        const property = 'proof';
         const expectedPurposeResult = {
           Ed25519Signature2018: {
             valid: true
           },
           RsaSignature2018: {
-            valid: true
-          },
-          LinkedDataSignature2015: {
-            controller: {
-              '@context': 'https://w3id.org/security/v2',
-              'https://example.org/special-authentication': {
-                publicKey: {
-                  id: 'https://example.com/i/alice/keys/1',
-                  owner: 'https://example.com/i/alice',
-                  /* eslint-disable-next-line max-len */
-                  publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
-                  type: 'RsaVerificationKey2018'
-                }
-              },
-              id: 'https://example.com/i/alice',
-              publicKey: 'https://example.com/i/alice/keys/1'
-            },
-            valid: true
-          },
-          GraphSignature2012: {
-            controller: {
-              '@context': 'https://w3id.org/security/v2',
-              'https://example.org/special-authentication': {
-                publicKey: {
-                  id: 'https://example.com/i/alice/keys/1',
-                  owner: 'https://example.com/i/alice',
-                  /* eslint-disable-next-line max-len */
-                  publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
-                  type: 'RsaVerificationKey2018'
-                }
-              },
-              id: 'https://example.com/i/alice',
-              publicKey: 'https://example.com/i/alice/keys/1'
-            },
             valid: true
           }
         };
@@ -723,10 +527,9 @@ describe('JSON-LD Signatures', () => {
         const result = await jsigs.verify(signed, {
           documentLoader: testLoader,
           suite,
-          purpose: suite.legacy ?
-            new PublicKeyProofPurpose() : new NoOpProofPurpose()
+          purpose: new NoOpProofPurpose()
         });
-        const property = suite.legacy ? 'signature' : 'proof';
+        const property = 'proof';
         const expected = {
           verified: false,
           results: [{
@@ -754,20 +557,14 @@ describe('JSON-LD Signatures', () => {
         const signed = await jsigs.sign(testDoc, {
           documentLoader: testLoader,
           suite,
-          purpose: suite.legacy ?
-            new PublicKeyProofPurpose() : new NoOpProofPurpose()
+          purpose: new NoOpProofPurpose()
         });
-        const property = suite.legacy ? 'signature' : 'proof';
+        const property = 'proof';
         assert.isArray(signed[property]);
         assert.equal(signed[property].length, 2);
         const expected = clone(mock.suites[suiteName].securityContextSigned);
         expected[property] = [expected[property], clone(expected[property])];
-        if(suite.legacy) {
-          expected[property][1].signatureValue =
-            signed[property][1].signatureValue;
-        } else {
-          expected[property][1].jws = signed[property][1].jws;
-        }
+        expected[property][1].jws = signed[property][1].jws;
         assert.deepEqual(signed, expected);
       });
 
@@ -775,53 +572,18 @@ describe('JSON-LD Signatures', () => {
         const Suite = suites[suiteName];
         const suite = new Suite(mock.suites[suiteName].parameters.verify);
         const testDoc = clone(mock.suites[suiteName].securityContextSigned);
-        const property = suite.legacy ? 'signature' : 'proof';
+        const property = 'proof';
         testDoc[property] = [testDoc[property], clone(testDoc[property])];
         const result = await jsigs.verify(testDoc, {
           documentLoader: testLoader,
           suite,
-          purpose: suite.legacy ?
-            new PublicKeyProofPurpose() : new NoOpProofPurpose()
+          purpose: new NoOpProofPurpose()
         });
         const expectedPurposeResult = {
           Ed25519Signature2018: {
             valid: true
           },
           RsaSignature2018: {
-            valid: true
-          },
-          LinkedDataSignature2015: {
-            controller: {
-              '@context': 'https://w3id.org/security/v2',
-              'https://example.org/special-authentication': {
-                publicKey: {
-                  id: 'https://example.com/i/alice/keys/1',
-                  owner: 'https://example.com/i/alice',
-                  /* eslint-disable-next-line max-len */
-                  publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
-                  type: 'RsaVerificationKey2018'
-                }
-              },
-              id: 'https://example.com/i/alice',
-              publicKey: 'https://example.com/i/alice/keys/1'
-            },
-            valid: true
-          },
-          GraphSignature2012: {
-            controller: {
-              '@context': 'https://w3id.org/security/v2',
-              'https://example.org/special-authentication': {
-                publicKey: {
-                  id: 'https://example.com/i/alice/keys/1',
-                  owner: 'https://example.com/i/alice',
-                  /* eslint-disable-next-line max-len */
-                  publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
-                  type: 'RsaVerificationKey2018'
-                }
-              },
-              id: 'https://example.com/i/alice',
-              publicKey: 'https://example.com/i/alice/keys/1'
-            },
             valid: true
           }
         };
@@ -864,7 +626,7 @@ describe('JSON-LD Signatures', () => {
           suite: verifySuite,
           purpose: new PublicKeyProofPurpose()
         });
-        const property = verifySuite.legacy ? 'signature' : 'proof';
+        const property = 'proof';
         const expectedPurposeResult = {
           RsaSignature2018: {
             controller: {
@@ -872,7 +634,7 @@ describe('JSON-LD Signatures', () => {
               'https://example.org/special-authentication': {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
-                  owner: 'https://example.com/i/alice',
+                  controller: 'https://example.com/i/alice',
                   /* eslint-disable-next-line max-len */
                   publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
                   type: 'RsaVerificationKey2018'
@@ -889,7 +651,7 @@ describe('JSON-LD Signatures', () => {
               'https://example.org/special-authentication': {
                 publicKey: {
                   id: 'https://example.com/i/carol/keys/1',
-                  owner: 'https://example.com/i/carol',
+                  controller: 'https://example.com/i/carol',
                   /* eslint-disable-next-line max-len */
                   publicKeyBase58: 'GycSSui454dpYRKiFdsQ5uaE8Gy3ac6dSMPcAoQsk8yq',
                   type: 'Ed25519VerificationKey2018'
@@ -897,40 +659,6 @@ describe('JSON-LD Signatures', () => {
               },
               id: 'https://example.com/i/carol',
               publicKey: 'https://example.com/i/carol/keys/1'
-            },
-            valid: true
-          },
-          LinkedDataSignature2015: {
-            controller: {
-              '@context': 'https://w3id.org/security/v2',
-              'https://example.org/special-authentication': {
-                publicKey: {
-                  id: 'https://example.com/i/alice/keys/1',
-                  owner: 'https://example.com/i/alice',
-                  /* eslint-disable-next-line max-len */
-                  publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
-                  type: 'RsaVerificationKey2018'
-                }
-              },
-              id: 'https://example.com/i/alice',
-              publicKey: 'https://example.com/i/alice/keys/1'
-            },
-            valid: true
-          },
-          GraphSignature2012: {
-            controller: {
-              '@context': 'https://w3id.org/security/v2',
-              'https://example.org/special-authentication': {
-                publicKey: {
-                  id: 'https://example.com/i/alice/keys/1',
-                  owner: 'https://example.com/i/alice',
-                  /* eslint-disable-next-line max-len */
-                  publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
-                  type: 'RsaVerificationKey2018'
-                }
-              },
-              id: 'https://example.com/i/alice',
-              publicKey: 'https://example.com/i/alice/keys/1'
             },
             valid: true
           }
@@ -960,8 +688,7 @@ describe('JSON-LD Signatures', () => {
           const result = await jsigs.verify(signed, {
             documentLoader: testLoader,
             suite,
-            purpose: suite.legacy ?
-              new PublicKeyProofPurpose() : new NoOpProofPurpose()
+            purpose: new NoOpProofPurpose()
           });
           assert.isFalse(result.verified);
           assert.isArray(result.results);
@@ -971,83 +698,6 @@ describe('JSON-LD Signatures', () => {
             'The proof does not include a valid "jws" property.');
         });
       }
-    });
-  }
-
-  const legacySuiteTests = [
-    'LinkedDataSignature2015',
-    'GraphSignature2012'
-  ];
-
-  for(const suiteName of legacySuiteTests) {
-    context(`Legacy suite tests: ${suiteName}`, () => {
-      it('should detect an expired date', async () => {
-        const Suite = suites[suiteName];
-        const suite = new Suite({
-          ...mock.suites[suiteName].parameters.verify
-        });
-        const signed = mock.suites[suiteName].securityContextSigned;
-        const result = await jsigs.verify(signed, {
-          documentLoader: testLoader,
-          suite,
-          purpose: new PublicKeyProofPurpose({
-            date: new Date('01-01-1970'),
-            maxTimestampDelta: 0
-          })
-        });
-        const expected = {
-          verified: false,
-          results: [{
-            proof: {
-              '@context': constants.SECURITY_CONTEXT_URL,
-              ...signed.signature
-            },
-            verified: false
-          }]
-        };
-        assert.isFalse(result.verified);
-        assert.isArray(result.results);
-        assert.equal(result.results.length, expected.results.length);
-        assert.deepEqual(result.results[0].proof, expected.results[0].proof);
-        assert.equal(result.results[0].verified, expected.results[0].verified);
-        assert.equal(
-          result.results[0].error.message,
-          'The proof\'s created timestamp is out of range.');
-      });
-
-      it('should detect a non-matching domain', async () => {
-        const Suite = suites[suiteName];
-        const suite = new Suite({
-          ...mock.suites[suiteName].parameters.verify,
-          date: new Date('01-01-1970'),
-          domain: 'example.com'
-        });
-        const signed = mock.suites[suiteName].securityContextSigned;
-        const result = await jsigs.verify(signed, {
-          documentLoader: testLoader,
-          suite,
-          purpose: new PublicKeyProofPurpose()
-        });
-        const expected = {
-          verified: false,
-          results: [{
-            proof: {
-              '@context': constants.SECURITY_CONTEXT_URL,
-              ...signed.signature
-            },
-            verified: false
-          }]
-        };
-        assert.isFalse(result.verified);
-        assert.isArray(result.results);
-        assert.equal(result.results.length, expected.results.length);
-        assert.deepEqual(result.results[0].proof, expected.results[0].proof);
-        assert.equal(result.results[0].verified, expected.results[0].verified);
-        const expectedMessage = 'The domain is not as expected';
-        assert.equal(
-          result.results[0].error.message.substr(0, expectedMessage.length),
-          expectedMessage);
-      });
     });
   }
 
@@ -1074,7 +724,7 @@ describe('JSON-LD Signatures', () => {
         const parameters = mock.suites[suiteName].parameters.verify;
         const verifySuite = new Suite(parameters);
         const documentLoader = jsigs.extendContextLoader(async url => {
-          if(url === parameters.creator) {
+          if(url === parameters.verificationMethod) {
             const remoteDoc = await testLoader(url);
             keyType = remoteDoc.document.type;
             remoteDoc.document = {...remoteDoc.document};
