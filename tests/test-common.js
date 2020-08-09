@@ -9,8 +9,7 @@ module.exports = async function(options) {
 const {assert, constants, jsigs, mock, suites, util} = options;
 const {
   AssertionProofPurpose,
-  AuthenticationProofPurpose,
-  PublicKeyProofPurpose
+  AuthenticationProofPurpose
 } = jsigs.purposes;
 const {LinkedDataProof} = jsigs.suites;
 const {NoOpProofPurpose} = mock;
@@ -608,71 +607,6 @@ describe('JSON-LD Signatures', () => {
         assert.deepEqual(result, expected);
       });
 
-      it('should sign and verify a document w/public key proof purpose',
-        async () => {
-        const Suite = suites[suiteName];
-
-        const signSuite = new Suite(mock.suites[suiteName].parameters.sign);
-        const testDoc = clone(mock.securityContextTestDoc);
-        const signed = await jsigs.sign(testDoc, {
-          documentLoader: testLoader,
-          suite: signSuite,
-          purpose: new PublicKeyProofPurpose()
-        });
-
-        const verifySuite = new Suite(mock.suites[suiteName].parameters.verify);
-        const result = await jsigs.verify(signed, {
-          documentLoader: testLoader,
-          suite: verifySuite,
-          purpose: new PublicKeyProofPurpose()
-        });
-        const property = 'proof';
-        const expectedPurposeResult = {
-          RsaSignature2018: {
-            controller: {
-              'https://example.org/special-authentication': {
-                publicKey: {
-                  id: 'https://example.com/i/alice/keys/1',
-                  controller: 'https://example.com/i/alice',
-                  publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
-                  type: 'RsaVerificationKey2018'
-                }
-              },
-              id: 'https://example.com/i/alice',
-              publicKey: 'https://example.com/i/alice/keys/1'
-            },
-            valid: true
-          },
-          Ed25519Signature2018: {
-            controller: {
-              'https://example.org/special-authentication': {
-                publicKey: {
-                  id: 'https://example.com/i/carol/keys/1',
-                  controller: 'https://example.com/i/carol',
-                  publicKeyBase58: 'GycSSui454dpYRKiFdsQ5uaE8Gy3ac6dSMPcAoQsk8yq',
-                  type: 'Ed25519VerificationKey2018'
-                }
-              },
-              id: 'https://example.com/i/carol',
-              publicKey: 'https://example.com/i/carol/keys/1'
-            },
-            valid: true
-          }
-        };
-
-        const expected = {
-          verified: true,
-          results: [{
-            proof: {
-              '@context': constants.SECURITY_CONTEXT_URL,
-              ...signed[property]
-            },
-            purposeResult: expectedPurposeResult[suiteName],
-            verified: true
-          }]
-        };
-        assert.deepEqual(result, expected);
-      });
       if(['Ed25519Signature2018', 'RsaSignature2018'].includes(suiteName)) {
         it('should fail to verify a proof without a "jws" property', async () => {
           const Suite = suites[suiteName];
@@ -712,7 +646,7 @@ describe('JSON-LD Signatures', () => {
         const signed = await jsigs.sign(testDoc, {
           documentLoader: testLoader,
           suite: signSuite,
-          purpose: new PublicKeyProofPurpose()
+          purpose: new NoOpProofPurpose()
         });
 
         let keyType;
@@ -731,7 +665,7 @@ describe('JSON-LD Signatures', () => {
         const result = await jsigs.verify(signed, {
           documentLoader,
           suite: verifySuite,
-          purpose: new PublicKeyProofPurpose()
+          purpose: new NoOpProofPurpose()
         });
         const expected = {
           verified: false,
