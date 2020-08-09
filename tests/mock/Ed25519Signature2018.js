@@ -22,14 +22,13 @@ mock.nonSecurityContextSigned = {
         '@type': 'http://www.w3.org/2001/XMLSchema#dateTime',
         '@value': '2018-02-13T21:26:08Z'
       },
-      'http://purl.org/dc/terms/creator': {
+      'https://w3id.org/security#verificationMethod': {
         '@id': publicKeys.carol.id
       },
       'https://w3id.org/security#jws':
         'eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19' +
         '..' +
-        'UNcNI6x6KDA_hHux2RLM8_i9aoZY34GwcZevOjkSh22WoNB4FcP6dNgf2nKzX' +
-        'XJIr-IqUnEwMYeD36fc8jv1AA',
+        '_HHWp46qy37crGUBlJhBNSk_UQYqSSQIBjUY5x3x0xrckKd3ey1HfcZMmgCcbizPuxfpXXhGDs1li1_j9XjYAA',
       'https://w3id.org/security#proofPurpose': {
         '@id': NOOP_PROOF_PURPOSE_URI
       }
@@ -42,12 +41,12 @@ mock.securityContextSigned = {
   proof: {
     type: 'Ed25519Signature2018',
     created: '2018-02-13T21:26:08Z',
-    creator: publicKeys.carol.id,
+    verificationMethod: publicKeys.carol.id,
     jws:
       'eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19' +
       '..' +
-      'UNcNI6x6KDA_hHux2RLM8_i9aoZY34GwcZevOjkSh22WoNB4FcP6dNgf2nKzX' +
-      'XJIr-IqUnEwMYeD36fc8jv1AA',
+      '_HHWp46qy37crGUBlJhBNSk_UQYqSSQIBjUY5x3x0xrckKd3ey1HfcZMmgCcbizPuxfp' +
+      'XXhGDs1li1_j9XjYAA',
     proofPurpose: NOOP_PROOF_PURPOSE_URI
   }
 };
@@ -57,7 +56,7 @@ mock.securityContextInvalidSignature = {
   proof: {
     type: 'Ed25519Signature2018',
     created: '2018-02-13T21:26:08Z',
-    creator: publicKeys.carol.id,
+    verificationMethod: publicKeys.carol.id,
     jws:
       'eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19' +
       '..' +
@@ -70,7 +69,7 @@ mock.securityContextInvalidSignature = {
 mock.parameters = {};
 
 mock.parameters.sign = {
-  creator: publicKeys.carol.id,
+  verificationMethod: publicKeys.carol.id,
   date: '2018-02-13T21:26:08Z',
   key: new Ed25519KeyPair({
     privateKeyBase58: privateKeys.carol.privateKeyBase58,
@@ -80,7 +79,7 @@ mock.parameters.sign = {
 
 // this links back to a key with a controller object
 mock.parameters.controllerObject = {
-  creator: publicKeys.ned.id,
+  verificationMethod: publicKeys.ned.id,
   date: '2018-02-13T21:26:08Z',
   key: new Ed25519KeyPair({
     privateKeyBase58: privateKeys.ned.privateKeyBase58,
@@ -89,7 +88,7 @@ mock.parameters.controllerObject = {
 };
 
 mock.parameters.verify = {
-  creator: publicKeys.carol.id,
+  verificationMethod: publicKeys.carol.id,
   date: '2018-02-13T21:26:08Z'
 };
 

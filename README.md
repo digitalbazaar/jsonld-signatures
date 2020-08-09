@@ -31,11 +31,6 @@ This library provides base classes for signature suites and proof purposes
 so that custom extensions can be written. It also provides some commonly
 used signature suites and proof purposes.
 
-This library also supports legacy signature suites such as `GraphSignature2012`,
-and `LinkedDataSignature2015`. These signature
-suites must be used with a `PublicKeyProofPurpose` instance as the proof
-purpose as they were created before extensible proof purposes were possible.
-
 During verification, the key and key controller information must be discovered.
 This library allows for the key and key controller information to be looked up
 via a `documentLoader` or it can be provided directly to the API via the

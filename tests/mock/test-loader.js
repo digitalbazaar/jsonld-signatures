@@ -21,5 +21,6 @@ module.exports = async url => {
       documentUrl: url
     };
   }
+  console.log(documents)
   throw new Error(`Document "${url}" not found.`);
 };
