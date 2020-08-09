@@ -9,8 +9,7 @@ module.exports = async function(options) {
 const {assert, constants, jsigs, mock, suites, util} = options;
 const {
   AssertionProofPurpose,
-  AuthenticationProofPurpose,
-  PublicKeyProofPurpose
+  AuthenticationProofPurpose
 } = jsigs.purposes;
 const {LinkedDataProof} = jsigs.suites;
 const {NoOpProofPurpose} = mock;
@@ -717,7 +716,7 @@ describe('JSON-LD Signatures', () => {
         const signed = await jsigs.sign(testDoc, {
           documentLoader: testLoader,
           suite: signSuite,
-          purpose: new PublicKeyProofPurpose()
+          purpose: new NoOpProofPurpose()
         });
 
         let keyType;
@@ -736,7 +735,7 @@ describe('JSON-LD Signatures', () => {
         const result = await jsigs.verify(signed, {
           documentLoader,
           suite: verifySuite,
-          purpose: new PublicKeyProofPurpose()
+          purpose: new NoOpProofPurpose()
         });
         const expected = {
           verified: false,
