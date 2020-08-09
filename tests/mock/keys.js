@@ -15,7 +15,7 @@ publicKeys.alice = {
   '@context': constants.SECURITY_CONTEXT_URL,
   id: 'https://example.com/i/alice/keys/1',
   type: ['RsaVerificationKey2018'],
-  owner: 'https://example.com/i/alice',
+  controller: 'https://example.com/i/alice',
   publicKeyPem:
     '-----BEGIN PUBLIC KEY-----\n' +
     'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\n' +
@@ -61,7 +61,7 @@ publicKeys.aliceBtc = {
   '@context': constants.SECURITY_CONTEXT_URL,
   id: 'ecdsa-koblitz-pubkey:1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER',
   type: 'CryptographicKey',
-  owner: 'https://example.com/i/alice',
+  controller: 'https://example.com/i/alice',
   publicKeyWif: '1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER'
 };
 privateKeys.aliceBtc = {
@@ -69,7 +69,7 @@ privateKeys.aliceBtc = {
 };
 controllers.alice = {
   '@context': constants.SECURITY_CONTEXT_URL,
-  id: publicKeys.alice.owner,
+  id: publicKeys.alice.controller,
   publicKey: [publicKeys.alice, publicKeys.aliceBtc],
   'https://example.org/special-authentication': {
     publicKey: publicKeys.alice.id
@@ -135,7 +135,7 @@ publicKeys.bob = {
   '@context': constants.SECURITY_CONTEXT_URL,
   id: 'https://example.com/i/bob/keys/1',
   type: ['RsaVerificationKey2018'],
-  owner: 'https://example.com/i/bob',
+  controller: 'https://example.com/i/bob',
   publicKeyPem:
     '-----BEGIN PUBLIC KEY-----\n' +
     'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwlsOUSgEA9NZdtxFmra5\n' +
@@ -179,7 +179,7 @@ privateKeys.bob = {
 };
 controllers.bob = {
   '@context': constants.SECURITY_CONTEXT_URL,
-  id: publicKeys.bob.owner,
+  id: publicKeys.bob.controller,
   publicKey: [publicKeys.bob]
 };
 
@@ -187,7 +187,7 @@ publicKeys.sally = {
   '@context': constants.SECURITY_CONTEXT_URL,
   id: 'https://example.com/i/sally/keys/1',
   type: ['RsaVerificationKey2018'],
-  owner: 'https://example.com/i/sally',
+  controller: 'https://example.com/i/sally',
   publicKeyPem:
     '-----BEGIN PUBLIC KEY-----\n' +
     'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwIjS6bkpr+xR/+JCL0KF\n' +
@@ -231,7 +231,7 @@ privateKeys.sally = {
 };
 controllers.sally = {
   '@context': constants.SECURITY_CONTEXT_URL,
-  id: publicKeys.sally.owner,
+  id: publicKeys.sally.controller,
   publicKey: [publicKeys.sally]
 };
 
@@ -239,7 +239,7 @@ publicKeys.carol = {
   '@context': constants.SECURITY_CONTEXT_URL,
   id: 'https://example.com/i/carol/keys/1',
   type: ['Ed25519VerificationKey2018'],
-  owner: 'https://example.com/i/carol',
+  controller: 'https://example.com/i/carol',
   publicKeyBase58: 'GycSSui454dpYRKiFdsQ5uaE8Gy3ac6dSMPcAoQsk8yq'
 };
 privateKeys.carol = {
@@ -249,7 +249,7 @@ privateKeys.carol = {
 };
 controllers.carol = {
   '@context': constants.SECURITY_CONTEXT_URL,
-  id: publicKeys.carol.owner,
+  id: publicKeys.carol.controller,
   publicKey: [publicKeys.carol],
   'https://example.org/special-authentication': {
     publicKey: publicKeys.carol.id
