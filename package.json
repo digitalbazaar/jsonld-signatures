@@ -24,6 +24,9 @@
   "license": "BSD-3-Clause",
   "main": "lib/jsonld-signatures.js",
   "files": [
+    "browser/*.js",
+    "dist/*.js",
+    "dist/*.js.map",
     "lib/*.js",
     "lib/**/*.js"
   ],
@@ -83,6 +86,7 @@
     "digital signatures"
   ],
   "scripts": {
+    "prepublish": "npm run build", 
     "build": "npm run build-webpack",
     "build-webpack": "webpack",
     "test": "npm run test-node",
