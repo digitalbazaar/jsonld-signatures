@@ -1,5 +1,10 @@
 # jsonld-signatures ChangeLog
 
+## 5.2.0 - 2020-09-30
+
+### Changed
+- Use node-forge@0.10.0.
+
 ## 5.1.0 - 2020-05-05
 
 ### Changed
