@@ -34,7 +34,7 @@
     "base64url": "^3.0.1",
     "crypto-ld": "^3.7.0",
     "jsonld": "^2.0.2",
-    "node-forge": "^0.9.1",
+    "node-forge": "^0.10.0",
     "security-context": "^4.0.0",
     "serialize-error": "^5.0.0"
   },
@@ -86,7 +86,7 @@
     "digital signatures"
   ],
   "scripts": {
-    "prepublish": "npm run build", 
+    "prepublish": "npm run build",
     "build": "npm run build-webpack",
     "build-webpack": "webpack",
     "test": "npm run test-node",
