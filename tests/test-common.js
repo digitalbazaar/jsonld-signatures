@@ -383,6 +383,7 @@ describe('JSON-LD Signatures', () => {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
                   owner: 'https://example.com/i/alice',
+                  /* eslint-disable-next-line max-len */
                   publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
                   type: 'RsaVerificationKey2018'
                 }
@@ -398,6 +399,7 @@ describe('JSON-LD Signatures', () => {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
                   owner: 'https://example.com/i/alice',
+                  /* eslint-disable-next-line max-len */
                   publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
                   type: 'RsaVerificationKey2018'
                 }
@@ -448,6 +450,7 @@ describe('JSON-LD Signatures', () => {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
                   owner: 'https://example.com/i/alice',
+                  /* eslint-disable-next-line max-len */
                   publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
                   type: 'RsaVerificationKey2018'
                 }
@@ -463,6 +466,7 @@ describe('JSON-LD Signatures', () => {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
                   owner: 'https://example.com/i/alice',
+                  /* eslint-disable-next-line max-len */
                   publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
                   type: 'RsaVerificationKey2018'
                 }
@@ -511,6 +515,7 @@ describe('JSON-LD Signatures', () => {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
                   owner: 'https://example.com/i/alice',
+                  /* eslint-disable-next-line max-len */
                   publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
                   type: 'RsaVerificationKey2018'
                 }
@@ -526,6 +531,7 @@ describe('JSON-LD Signatures', () => {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
                   owner: 'https://example.com/i/alice',
+                  /* eslint-disable-next-line max-len */
                   publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
                   type: 'RsaVerificationKey2018'
                 }
@@ -592,6 +598,7 @@ describe('JSON-LD Signatures', () => {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
                   owner: 'https://example.com/i/alice',
+                  /* eslint-disable-next-line max-len */
                   publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
                   type: 'RsaVerificationKey2018'
                 }
@@ -607,6 +614,7 @@ describe('JSON-LD Signatures', () => {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
                   owner: 'https://example.com/i/alice',
+                  /* eslint-disable-next-line max-len */
                   publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
                   type: 'RsaVerificationKey2018'
                 }
@@ -657,6 +665,7 @@ describe('JSON-LD Signatures', () => {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
                   owner: 'https://example.com/i/alice',
+                  /* eslint-disable-next-line max-len */
                   publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
                   type: 'RsaVerificationKey2018'
                 }
@@ -672,6 +681,7 @@ describe('JSON-LD Signatures', () => {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
                   owner: 'https://example.com/i/alice',
+                  /* eslint-disable-next-line max-len */
                   publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
                   type: 'RsaVerificationKey2018'
                 }
@@ -776,6 +786,7 @@ describe('JSON-LD Signatures', () => {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
                   owner: 'https://example.com/i/alice',
+                  /* eslint-disable-next-line max-len */
                   publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
                   type: 'RsaVerificationKey2018'
                 }
@@ -791,6 +802,7 @@ describe('JSON-LD Signatures', () => {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
                   owner: 'https://example.com/i/alice',
+                  /* eslint-disable-next-line max-len */
                   publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
                   type: 'RsaVerificationKey2018'
                 }
@@ -848,6 +860,7 @@ describe('JSON-LD Signatures', () => {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
                   owner: 'https://example.com/i/alice',
+                  /* eslint-disable-next-line max-len */
                   publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
                   type: 'RsaVerificationKey2018'
                 }
@@ -863,6 +876,7 @@ describe('JSON-LD Signatures', () => {
                 publicKey: {
                   id: 'https://example.com/i/carol/keys/1',
                   owner: 'https://example.com/i/carol',
+                  /* eslint-disable-next-line max-len */
                   publicKeyBase58: 'GycSSui454dpYRKiFdsQ5uaE8Gy3ac6dSMPcAoQsk8yq',
                   type: 'Ed25519VerificationKey2018'
                 }
@@ -878,6 +892,7 @@ describe('JSON-LD Signatures', () => {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
                   owner: 'https://example.com/i/alice',
+                  /* eslint-disable-next-line max-len */
                   publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
                   type: 'RsaVerificationKey2018'
                 }
@@ -893,6 +908,7 @@ describe('JSON-LD Signatures', () => {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
                   owner: 'https://example.com/i/alice',
+                  /* eslint-disable-next-line max-len */
                   publicKeyPem: '-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+uWAsdsMZhH+DE9d0Je\nkeJ6GVlb8C0tnvT+wW9vNJhg/Zb3qsT0ENli7GLFvm8wSEt61Ng8Xt8M+ytCnqQP\n+SqKGx5fdrCeEwR0G2tzsUo2B4/H3DEp45656hBKtu0ZeTl8ZgfCKlYdDttoDWmq\nCH3SHrqcmzlVcX3pnE0ARkP2trHODQDpX1gFF7Ct/uRyEppplK2c/SkElVuAD5c3\nJX2wx81dv7Ujhse7ZKX9UEJ1FmrSa/O3JjdOSa5/hK0/oRHmBDK46RMdr94S7/GU\nz1I2akGMkSxzBMJEw9wXd01GJXw+Xv8TkFF5ae+iQ0I7hkrww8x+G9EQCRKylV8w\ncwIDAQAB\n-----END PUBLIC KEY-----',
                   type: 'RsaVerificationKey2018'
                 }
@@ -918,7 +934,8 @@ describe('JSON-LD Signatures', () => {
         assert.deepEqual(result, expected);
       });
       if(['Ed25519Signature2018', 'RsaSignature2018'].includes(suiteName)) {
-        it('should fail to verify a proof without a "jws" property', async () => {
+        it('should fail to verify a proof without a "jws" property',
+          async () => {
           const Suite = suites[suiteName];
           const suite = new Suite(mock.suites[suiteName].parameters.verify);
           const signed = clone(mock.suites[suiteName].securityContextSigned);
@@ -1312,7 +1329,7 @@ describe('JSON-LD Signatures', () => {
           });
           const expectedPurposeResult = {
             RsaSignature2018: {
-              controller:{
+              controller: {
                 '@context': 'https://w3id.org/security/v2',
                 authentication: 'https://example.com/i/alice/keys/1',
                 id: 'https://example.com/i/alice',
@@ -1374,7 +1391,7 @@ describe('JSON-LD Signatures', () => {
         });
           const expectedPurposeResult = {
             RsaSignature2018: {
-              controller:{
+              controller: {
                 assertionMethod: [
                   'https://example.com/i/alex/keys/1'
                 ],
@@ -1385,6 +1402,7 @@ describe('JSON-LD Signatures', () => {
                 publicKey: {
                   controller: 'https://example.com/i/alex',
                   id: 'https://example.com/i/alex/keys/1',
+                  /* eslint-disable-next-line max-len */
                   publicKeyPem: '-----BEGIN PUBLIC KEY-----\r\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0MG729HDdieuzyFT+vdg\r\nMXDjTdCniWv64evMXydjfaYlTsmd1FfFQYJdrKJaFzB4y9vm37yKvsw7FJFymSzm\r\nk4T62yMqCIe19UNGHqk5TDVSKf0XZTZX+5i9qhQOaL7yFzzLunI8bNxAzJZ63cGW\r\nf4uJI+513SN9IKvh45vWlgsbZ/ekELHF0YXrupeTzQZMq4fl2/vQxPPmpooNXZ3F\r\nud9DZLAyWhKg69u996XjYP0QcjkE7H1PC1Um+CYDGe65pzBQlYlwgYtztK64kK3A\r\n2FGVQufyQ+19FlHTJTYdyy/zKtyE2+22wuANiLkg9JQEWroRQaGBLCmjwaA+AMQm\r\nfQIDAQAB\r\n-----END PUBLIC KEY-----\r\n',
                   type: 'RsaVerificationKey2018'
                 }
@@ -1403,6 +1421,7 @@ describe('JSON-LD Signatures', () => {
                 publicKey: {
                   controller: 'https://example.com/i/ned',
                   id: 'https://example.com/i/ned/keys/1',
+                  /* eslint-disable-next-line max-len */
                   publicKeyBase58: '39GT26rnBupnnwBhwqHxsCgqoMNYauRStTQCN5JNaPL7',
                   type: 'Ed25519VerificationKey2018'
                 }
@@ -1450,7 +1469,7 @@ describe('JSON-LD Signatures', () => {
           });
           const expectedPurposeResult = {
             RsaSignature2018: {
-              controller:{
+              controller: {
                 '@context': 'https://w3id.org/security/v2',
                 authentication: 'https://example.com/i/alice/keys/1',
                 id: 'https://example.com/i/alice',
@@ -1469,6 +1488,7 @@ describe('JSON-LD Signatures', () => {
                 publicKey: {
                   controller: 'https://example.com/i/ned',
                   id: 'https://example.com/i/ned/keys/1',
+                  /* eslint-disable-next-line max-len */
                   publicKeyBase58: '39GT26rnBupnnwBhwqHxsCgqoMNYauRStTQCN5JNaPL7',
                   type: 'Ed25519VerificationKey2018'
                 }
@@ -1635,6 +1655,7 @@ describe('JSON-LD Signatures', () => {
                   publicKey: {
                     controller: 'https://example.com/i/alex',
                     id: 'https://example.com/i/alex/keys/1',
+                    /* eslint-disable-next-line max-len */
                     publicKeyPem: '-----BEGIN PUBLIC KEY-----\r\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0MG729HDdieuzyFT+vdg\r\nMXDjTdCniWv64evMXydjfaYlTsmd1FfFQYJdrKJaFzB4y9vm37yKvsw7FJFymSzm\r\nk4T62yMqCIe19UNGHqk5TDVSKf0XZTZX+5i9qhQOaL7yFzzLunI8bNxAzJZ63cGW\r\nf4uJI+513SN9IKvh45vWlgsbZ/ekELHF0YXrupeTzQZMq4fl2/vQxPPmpooNXZ3F\r\nud9DZLAyWhKg69u996XjYP0QcjkE7H1PC1Um+CYDGe65pzBQlYlwgYtztK64kK3A\r\n2FGVQufyQ+19FlHTJTYdyy/zKtyE2+22wuANiLkg9JQEWroRQaGBLCmjwaA+AMQm\r\nfQIDAQAB\r\n-----END PUBLIC KEY-----\r\n',
                     type: 'RsaVerificationKey2018'
                   }
@@ -1653,6 +1674,7 @@ describe('JSON-LD Signatures', () => {
                   publicKey: {
                     controller: 'https://example.com/i/ned',
                     id: 'https://example.com/i/ned/keys/1',
+                    /* eslint-disable-next-line max-len */
                     publicKeyBase58: '39GT26rnBupnnwBhwqHxsCgqoMNYauRStTQCN5JNaPL7',
                     type: 'Ed25519VerificationKey2018'
                   }
