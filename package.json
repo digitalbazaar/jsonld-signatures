@@ -93,6 +93,7 @@
     "test-node": "cross-env NODE_ENV=test mocha --delay -t 30000 -A -R ${REPORTER:-spec} tests/test.js",
     "test-karma": "karma start",
     "coverage": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text-summary npm run test-node",
+    "coverage-ci": "cross-env NODE_ENV=test nyc --reporter=lcovonly npm run test-node",
     "coverage-report": "nyc report",
     "lint": "eslint '*.js' 'lib/*.js' 'lib/**/*.js' 'tests/*.js' 'tests/**/*.js'"
   },
