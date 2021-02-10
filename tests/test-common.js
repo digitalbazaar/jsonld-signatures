@@ -379,6 +379,7 @@ describe('JSON-LD Signatures', () => {
           },
           LinkedDataSignature2015: {
             controller: {
+              '@context': 'https://w3id.org/security/v2',
               'https://example.org/special-authentication': {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
@@ -395,6 +396,7 @@ describe('JSON-LD Signatures', () => {
           },
           GraphSignature2012: {
             controller: {
+              '@context': 'https://w3id.org/security/v2',
               'https://example.org/special-authentication': {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
@@ -446,6 +448,7 @@ describe('JSON-LD Signatures', () => {
           },
           LinkedDataSignature2015: {
             controller: {
+              '@context': 'https://w3id.org/security/v2',
               'https://example.org/special-authentication': {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
@@ -462,6 +465,7 @@ describe('JSON-LD Signatures', () => {
           },
           GraphSignature2012: {
             controller: {
+              '@context': 'https://w3id.org/security/v2',
               'https://example.org/special-authentication': {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
@@ -511,6 +515,7 @@ describe('JSON-LD Signatures', () => {
           },
           LinkedDataSignature2015: {
             controller: {
+              '@context': 'https://w3id.org/security/v2',
               'https://example.org/special-authentication': {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
@@ -527,6 +532,7 @@ describe('JSON-LD Signatures', () => {
           },
           GraphSignature2012: {
             controller: {
+              '@context': 'https://w3id.org/security/v2',
               'https://example.org/special-authentication': {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
@@ -594,6 +600,7 @@ describe('JSON-LD Signatures', () => {
           },
           LinkedDataSignature2015: {
             controller: {
+              '@context': 'https://w3id.org/security/v2',
               'https://example.org/special-authentication': {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
@@ -610,6 +617,7 @@ describe('JSON-LD Signatures', () => {
           },
           GraphSignature2012: {
             controller: {
+              '@context': 'https://w3id.org/security/v2',
               'https://example.org/special-authentication': {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
@@ -661,6 +669,7 @@ describe('JSON-LD Signatures', () => {
           },
           LinkedDataSignature2015: {
             controller: {
+              '@context': 'https://w3id.org/security/v2',
               'https://example.org/special-authentication': {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
@@ -677,6 +686,7 @@ describe('JSON-LD Signatures', () => {
           },
           GraphSignature2012: {
             controller: {
+              '@context': 'https://w3id.org/security/v2',
               'https://example.org/special-authentication': {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
@@ -782,6 +792,7 @@ describe('JSON-LD Signatures', () => {
           },
           LinkedDataSignature2015: {
             controller: {
+              '@context': 'https://w3id.org/security/v2',
               'https://example.org/special-authentication': {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
@@ -798,6 +809,7 @@ describe('JSON-LD Signatures', () => {
           },
           GraphSignature2012: {
             controller: {
+              '@context': 'https://w3id.org/security/v2',
               'https://example.org/special-authentication': {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
@@ -856,6 +868,7 @@ describe('JSON-LD Signatures', () => {
         const expectedPurposeResult = {
           RsaSignature2018: {
             controller: {
+              '@context': 'https://w3id.org/security/v2',
               'https://example.org/special-authentication': {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
@@ -872,6 +885,7 @@ describe('JSON-LD Signatures', () => {
           },
           Ed25519Signature2018: {
             controller: {
+              '@context': 'https://w3id.org/security/v2',
               'https://example.org/special-authentication': {
                 publicKey: {
                   id: 'https://example.com/i/carol/keys/1',
@@ -888,6 +902,7 @@ describe('JSON-LD Signatures', () => {
           },
           LinkedDataSignature2015: {
             controller: {
+              '@context': 'https://w3id.org/security/v2',
               'https://example.org/special-authentication': {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
@@ -904,6 +919,7 @@ describe('JSON-LD Signatures', () => {
           },
           GraphSignature2012: {
             controller: {
+              '@context': 'https://w3id.org/security/v2',
               'https://example.org/special-authentication': {
                 publicKey: {
                   id: 'https://example.com/i/alice/keys/1',
@@ -1392,6 +1408,7 @@ describe('JSON-LD Signatures', () => {
           const expectedPurposeResult = {
             RsaSignature2018: {
               controller: {
+                '@context': 'https://w3id.org/security/v2',
                 assertionMethod: [
                   'https://example.com/i/alex/keys/1'
                 ],
@@ -1411,6 +1428,7 @@ describe('JSON-LD Signatures', () => {
             },
             Ed25519Signature2018: {
               controller: {
+                '@context': 'https://w3id.org/security/v2',
                 assertionMethod: [
                   'https://example.com/i/ned/keys/1'
                 ],
@@ -1478,6 +1496,7 @@ describe('JSON-LD Signatures', () => {
             },
             Ed25519Signature2018: {
               controller: {
+                '@context': 'https://w3id.org/security/v2',
                 assertionMethod: [
                   'https://example.com/i/ned/keys/1'
                 ],
@@ -1645,6 +1664,7 @@ describe('JSON-LD Signatures', () => {
             const expectedPurposeResult = {
               RsaSignature2018: {
                 controller: {
+                  '@context': 'https://w3id.org/security/v2',
                   assertionMethod: [
                     'https://example.com/i/alex/keys/1'
                   ],
@@ -1664,6 +1684,7 @@ describe('JSON-LD Signatures', () => {
               },
               Ed25519Signature2018: {
                 controller: {
+                  '@context': 'https://w3id.org/security/v2',
                   assertionMethod: [
                     'https://example.com/i/ned/keys/1'
                   ],
