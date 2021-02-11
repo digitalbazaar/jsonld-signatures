@@ -1410,39 +1410,37 @@ describe('JSON-LD Signatures', () => {
               controller: {
                 '@context': 'https://w3id.org/security/v2',
                 assertionMethod: [
-                  'https://example.com/i/alex/keys/1'
+                  {
+                    controller: 'https://example.com/i/alex',
+                    id: 'https://example.com/i/alex/keys/1',
+                    /* eslint-disable-next-line max-len */
+                    publicKeyPem: '-----BEGIN PUBLIC KEY-----\r\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0MG729HDdieuzyFT+vdg\r\nMXDjTdCniWv64evMXydjfaYlTsmd1FfFQYJdrKJaFzB4y9vm37yKvsw7FJFymSzm\r\nk4T62yMqCIe19UNGHqk5TDVSKf0XZTZX+5i9qhQOaL7yFzzLunI8bNxAzJZ63cGW\r\nf4uJI+513SN9IKvh45vWlgsbZ/ekELHF0YXrupeTzQZMq4fl2/vQxPPmpooNXZ3F\r\nud9DZLAyWhKg69u996XjYP0QcjkE7H1PC1Um+CYDGe65pzBQlYlwgYtztK64kK3A\r\n2FGVQufyQ+19FlHTJTYdyy/zKtyE2+22wuANiLkg9JQEWroRQaGBLCmjwaA+AMQm\r\nfQIDAQAB\r\n-----END PUBLIC KEY-----\r\n',
+                    type: 'RsaVerificationKey2018'
+                  }
                 ],
                 authentication: [
                   'https://example.com/i/alex/keys/1'
                 ],
                 id: 'https://example.com/i/alex',
-                publicKey: {
-                  controller: 'https://example.com/i/alex',
-                  id: 'https://example.com/i/alex/keys/1',
-                  /* eslint-disable-next-line max-len */
-                  publicKeyPem: '-----BEGIN PUBLIC KEY-----\r\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0MG729HDdieuzyFT+vdg\r\nMXDjTdCniWv64evMXydjfaYlTsmd1FfFQYJdrKJaFzB4y9vm37yKvsw7FJFymSzm\r\nk4T62yMqCIe19UNGHqk5TDVSKf0XZTZX+5i9qhQOaL7yFzzLunI8bNxAzJZ63cGW\r\nf4uJI+513SN9IKvh45vWlgsbZ/ekELHF0YXrupeTzQZMq4fl2/vQxPPmpooNXZ3F\r\nud9DZLAyWhKg69u996XjYP0QcjkE7H1PC1Um+CYDGe65pzBQlYlwgYtztK64kK3A\r\n2FGVQufyQ+19FlHTJTYdyy/zKtyE2+22wuANiLkg9JQEWroRQaGBLCmjwaA+AMQm\r\nfQIDAQAB\r\n-----END PUBLIC KEY-----\r\n',
-                  type: 'RsaVerificationKey2018'
-                }
+                publicKey: 'https://example.com/i/alex/keys/1'
               },
               valid: true
             },
             Ed25519Signature2018: {
               controller: {
                 '@context': 'https://w3id.org/security/v2',
-                assertionMethod: [
-                  'https://example.com/i/ned/keys/1'
-                ],
-                authentication: [
-                  'https://example.com/i/ned/keys/1'
-                ],
-                id: 'https://example.com/i/ned',
-                publicKey: {
+                assertionMethod: [{
                   controller: 'https://example.com/i/ned',
                   id: 'https://example.com/i/ned/keys/1',
                   /* eslint-disable-next-line max-len */
                   publicKeyBase58: '39GT26rnBupnnwBhwqHxsCgqoMNYauRStTQCN5JNaPL7',
                   type: 'Ed25519VerificationKey2018'
-                }
+                }],
+                authentication: [
+                  'https://example.com/i/ned/keys/1'
+                ],
+                id: 'https://example.com/i/ned',
+                publicKey: 'https://example.com/i/ned/keys/1'
               },
               valid: true
             }
@@ -1501,16 +1499,16 @@ describe('JSON-LD Signatures', () => {
                   'https://example.com/i/ned/keys/1'
                 ],
                 authentication: [
-                  'https://example.com/i/ned/keys/1'
+                  {
+                    controller: 'https://example.com/i/ned',
+                    id: 'https://example.com/i/ned/keys/1',
+                    /* eslint-disable-next-line max-len */
+                    publicKeyBase58: '39GT26rnBupnnwBhwqHxsCgqoMNYauRStTQCN5JNaPL7',
+                    type: 'Ed25519VerificationKey2018'
+                  }
                 ],
                 id: 'https://example.com/i/ned',
-                publicKey: {
-                  controller: 'https://example.com/i/ned',
-                  id: 'https://example.com/i/ned/keys/1',
-                  /* eslint-disable-next-line max-len */
-                  publicKeyBase58: '39GT26rnBupnnwBhwqHxsCgqoMNYauRStTQCN5JNaPL7',
-                  type: 'Ed25519VerificationKey2018'
-                }
+                publicKey: 'https://example.com/i/ned/keys/1'
               },
               valid: true
             }
@@ -1669,16 +1667,16 @@ describe('JSON-LD Signatures', () => {
                     'https://example.com/i/alex/keys/1'
                   ],
                   authentication: [
-                    'https://example.com/i/alex/keys/1'
+                    {
+                      controller: 'https://example.com/i/alex',
+                      id: 'https://example.com/i/alex/keys/1',
+                      /* eslint-disable-next-line max-len */
+                      publicKeyPem: '-----BEGIN PUBLIC KEY-----\r\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0MG729HDdieuzyFT+vdg\r\nMXDjTdCniWv64evMXydjfaYlTsmd1FfFQYJdrKJaFzB4y9vm37yKvsw7FJFymSzm\r\nk4T62yMqCIe19UNGHqk5TDVSKf0XZTZX+5i9qhQOaL7yFzzLunI8bNxAzJZ63cGW\r\nf4uJI+513SN9IKvh45vWlgsbZ/ekELHF0YXrupeTzQZMq4fl2/vQxPPmpooNXZ3F\r\nud9DZLAyWhKg69u996XjYP0QcjkE7H1PC1Um+CYDGe65pzBQlYlwgYtztK64kK3A\r\n2FGVQufyQ+19FlHTJTYdyy/zKtyE2+22wuANiLkg9JQEWroRQaGBLCmjwaA+AMQm\r\nfQIDAQAB\r\n-----END PUBLIC KEY-----\r\n',
+                      type: 'RsaVerificationKey2018'
+                    }
                   ],
                   id: 'https://example.com/i/alex',
-                  publicKey: {
-                    controller: 'https://example.com/i/alex',
-                    id: 'https://example.com/i/alex/keys/1',
-                    /* eslint-disable-next-line max-len */
-                    publicKeyPem: '-----BEGIN PUBLIC KEY-----\r\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0MG729HDdieuzyFT+vdg\r\nMXDjTdCniWv64evMXydjfaYlTsmd1FfFQYJdrKJaFzB4y9vm37yKvsw7FJFymSzm\r\nk4T62yMqCIe19UNGHqk5TDVSKf0XZTZX+5i9qhQOaL7yFzzLunI8bNxAzJZ63cGW\r\nf4uJI+513SN9IKvh45vWlgsbZ/ekELHF0YXrupeTzQZMq4fl2/vQxPPmpooNXZ3F\r\nud9DZLAyWhKg69u996XjYP0QcjkE7H1PC1Um+CYDGe65pzBQlYlwgYtztK64kK3A\r\n2FGVQufyQ+19FlHTJTYdyy/zKtyE2+22wuANiLkg9JQEWroRQaGBLCmjwaA+AMQm\r\nfQIDAQAB\r\n-----END PUBLIC KEY-----\r\n',
-                    type: 'RsaVerificationKey2018'
-                  }
+                  publicKey: 'https://example.com/i/alex/keys/1'
                 },
                 valid: true
               },
@@ -1689,16 +1687,16 @@ describe('JSON-LD Signatures', () => {
                     'https://example.com/i/ned/keys/1'
                   ],
                   authentication: [
-                    'https://example.com/i/ned/keys/1'
+                    {
+                      controller: 'https://example.com/i/ned',
+                      id: 'https://example.com/i/ned/keys/1',
+                      /* eslint-disable-next-line max-len */
+                      publicKeyBase58: '39GT26rnBupnnwBhwqHxsCgqoMNYauRStTQCN5JNaPL7',
+                      type: 'Ed25519VerificationKey2018'
+                    }
                   ],
                   id: 'https://example.com/i/ned',
-                  publicKey: {
-                    controller: 'https://example.com/i/ned',
-                    id: 'https://example.com/i/ned/keys/1',
-                    /* eslint-disable-next-line max-len */
-                    publicKeyBase58: '39GT26rnBupnnwBhwqHxsCgqoMNYauRStTQCN5JNaPL7',
-                    type: 'Ed25519VerificationKey2018'
-                  }
+                  publicKey: 'https://example.com/i/ned/keys/1'
                 },
                 valid: true
               }
