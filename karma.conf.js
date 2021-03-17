@@ -1,25 +1,7 @@
-/**
- * Karam configuration for jsonld-signatures.
- *
- * Copyright (c) 2011-2018 Digital Bazaar, Inc. All rights reserved.
+/*
+ * Copyright (c) 2021 Digital Bazaar, Inc. All rights reserved.
  */
 module.exports = function(config) {
-  // bundler to test: webpack, browserify
-  const bundler = process.env.BUNDLER || 'webpack';
-
-  const frameworks = ['mocha'];
-  // main bundle preprocessors
-  const preprocessors = ['babel'];
-
-  if(bundler === 'browserify') {
-    frameworks.push(bundler);
-    preprocessors.push(bundler);
-  } else if(bundler === 'webpack') {
-    preprocessors.push(bundler);
-    preprocessors.push('sourcemap');
-  } else {
-    throw Error('Unknown bundler');
-  }
 
   config.set({
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -27,72 +9,26 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks,
+    frameworks: ['mocha', 'chai'],
 
     // list of files / patterns to load in the browser
     files: [
-      {
-        pattern: 'tests/test-karma.js',
-        watched: false, served: true, included: true
-      }
+      'test/*.spec.js'
     ],
 
     // list of files to exclude
     exclude: [],
 
     // preprocess matching files before serving them to the browser
-    // available preprocessors:
-    // https://npmjs.org/browse/keyword/karma-preprocessor
+    // preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      //'tests/*.js': ['webpack', 'babel'] //preprocessors
-      'tests/*.js': preprocessors
+      'test/*.js': ['webpack', 'sourcemap']
     },
 
     webpack: {
+      //mode: 'production',
       mode: 'development',
-      devtool: 'inline-source-map',
-      module: {
-        rules: [
-          {
-            test: /\.js$/,
-            include: [{
-              // exclude node_modules by default
-              exclude: /(node_modules)/
-            }/*, {
-              // include jsonld and rdf-canonize
-              include: /(node_modules\/jsonld)/,
-              include: /(node_modules\/rdf-canonize)/
-            }*/],
-            use: {
-              loader: 'babel-loader',
-              options: {
-                presets: ['@babel/preset-env'],
-                plugins: [
-                  [
-                    '@babel/plugin-proposal-object-rest-spread',
-                    {useBuiltIns: true}
-                  ],
-                  '@babel/plugin-transform-modules-commonjs',
-                  '@babel/plugin-transform-runtime'
-                ]
-              }
-            }
-          }
-        ]
-      },
-      node: {
-        Buffer: false,
-        process: false,
-        crypto: false,
-        setImmediate: false
-      },
-    },
-
-    browserify: {
-      debug: true,
-      plugin: [
-        [require('esmify')]
-      ]
+      devtool: 'inline-source-map'
     },
 
     // test results reporter to use
@@ -108,34 +44,21 @@ module.exports = function(config) {
     colors: true,
 
     // level of logging
-    // possible values:
-    // config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN ||
-    // config.LOG_INFO || config.LOG_DEBUG
+    // possible values: config.LOG_DISABLE || config.LOG_ERROR ||
+    //   config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_INFO,
 
-    // enable / disable watching file and executing tests whenever any file
-    // changes
+    // enable / disable watching file and executing test whenever any
+    // file changes
     autoWatch: false,
 
     // start these browsers
-    // available browser launchers:
-    // https://npmjs.org/browse/keyword/karma-launcher
+    // browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     //browsers: ['ChromeHeadless', 'Chrome', 'Firefox', 'Safari'],
     browsers: ['ChromeHeadless'],
 
-    customLaunchers: {
-      IE9: {
-        base: 'IE',
-        'x-ua-compatible': 'IE=EmulateIE9'
-      },
-      IE8: {
-        base: 'IE',
-        'x-ua-compatible': 'IE=EmulateIE8'
-      }
-    },
-
     // Continuous Integration mode
-    // if true, Karma captures browsers, runs the tests and exits
+    // if true, Karma captures browsers, runs the test and exits
     singleRun: true,
 
     // Concurrency level
@@ -150,9 +73,6 @@ module.exports = function(config) {
         reporter: 'html'
         //delay: true
       }
-    },
-
-    // Proxied paths
-    proxies: {}
+    }
   });
 };

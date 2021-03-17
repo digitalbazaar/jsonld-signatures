@@ -1,5 +1,10 @@
 # jsonld-signatures ChangeLog
 
+## 8.0.0 - 
+
+### Changed
+- **BREAKING** Bundled signature suites have all been moved to external repos:
+
 ## 7.0.0 - 2021-02-11
 
 ### Changed

@@ -33,40 +33,36 @@
   ],
   "dependencies": {
     "base64url": "^3.0.1",
-    "crypto-ld": "^4.0.3",
+    "crypto-ld": "^5.0.0",
     "jsonld": "^4.0.1",
     "node-forge": "^0.10.0",
     "security-context": "^4.0.0",
-    "serialize-error": "^5.0.0"
+    "serialize-error": "^8.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.4",
-    "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
-    "@babel/plugin-transform-modules-commonjs": "^7.6.0",
-    "@babel/plugin-transform-runtime": "^7.6.2",
-    "@babel/preset-env": "^7.6.3",
-    "@babel/runtime": "^7.6.3",
-    "babel-loader": "^8.0.6",
-    "browserify": "^16.5.0",
-    "chai": "^4.1.2",
-    "core-js": "^2.6.9",
-    "cross-env": "^6.0.3",
-    "dirty-chai": "^2.0.1",
-    "eslint": "^7.18.0",
+    "@babel/core": "^7.13.8",
+    "@babel/plugin-transform-modules-commonjs": "^7.13.8",
+    "@babel/plugin-transform-runtime": "^7.13.9",
+    "@babel/preset-env": "^7.13.9",
+    "@babel/runtime": "^7.13.9",
+    "babel-loader": "^8.2.2",
+    "chai": "^4.3.3",
+    "cross-env": "^7.0.3",
+    "eslint": "^7.21.0",
     "eslint-config-digitalbazaar": "^2.6.1",
-    "esmify": "^2.1.1",
-    "karma": "^4.3.0",
+    "eslint-plugin-jsdoc": "^32.2.0",
+    "karma": "^6.1.1",
     "karma-babel-preprocessor": "^8.0.1",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^3.1.0",
     "karma-mocha": "^2.0.1",
     "karma-mocha-reporter": "^2.2.5",
-    "karma-sourcemap-loader": "^0.3.7",
-    "karma-webpack": "^4.0.2",
-    "mocha": "^8.1.1",
+    "karma-sourcemap-loader": "^0.3.8",
+    "karma-webpack": "^5.0.0",
+    "mocha": "^8.3.1",
     "mocha-lcov-reporter": "^1.3.0",
     "nyc": "^15.1.0",
-    "webpack": "^4.44.1"
+    "webpack": "^5.24.3"
   },
   "engines": {
     "node": ">=12"
@@ -82,12 +78,12 @@
   ],
   "scripts": {
     "test": "npm run lint && npm run test-node && npm run test-karma",
-    "test-node": "cross-env NODE_ENV=test mocha --preserve-symlinks -t 10000 tests/**/*.spec.js",
-    "test-karma": "karma start tests/karma.conf.js",
+    "test-node": "cross-env NODE_ENV=test mocha --preserve-symlinks -t 10000 test/*.spec.js",
+    "test-karma": "karma start karma.conf.js",
     "coverage": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text-summary npm run test-node",
     "coverage-ci": "cross-env NODE_ENV=test nyc --reporter=lcovonly npm run test-node",
     "coverage-report": "nyc report",
-    "lint": "eslint lib/ tests/"
+    "lint": "eslint ."
   },
   "nyc": {
     "exclude": [
