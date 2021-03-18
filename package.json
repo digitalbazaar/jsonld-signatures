@@ -32,7 +32,6 @@
     "lib/**/*.js"
   ],
   "dependencies": {
-    "base64url": "^3.0.1",
     "jsonld": "^5.0.0",
     "node-forge": "^0.10.0",
     "security-context": "^4.0.0",
@@ -90,7 +89,6 @@
     ]
   },
   "browser": {
-    "crypto": false,
-    "base64url": false
+    "crypto": false
   }
 }
