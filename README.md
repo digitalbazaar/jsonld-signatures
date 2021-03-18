@@ -1,23 +1,29 @@
-jsonld-signatures
-=================
+# JSON-LD Signatures _(jsonld-signatures)_
 
-[![Build status](https://img.shields.io/github/workflow/status/digitalbazaar/jsonld-signatures/Node.js%20CI)](https://github.com/digitalbazaar/jsonld-signatures/actions?query=workflow%3A%22Node.js+CI%22)
-[![Coverage status](https://img.shields.io/codecov/c/github/digitalbazaar/jsonld-signatures)](https://codecov.io/gh/digitalbazaar/jsonld-signatures)
-[![Dependency Status](https://img.shields.io/david/digitalbazaar/jsonld-signatures.svg)](https://david-dm.org/digitalbazaar/jsonld-signatures)
+[![Node.js CI](https://github.com/digitalbazaar/jsonld-signatures/workflows/Node.js%20CI/badge.svg)](https://github.com/digitalbazaar/jsonld-signatures/actions?query=workflow%3A%22Node.js+CI%22)
+[![NPM Version](https://img.shields.io/npm/v/jsonld-signatures.svg?style=flat-square)](https://npm.im/jsonld-signatures)
 
-An implementation of the Linked Data Signatures specification for JSON-LD.
-This software works in all modern browsers as well as node.js via [npm](https://www.npmjs.com/package/jsonld-signatures).
+> An implementation of the Linked Data Signatures specification for JSON-LD, for Node.js and browsers.
 
-Introduction
-------------
+## Table of Contents
+
+- [Background](#background)
+- [Security](#security)
+- [Install](#install)
+- [Usage](#usage)
+- [Contribute](#contribute)
+- [Commercial Support](#commercial-support)
+- [License](#license)
+
+## Background
 
 A Linked Data Signature proof is created (or verified) by specifying a
 signature suite and a proof purpose.
 
 The signature suite performs the cryptographic operation required to sign (or
 verify) a digital signature and includes information in a proof such as the
-`verificationMethod` identifier (aka `creator`) and the date the proof was
-created (aka `created`).
+`verificationMethod` identifier, the proof's `controller`, and the date the
+proof was created.
 
 The proof purpose indicates why the proof was created and what its intended use
 is. This information can also be used to make sure that the
@@ -29,7 +35,27 @@ signing documents for reasons they did not intend.
 
 This library provides base classes for signature suites and proof purposes
 so that custom extensions can be written. It also provides some commonly
-used signature suites and proof purposes.
+used proof purposes.
+
+### Relationship to Verifiable Credentials
+
+`jsonld-signatures` is a low-level library that is meant to sign _any_ JSON-LD
+document.
+
+One common use case for creating these signatures is for use with 
+[Verifiable Credentials](https://w3c.github.io/vc-data-model) (VCs). If you're 
+working with those, you should use a higher-level library that's specifically
+made for that purpose, such as [`vc-js`](https://github.com/digitalbazaar/vc-js).
+(Incidentally, `vc-js` uses this library, `jsonld-signatures`, under the hood.)
+
+## Security
+
+As with most security- and cryptography-related tools, the overall security of 
+your system will largely depend on your design decisions (which key types you 
+will use, where you'll store the private keys, what you put into your 
+credentials, and so on).
+
+### Document Loader
 
 During verification, the key and key controller information must be discovered.
 This library allows for the key and key controller information to be looked up
@@ -55,217 +81,67 @@ increase security by using a custom `documentLoader` that is similarly strict
 and will only load a subset of documents that is constrained by some technical,
 security, or business rules.
 
-Install with npm:
+## Install
+
+- Node.js 12+ is required.
+
+To install locally (for development):
 
 ```
-npm install jsonld-signatures
+git clone https://github.com/digitalbazaar/jsonld-signatures.git
+cd jsonld-signatures
+npm install
 ```
 
-In Node.js, include the library like this:
-```js
-const jsigs = require('jsonld-signatures');
-```
+## Usage
 
-In a browser environment, include `jsonld`, `forge`, and
-`dist/jsonld-signatures.min.js` via script tag or other mechanism.
+`jsonld-signatures` (version `8.x` and above) is not meant for standalone use.
+Instead, it's generally used through an individual _crypto suite_.
+For detailed usage instructions, see the READMEs of the supported suites:
 
-Examples
---------
+* [`Ed25519Signature2020`](https://github.com/digitalbazaar/ed25519-signature-2020) 
+* [`Ed25519Signature2018`](https://github.com/digitalbazaar/ed25519-signature-2018)
 
-Signing and verifying a simple assertion:
+Most of the usages with individual suites and key types will have elements in
+common. You'll need to:
 
-```js
-// to generate the next two lines, run the following command:
-//
-// openssl genrsa -out key.pem; cat key.pem; 
-// openssl rsa -in key.pem -pubout -out pubkey.pem;
-// cat pubkey.pem; rm key.pem pubkey.pem
-//
-// for an example of how to specify these keys, look at [key-example]:
-const publicKeyPem = "-----BEGIN PUBLIC KEY-----\r\n...";
-const privateKeyPem = "-----BEGIN PRIVATE KEY-----\r\n...";
+* Generate or import cryptographic keys to sign with (see
+  the [`@digitalbazaar/crypto-ld >=v5.0`](https://github.com/digitalbazaar/crypto-ld))
+  library), or use a secure `signer()` function provided by your secure
+  cryptographic module.
+* _Authorize_ those keys for the specific purpose you're using
+  them for (see section on Proof Purpose below), using a Controller Document
+  (such as a DID Document or similar).
+* Pair those keys with a corresponding cryptographic Signature Suite.
+  For greenfield development, we recommend the [`Ed25519Signature2020`](https://github.com/digitalbazaar/ed25519-signature-2020)
+  suite, and for legacy/compatibility work, you can use 
+  [`Ed25519Signature2018`](https://github.com/digitalbazaar/ed25519-signature-2018) suite.
+  See also the [Choosing a Key Type](https://github.com/digitalbazaar/crypto-ld#choosing-a-key-type)
+  section of `crypto-ld` documentation.
+* Set up your `documentLoader` to fetch contexts and documents securely.
+* Lastly, perform the `jsigs.sign()` or `jsigs.verify()` operations.
 
-// specify the public key object
-const publicKey = {
-  '@context': jsigs.SECURITY_CONTEXT_URL,
-  type: 'RsaVerificationKey2018',
-  id: 'https://example.com/i/alice/keys/1',
-  controller: 'https://example.com/i/alice',
-  publicKeyPem
-};
-
-// specify the public key controller object
-const controller = {
-  '@context': jsigs.SECURITY_CONTEXT_URL,
-  id: 'https://example.com/i/alice',
-  publicKey: [publicKey],
-  // this authorizes this key to be used for making assertions
-  assertionMethod: [publicKey.id]
-};
-
-// create the JSON-LD document that should be signed
-const doc = {
-  '@context': {
-    schema: 'http://schema.org/',
-    name: 'schema:name',
-    homepage: 'schema:url',
-    image: 'schema:image'
-  },
-  name: 'Manu Sporny',
-  homepage: 'https://manu.sporny.org/',
-  image: 'https://manu.sporny.org/images/manu.png'
-};
-
-// sign the document as a simple assertion
-const {RsaSignature2018} = jsigs.suites;
-const {AssertionProofPurpose} = jsigs.purposes;
-const {RSAKeyPair} = require('crypto-ld');
-const {documentLoaders} = require('jsonld');
-
-const key = new RSAKeyPair({...publicKey, privateKeyPem});
-const signed = await jsigs.sign(doc, {
-  suite: new RsaSignature2018({key}),
-  purpose: new AssertionProofPurpose()
-});
-
-console.log('Signed document:', signed);
-// we will need the documentLoader to verify the controller
-const {node: documentLoader} = documentLoaders;
-
-// verify the signed document
-const result = await jsigs.verify(signed, {
-  documentLoader,
-  suite: new RsaSignature2018(key),
-  purpose: new AssertionProofPurpose({controller})
-});
-if(result.verified) {
-  console.log('Signature verified.');
-} else {
-  console.log('Signature verification error:', result.error);
-}
-```
-
-Signing and verifying a document to authenticate to a website:
-
-```js
-const publicKeyBase58 = 'GycSSui454dpYRKiFdsQ5uaE8Gy3ac6dSMPcAoQsk8yq';
-const privateKeyBase58 = '3Mmk4UzTRJTEtxaKk61LxtgUxAa2Dg36jF6Vog...SSiF';
-
-// specify the public key object
-const publicKey = {
-  '@context': jsigs.SECURITY_CONTEXT_URL,
-  type: 'Ed25519VerificationKey2018',
-  id: 'https://example.com/i/alice/keys/2',
-  controller: 'https://example.com/i/alice',
-  publicKeyBase58
-};
-
-// specify the public key controller object
-const controller = {
-  '@context': jsigs.SECURITY_CONTEXT_URL,
-  id: 'https://example.com/i/alice',
-  publicKey: [publicKey],
-  // this authorizes this key to be used for authenticating
-  authentication: [publicKey.id]
-};
-
-// create the JSON-LD document that should be signed
-const doc = {
-  '@context': {
-    schema: 'http://schema.org/',
-    action: 'schema:action'
-  },
-  action: 'AuthenticateMe'
-};
-
-// sign the document for the purpose of authentication
-const {Ed25519Signature2018} = jsigs.suites;
-const {AuthenticationProofPurpose} = jsigs.purposes;
-const {Ed25519KeyPair} = require('crypto-ld');
-const {documentLoaders} = require('jsonld');
-
-const signed = await jsigs.sign(doc, {
-  suite: new Ed25519Signature2018({
-    verificationMethod: publicKey.id,
-    key: new Ed25519KeyPair({privateKeyBase58})
-  }),
-  purpose: new AuthenticationProofPurpose({
-    challenge: 'abc',
-    domain: 'example.com'
-  })
-});
-
-console.log('Signed document:', signed);
-// we will need the documentLoader to verify the controller
-const {node: documentLoader} = documentLoaders;
-
-// verify the signed document
-const result = await jsigs.verify(signed, {
-  documentLoader,
-  suite: new Ed25519Signature2018({
-    key: new Ed25519KeyPair(publicKey)
-  }),
-  purpose: new AuthenticationProofPurpose({
-    controller,
-    challenge: 'abc',
-    domain: 'example.com'
-  })
-});
-if(result.verified) {
-  console.log('Signature verified.');
-} else {
-  console.log('Signature verification error:', result.error);
-}
-```
-
-Node.js Native Canonize Bindings
---------------------------------
+### Node.js Native Canonize Bindings
 
 Specialized use cases may wish to use the native canonize bindings. This mode
 can be enabled by setting the `useNativeCanonize` option to `true`. See the
 [jsonld.js notes](https://github.com/digitalbazaar/jsonld.js#nodejs-native-canonize-bindings)
 on this feature and note you should benchmark performance before using it.
 
-Commercial Support
-------------------
+## Contribute
+
+See [the contribute file](https://github.com/digitalbazaar/bedrock/blob/master/CONTRIBUTING.md)!
+
+PRs accepted.
+
+If editing the Readme, please conform to the
+[standard-readme](https://github.com/RichardLitt/standard-readme) specification.
+
+## Commercial Support
 
 Commercial support for this library is available upon request from
 Digital Bazaar: support@digitalbazaar.com
 
-Source
-------
+## License
 
-The source code for the JavaScript implementation of the JSON-LD Signatures API
-is available at:
-
-https://github.com/digitalbazaar/jsonld-signatures
-
-Tests
------
-
-This library includes a sample testing utility which may be used to verify
-that changes to the processor maintain the correct output.
-
-To run the sample tests you will need to get the test suite files by cloning
-the [jsonld-signatures repository][jsonld-signatures] hosted on GitHub.
-
-https://github.com/digitalbazaar/jsonld-signatures/
-
-Run the Node.js tests using the following command:
-
-    npm run test
-
-Run browser tests using ChromeHeadless using the following command:
-
-    npm run test-karma
-
-Run browser tests using a selection of browsers using the following command:
-
-    npm run test-karma -- --browsers Firefox,Chrome,ChromeHeadless
-
-Code coverage of node tests can be generated in `coverage/`:
-
-    npm run coverage
-
-[jsonld-signatures]: https://github.com/digitalbazaar/jsonld-signatures/
-[key-example]: https://github.com/digitalbazaar/jsonld-signatures/blob/44f1f67db2cfb0b166b7d5f63c40e10cc4642416/tests/test.js#L73
+[New BSD License (3-clause)](LICENSE) © Digital Bazaar
