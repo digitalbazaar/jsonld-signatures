@@ -13,6 +13,9 @@
   - `RsaSignature2018` suite moved to https://github.com/digitalbazaar/rsa-signature-2018
   - `Ed25519Signature2018` suite moved to https://github.com/digitalbazaar/ed25519-signature-2018
 - **BREAKING**: Drop support for Node.js v10 (it's leaving LTS).
+- **BREAKING**: Remove `compactProof` parameter when signing and verifying. This
+  means that going forward, documents are required to use the appropriate
+  contexts for the proof that they're using (error will be thrown otherwise).
 
 ## 7.0.0 - 2021-02-11
 
