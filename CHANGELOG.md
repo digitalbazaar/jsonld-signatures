@@ -9,9 +9,9 @@
 - **BREAKING**: Drop support for deprecated `owner` proof property.
 - **BREAKING**: Drop support for deprecated `creator` proof property.
 - **BREAKING**: Remove bundled signature suites; all moved to external repos:
-    - `JwsLinkedDataSignature` suite moved to https://github.com/digitalbazaar/jws-linked-data-signature
-    - `RsaSignature2018` suite moved to https://github.com/digitalbazaar/rsa-signature-2018
-    - `Ed25519Signature2018` suite moved to https://github.com/digitalbazaar/ed25519-signature-2018
+  - `JwsLinkedDataSignature` suite moved to https://github.com/digitalbazaar/jws-linked-data-signature
+  - `RsaSignature2018` suite moved to https://github.com/digitalbazaar/rsa-signature-2018
+  - `Ed25519Signature2018` suite moved to https://github.com/digitalbazaar/ed25519-signature-2018
 - **BREAKING**: Drop support for Node.js v10 (it's leaving LTS).
 
 ## 7.0.0 - 2021-02-11
