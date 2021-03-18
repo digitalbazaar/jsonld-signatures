@@ -3,16 +3,22 @@
 ## 8.0.0 - 2021-03-18
 
 ### Changed
+- **BREAKING**: Only support Node.js >=12.
+- **BREAKING**: Drop support for deprecated `owner` proof property.
+- **BREAKING**: Drop support for deprecated `creator` proof property.
+
+### Removed
+- **BREAKING**: No longer shipping browser bundles. Due to splitting out suites
+  into other packages, it becomes more pratical to create browser bundles at
+  the application level with modern tools.
+- **BREAKING**: No longer exporting `crypto-ld` classes.
 - **BREAKING**: Remove `PublicKeyProofPurpose`.
 - **BREAKING**: Remove `GraphSignature2012` suite.
 - **BREAKING**: Remove `LinkedDataSignature2015` suite.
-- **BREAKING**: Drop support for deprecated `owner` proof property.
-- **BREAKING**: Drop support for deprecated `creator` proof property.
 - **BREAKING**: Remove bundled signature suites; all moved to external repos:
   - `JwsLinkedDataSignature` suite moved to https://github.com/digitalbazaar/jws-linked-data-signature
   - `RsaSignature2018` suite moved to https://github.com/digitalbazaar/rsa-signature-2018
   - `Ed25519Signature2018` suite moved to https://github.com/digitalbazaar/ed25519-signature-2018
-- **BREAKING**: Drop support for Node.js v10 (it's leaving LTS).
 - **BREAKING**: Remove `compactProof` parameter when signing and verifying. This
   means that going forward, documents are required to use the appropriate
   contexts for the proof that they're using (error will be thrown otherwise).
