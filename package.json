@@ -25,7 +25,6 @@
   "license": "BSD-3-Clause",
   "main": "lib/jsonld-signatures.js",
   "files": [
-    "browser/*.js",
     "dist/*.js",
     "dist/*.js.map",
     "lib/*.js",
@@ -33,7 +32,6 @@
   ],
   "dependencies": {
     "jsonld": "^5.0.0",
-    "node-forge": "^0.10.0",
     "security-context": "^4.0.0",
     "serialize-error": "^8.0.1"
   },
@@ -89,6 +87,7 @@
     ]
   },
   "browser": {
-    "crypto": false
+    "crypto": false,
+    "./lib/sha256digest.js": "./lib/sha256digest-browser.js"
   }
 }
