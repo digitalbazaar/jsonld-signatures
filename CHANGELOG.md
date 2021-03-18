@@ -1,6 +1,6 @@
 # jsonld-signatures ChangeLog
 
-## 8.0.0 - 
+## 8.0.0 - 2021-03-18
 
 ### Changed
 - **BREAKING**: Remove `PublicKeyProofPurpose`.
