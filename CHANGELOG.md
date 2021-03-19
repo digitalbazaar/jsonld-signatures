@@ -1,5 +1,10 @@
 # jsonld-signatures ChangeLog
 
+## 8.0.1 - 2021-03-18
+
+### Changed
+- Update karma setup, remove babel.
+
 ## 8.0.0 - 2021-03-18
 
 ### Changed
