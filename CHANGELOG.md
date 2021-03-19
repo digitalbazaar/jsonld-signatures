@@ -1,6 +1,6 @@
 # jsonld-signatures ChangeLog
 
-## 8.0.2 - 
+## 8.0.2 - 2021-03-19
 
 ### Changed
 - In ProofSet, use the document's context for proof before defaulting to 
