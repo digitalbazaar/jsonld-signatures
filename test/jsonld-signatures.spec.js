@@ -10,6 +10,9 @@ const jsigs = require('../lib/jsonld-signatures');
 /**
  * NOTE: The existing test suite has been extracted to each individual signature
  * suite's repository.
+ *
+ * Test coverage of this package currently depends on indirect testing through
+ * other test suites.
  */
 describe('jsonld-signatures', () => {
   it('should exist', async () => {
