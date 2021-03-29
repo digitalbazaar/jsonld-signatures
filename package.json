@@ -1,6 +1,6 @@
 {
-  "name": "jsonld-signatures",
-  "version": "8.0.3-0",
+  "name": "jsonld-signatures-spherity",
+  "version": "8.1.0",
   "description": "An implementation of the Linked Data Signatures specifications for JSON-LD in JavaScript.",
   "homepage": "https://github.com/digitalbazaar/jsonld-signatures",
   "author": {
