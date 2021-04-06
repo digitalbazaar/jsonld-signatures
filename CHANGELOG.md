@@ -1,9 +1,15 @@
 # jsonld-signatures ChangeLog
 
+## 8.0.3 - TBD
+
+### Fixed
+- Add missing `signer` parameter to the `LinkedDataSignature` constructor.
+  This issue caused `this.signer` in subclasses to be `undefined`.
+
 ## 8.0.2 - 2021-03-19
 
 ### Changed
-- In ProofSet, use the document's context for proof before defaulting to 
+- In ProofSet, use the document's context for proof before defaulting to
   security context.
 
 ## 8.0.1 - 2021-03-18
