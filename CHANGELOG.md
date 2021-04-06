@@ -1,10 +1,15 @@
 # jsonld-signatures ChangeLog
 
-## 8.0.3 - TBD
+## 9.0.0 - TBD
+
+### Changed
+- **BREAKING**: Remove `verificationMethod` param from suite constructor. It
+  is now strictly initialized from `key.id` or `signer.id`.
+  Increase validation on either key or signer/verifier parameters.
 
 ### Fixed
-- Add missing `signer` parameter to the `LinkedDataSignature` constructor.
-  This issue caused `this.signer` in subclasses to be `undefined`.
+- Add missing `signer` and `verifier` parameters to the `LinkedDataSignature` 
+  constructor. This issue caused `this.signer` in subclasses to be `undefined`.
 
 ## 8.0.2 - 2021-03-19
 
@@ -26,7 +31,7 @@
 
 ### Removed
 - **BREAKING**: No longer shipping browser bundles. Due to splitting out suites
-  into other packages, it becomes more pratical to create browser bundles at
+  into other packages, it becomes more practical to create browser bundles at
   the application level with modern tools.
 - **BREAKING**: No longer exporting `crypto-ld` classes.
 - **BREAKING**: Remove `PublicKeyProofPurpose`.
