@@ -1,6 +1,6 @@
 # jsonld-signatures ChangeLog
 
-## 9.0.0 - TBD
+## 9.0.0 - 2021-04-06
 
 ### Changed
 - **BREAKING**: Remove `verificationMethod` param from suite constructor. It
