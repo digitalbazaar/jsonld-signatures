@@ -2,10 +2,15 @@
 
 ## 9.0.1 -
 
+These changes were intended to be released in v9.0.0, so, releasing them as
+a patch.
+
 ### Changed
-- Implement automatic adding of the suite context to the document to be signed,
-  (if it's not present already). (We meant to add this to v9.0.0, so we're
-  releasing this as a patch).
+- **BREAKING**: Implement automatic adding of the suite context to the document
+  to be signed, (if it's not present already).
+- **BREAKING**: Remove the case where the `document` argument in `sign()` or
+  `verify()` is a URL (instead of an object), since this is an unused feature,
+  and a mixing of layers.
 
 ## 9.0.0 - 2021-04-06
 
