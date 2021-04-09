@@ -17,6 +17,20 @@
 - [Commercial Support](#commercial-support)
 - [License](#license)
 
+## Version Compatibility
+
+`jsonld-signatures` **v9.0** is compatible with the following signature suites:
+
+* [`ed25519-signature-2020`](https://github.com/digitalbazaar/ed25519-signature-2020)
+  `>= 2.1.0`.
+
+and the following related libraries:
+
+* `crypto-ld` `>= 5.0.0` (and related key crypto suites such as 
+  [`ed25519-verification-key-2020`](https://github.com/digitalbazaar/ed25519-verification-key-2020)
+  `>= 2.1.0`).
+* `vc-js` `>= 7.0` (currently, [branch `v7.x`](https://github.com/digitalbazaar/vc-js/pull/83))
+
 ## Background
 
 A Linked Data Signature proof is created (or verified) by specifying a

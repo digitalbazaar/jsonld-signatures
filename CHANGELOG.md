@@ -1,5 +1,12 @@
 # jsonld-signatures ChangeLog
 
+## 9.0.1 -
+
+### Changed
+- Implement automatic adding of the suite context to the document to be signed,
+  (if it's not present already). (We meant to add this to v9.0.0, so we're
+  releasing this as a patch).
+
 ## 9.0.0 - 2021-04-06
 
 ### Changed
