@@ -1,6 +1,6 @@
 # jsonld-signatures ChangeLog
 
-## 9.0.1 -
+## 9.0.1 - 2021-04-09
 
 These changes were intended to be released in v9.0.0, so, releasing them as
 a patch.
