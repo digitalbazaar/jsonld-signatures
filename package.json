@@ -29,8 +29,8 @@
     "lib/**/*.js"
   ],
   "dependencies": {
-    "jsonld": "^5.0.0",
-    "security-context": "^4.0.0",
+    "@digitalbazaar/security-context": "^1.0.0",
+    "jsonld": "digitalbazaar/jsonld.js#v5.2.1-rc1",
     "serialize-error": "^8.0.1"
   },
   "devDependencies": {
