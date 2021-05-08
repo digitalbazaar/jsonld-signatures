@@ -1,5 +1,13 @@
 # jsonld-signatures ChangeLog
 
+## 9.3.1 -
+
+### Changed
+- Update `jsonld` (and `rdf-canonize`) dependency, to enable use with React
+  Native.
+- Switch to `@digitalbazaar/security-context` (more compact, no fs dependency).
+
+
 ## 9.3.0 - 2021-07-10
 
 ### Added
