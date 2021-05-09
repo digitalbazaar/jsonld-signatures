@@ -30,7 +30,9 @@
   ],
   "dependencies": {
     "@digitalbazaar/security-context": "^1.0.0",
-    "jsonld": "digitalbazaar/jsonld.js#v5.2.1-rc1",
+    "fast-text-encoding": "^1.0.3",
+    "isomorphic-webcrypto": "^2.3.8",
+    "jsonld": "digitalbazaar/jsonld.js#v5.2.1-rc2",
     "serialize-error": "^8.0.1"
   },
   "devDependencies": {
@@ -79,6 +81,13 @@
   },
   "browser": {
     "crypto": false,
-    "./lib/sha256digest.js": "./lib/sha256digest-browser.js"
+    "./lib/sha256digest.js": "./lib/sha256digest-browser.js",
+    "fast-text-encoding": false,
+    "isomorphic-webcrypto": false
+  },
+  "react-native": {
+    "crypto": false,
+    "./lib/sha256digest.js": "./lib/sha256digest-reactnative.js",
+    "./lib/sha256digest-browser.js": false
   }
 }
