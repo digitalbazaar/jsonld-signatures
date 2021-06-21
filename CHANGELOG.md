@@ -1,5 +1,10 @@
 # jsonld-signatures ChangeLog
 
+## 9.1.0 - 2021-xx-xx
+
+### Changed
+- Allow specifying a signer or a verifier. Specifying both is not required.
+
 ## 9.0.2 - 2021-04-12
 
 ### Changed
@@ -26,7 +31,7 @@ a patch.
   Increase validation on either key or signer/verifier parameters.
 
 ### Fixed
-- Add missing `signer` and `verifier` parameters to the `LinkedDataSignature` 
+- Add missing `signer` and `verifier` parameters to the `LinkedDataSignature`
   constructor. This issue caused `this.signer` in subclasses to be `undefined`.
 
 ## 8.0.2 - 2021-03-19
