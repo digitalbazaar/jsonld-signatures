@@ -1,5 +1,12 @@
 # jsonld-signatures ChangeLog
 
+## 9.1.0 - 2021-xx-xx
+
+### Changed
+- Use `tag: 'static'` feature in `extendContextLoader`. This flag will inform
+  the JSON-LD processor that the statically loaded contexts are, in fact,
+  static and only need to be processed once.
+
 ## 9.0.2 - 2021-04-12
 
 ### Changed
