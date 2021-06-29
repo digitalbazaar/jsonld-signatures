@@ -1,6 +1,6 @@
 # jsonld-signatures ChangeLog
 
-## 9.1.1 - 2021-06-xx
+## 9.1.1 - 2021-06-29
 
 ### Fixed
 - Use `Map` to internally represent contexts instead of an object. This
