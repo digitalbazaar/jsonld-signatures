@@ -1,6 +1,6 @@
 # jsonld-signatures ChangeLog
 
-## 9.1.0 - 2021-xx-xx
+## 9.1.0 - 2021-06-29
 
 ### Changed
 - Use `tag: 'static'` feature in `extendContextLoader`. This flag will inform
