@@ -1,5 +1,29 @@
 # jsonld-signatures ChangeLog
 
+## 9.2.0 - 2021-xx-xx
+
+### Added
+- Support passing multiple purposes in a single verify call.
+- Add `NotFoundError` name to error thrown when there are not enough proofs
+  to match the passed supported suites and purposes during verification.
+  LD suite implementations should not be relying the error message but can
+  rely on the `name` property of the error instead.
+
+### Changed
+- `LinkedDataSignature` no longer calls `purpose.validate`; this function
+  is instead called after `verifyProof()`. This removes the responsibility
+  of calling this function from LD suite implementations and places it in
+  the main verify call from within jsigs instead. LD suites will still be
+  passed a dummy `purpose` in this version for backwards compatibility
+  purposes that will successfully return a promise that resolves to
+  `true` from `purpose.validate()`. Decoupling this from the suites both
+  establishes a better separation of concerns and simplifies LD suites by
+  reducing their responsibilities. LD suites are responsible for returing
+  the `verificationMethod` used in their results so it can be passed to
+  `purpose.validate()`.
+- Add cache for hash of canonicalized document to enable its reuse when
+  verifying multiple proofs on a single document.
+
 ## 9.1.1 - 2021-06-29
 
 ### Fixed
@@ -39,7 +63,7 @@ a patch.
   Increase validation on either key or signer/verifier parameters.
 
 ### Fixed
-- Add missing `signer` and `verifier` parameters to the `LinkedDataSignature` 
+- Add missing `signer` and `verifier` parameters to the `LinkedDataSignature`
   constructor. This issue caused `this.signer` in subclasses to be `undefined`.
 
 ## 8.0.2 - 2021-03-19
