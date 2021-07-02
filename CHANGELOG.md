@@ -1,6 +1,6 @@
 # jsonld-signatures ChangeLog
 
-## 9.2.0 - 2021-xx-xx
+## 9.2.0 - 2021-07-02
 
 ### Added
 - Support passing multiple purposes in a single verify call.
