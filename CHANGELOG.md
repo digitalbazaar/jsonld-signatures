@@ -1,5 +1,10 @@
 # jsonld-signatures ChangeLog
 
+## 9.2.1 - TBD
+
+### Changed
+- Use the method size to get the number of entries in the Map purposeToProofs.
+
 ## 9.2.0 - 2021-07-02
 
 ### Added
