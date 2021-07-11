@@ -1,6 +1,6 @@
 # jsonld-signatures ChangeLog
 
-## 9.3.0 - 2021-07-xx
+## 9.3.0 - 2021-07-10
 
 ### Added
 - Add optimization for JSON-LD controller documents that are DID documents. When
