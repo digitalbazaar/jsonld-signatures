@@ -1,5 +1,13 @@
 # jsonld-signatures ChangeLog
 
+## 9.3.0 - 2021-07-xx
+
+### Added
+- Add optimization for JSON-LD controller documents that are DID documents. When
+  a controller ID resolves to a JSON-LD DID Document, then JSON-LD framing can
+  be skipped when verifying verification method relationships if the verification
+  relationship is one that is defined by the DID context.
+
 ## 9.2.1 - 2021-07-08
 
 ### Fixed
