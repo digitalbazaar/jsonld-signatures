@@ -32,7 +32,7 @@
     "@digitalbazaar/security-context": "^1.0.0",
     "fast-text-encoding": "^1.0.3",
     "isomorphic-webcrypto": "^2.3.8",
-    "jsonld": "digitalbazaar/jsonld.js#v5.2.1-rc2",
+    "jsonld": "digitalbazaar/jsonld.js#rn",
     "serialize-error": "^8.0.1"
   },
   "devDependencies": {
