@@ -1,5 +1,10 @@
 # jsonld-signatures ChangeLog
 
+## 9.3.1 - 2021-xx-xx
+
+### Fixed
+- Allow `expansionMap` overrides.
+
 ## 9.3.0 - 2021-07-10
 
 ### Added
