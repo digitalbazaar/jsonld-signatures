@@ -99,7 +99,13 @@ security, or business rules.
 
 ## Install
 
-- Node.js 14+ is required.
+- Browsers and Node.js 14+ are supported.
+
+To install from NPM:
+
+```
+npm install jsonld-signatures
+```
 
 To install locally (for development):
 
