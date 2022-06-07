@@ -1,6 +1,6 @@
 # jsonld-signatures ChangeLog
 
-## 10.0.0 - 2022-xx-xx
+## 10.0.0 - 2022-06-06
 
 ### Changed
 - **BREAKING**: Update to jsonld@6.
