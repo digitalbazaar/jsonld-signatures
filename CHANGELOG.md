@@ -8,6 +8,7 @@
 - **BREAKING**: Update required Node.js to >=14.
   - Updated due to jsonld@6 requirements.
 - Test on Node.js 18.x.
+- Update eslint dependencies.
 
 ## 9.3.1 - 2021-12-17
 
