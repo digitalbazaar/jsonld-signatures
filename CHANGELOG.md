@@ -5,6 +5,9 @@
 ### Changed
 - **BREAKING**: Update to jsonld@6.
   - Use of the packaged jsonld document loaders requires Node.js >=14.
+- **BREAKING**: Update required Node.js to >=14.
+  - Updated due to jsonld@6 requirements.
+- Test on Node.js 18.x.
 
 ## 9.3.1 - 2021-12-17
 
