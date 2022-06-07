@@ -1,5 +1,11 @@
 # jsonld-signatures ChangeLog
 
+## 10.0.0 - 2022-xx-xx
+
+### Changed
+- **BREAKING**: Update to jsonld@6.
+  - Use of the packaged jsonld document loaders requires Node.js >=14.
+
 ## 9.3.1 - 2021-12-17
 
 ### Fixed
