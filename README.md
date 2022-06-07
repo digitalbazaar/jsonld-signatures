@@ -99,7 +99,7 @@ security, or business rules.
 
 ## Install
 
-- Node.js 12+ is required.
+- Node.js 14+ is required.
 
 To install locally (for development):
 
