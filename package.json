@@ -25,7 +25,6 @@
   "license": "BSD-3-Clause",
   "main": "lib/jsonld-signatures.js",
   "files": [
-    "lib/*.js",
     "lib/**/*.js"
   ],
   "dependencies": {
@@ -34,22 +33,22 @@
     "serialize-error": "^8.0.1"
   },
   "devDependencies": {
-    "chai": "^4.3.3",
+    "chai": "^4.3.6",
     "cross-env": "^7.0.3",
     "eslint": "^8.17.0",
     "eslint-config-digitalbazaar": "^3.0.0",
     "eslint-plugin-jsdoc": "^39.3.2",
-    "karma": "^6.1.1",
+    "karma": "^6.3.20",
     "karma-chai": "^0.1.0",
-    "karma-chrome-launcher": "^3.1.0",
+    "karma-chrome-launcher": "^3.1.1",
     "karma-mocha": "^2.0.1",
     "karma-mocha-reporter": "^2.2.5",
     "karma-sourcemap-loader": "^0.3.8",
     "karma-webpack": "^5.0.0",
-    "mocha": "^8.3.1",
+    "mocha": "^10.0.0",
     "mocha-lcov-reporter": "^1.3.0",
     "nyc": "^15.1.0",
-    "webpack": "^5.24.3"
+    "webpack": "^5.73.0"
   },
   "engines": {
     "node": ">=14"

@@ -9,6 +9,7 @@
   - Updated due to jsonld@6 requirements.
 - Test on Node.js 18.x.
 - Update eslint dependencies.
+- Update development dependencies.
 
 ## 9.3.1 - 2021-12-17
 
