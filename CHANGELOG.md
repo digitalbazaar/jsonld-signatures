@@ -1,5 +1,15 @@
 # jsonld-signatures ChangeLog
 
+## 11.0.0 - 2022-08-xx
+
+### Changed
+- **BREAKING**: Use `jsonld@7` to make use of `safe` mode. The `safe` mode
+  is a more robust replacement for `expansionMap`.
+
+### Removed
+- **BREAKING**: Remove `expansionMap` option. Now `safe` mode is used internally
+  instead.
+
 ## 10.0.0 - 2022-06-06
 
 ### Changed
