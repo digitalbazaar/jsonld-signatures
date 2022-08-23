@@ -1,6 +1,6 @@
 # jsonld-signatures ChangeLog
 
-## 11.0.0 - 2022-08-xx
+## 11.0.0 - 2022-08-23
 
 ### Changed
 - **BREAKING**: Use `jsonld@8` to make use of `safe` mode. The `safe` mode
