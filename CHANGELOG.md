@@ -3,7 +3,7 @@
 ## 11.0.0 - 2022-08-xx
 
 ### Changed
-- **BREAKING**: Use `jsonld@7` to make use of `safe` mode. The `safe` mode
+- **BREAKING**: Use `jsonld@8` to make use of `safe` mode. The `safe` mode
   is a more robust replacement for `expansionMap`.
 
 ### Removed
