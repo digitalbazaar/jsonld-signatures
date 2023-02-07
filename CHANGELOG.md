@@ -1,6 +1,6 @@
 # jsonld-signatures ChangeLog
 
-## 11.1.0 - 2023-02-dd
+## 11.1.0 - 2023-02-07
 
 ### Added
 - Allow custom `canonizeOptions` to be passed in the construction of a LD
