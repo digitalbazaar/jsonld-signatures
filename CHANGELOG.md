@@ -1,5 +1,12 @@
 # jsonld-signatures ChangeLog
 
+## 11.1.0 - 2023-02-dd
+
+### Added
+- Allow custom `canonizeOptions` to be passed in the construction of a LD
+  signature suites as a stop-gap until hard requirements for canonize options
+  are either set or advised to be certain values by a W3C working group.
+
 ## 11.0.0 - 2022-08-23
 
 ### Changed
