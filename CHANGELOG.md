@@ -3,8 +3,8 @@
 ## 11.1.0 - 2023-TBD
 
 ### Changed
-- Update `matchProof()` to check if the proof cryptosuite matches along with
-  proof type for `DataIntegrityProof`.
+- Update `matchProof()` to check if proof contains `cryptosuite` and if so,
+  check if `proof.cryptosuite` matches along with `proof.type`.
 
 ## 11.1.0 - 2023-02-07
 
