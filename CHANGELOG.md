@@ -1,5 +1,11 @@
 # jsonld-signatures ChangeLog
 
+## 11.1.0 - 2023-TBD
+
+### Changed
+- Update `matchProof()` to check if the proof cryptosuite matches along with
+  proof type for `DataIntegrityProof`.
+
 ## 11.1.0 - 2023-02-07
 
 ### Added
