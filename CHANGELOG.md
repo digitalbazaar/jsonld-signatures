@@ -1,5 +1,17 @@
 # jsonld-signatures ChangeLog
 
+## 11.2.0 - 2023-05-dd
+
+### Added
+- Add support for `derive` function to be implemented by the given
+  cryptosuite. The `derive` function is used to derive a new document with
+  a new `proof` based on an existing `document` (and `proof`). The `derive`
+  function will be used when calling `derive` from `jsonld-signatures`.
+- Any existing `proofSet` from the input document will be passed to the
+  `createProof` and `verifyProof` functions in `LinkedDataProof` and
+  `LinkedDataSignature`. It will also be passed to `createVerifyData` in
+  `LinkedDataSignature`.
+
 ## 11.1.0 - 2023-02-07
 
 ### Added
