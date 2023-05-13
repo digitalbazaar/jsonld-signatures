@@ -7,6 +7,11 @@
   cryptosuite. The `derive` function is used to derive a new document with
   a new `proof` based on an existing `document` (and `proof`). The `derive`
   function will be used when calling `derive` from `jsonld-signatures`.
+  **Note**: The `derive` API will be considered unstable for a short while
+  to ensure it meets the needs of external cryptosuites. It could change
+  without a major version update (via a minor or patch release) until
+  this notice is removed. If this is a concern for you, do not use it
+  until this notice is removed.
 - Any existing `proofSet` from the input document will be passed to the
   `createProof` and `verifyProof` functions in `LinkedDataProof` and
   `LinkedDataSignature`. It will also be passed to `createVerifyData` in
