@@ -12,6 +12,10 @@
   `LinkedDataSignature`. It will also be passed to `createVerifyData` in
   `LinkedDataSignature`.
 
+### Changed
+- Use `@digitalbazaar/security-context` to provide security contexts instead
+  of the old `security-context` package.
+
 ## 11.1.0 - 2023-02-07
 
 ### Added
