@@ -1,5 +1,10 @@
 # jsonld-signatures ChangeLog
 
+## 11.2.1 - 2023-05-dd
+
+### Fixed
+- Ensure internal `_getProofs` helper is synchronous.
+
 ## 11.2.0 - 2023-05-13
 
 ### Added
