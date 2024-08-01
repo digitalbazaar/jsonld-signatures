@@ -30,6 +30,7 @@
   "dependencies": {
     "@digitalbazaar/security-context": "^1.0.0",
     "jsonld": "^8.0.0",
+    "rdf-canonize": "^4.0.1",
     "serialize-error": "^8.1.0"
   },
   "devDependencies": {
@@ -51,7 +52,7 @@
     "webpack": "^5.73.0"
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=18"
   },
   "keywords": [
     "JSON",

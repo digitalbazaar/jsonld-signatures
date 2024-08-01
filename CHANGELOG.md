@@ -1,5 +1,11 @@
 # jsonld-signatures ChangeLog
 
+## 11.3.0 - 2024-08-dd
+
+### Changed
+- Use `rdf-canonize` directly to get latest updates and avoid reliance
+  on `jsonld` package to provide it indirectly.
+
 ## 11.2.1 - 2023-05-14
 
 ### Fixed
