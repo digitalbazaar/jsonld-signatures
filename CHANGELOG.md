@@ -1,6 +1,6 @@
 # jsonld-signatures ChangeLog
 
-## 11.3.1 - 2024-10-dd
+## 11.3.1 - 2024-10-02
 
 ### Fixed
 - Ensure verification method ID is a string when checking controller
