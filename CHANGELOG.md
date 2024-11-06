@@ -1,5 +1,10 @@
 # jsonld-signatures ChangeLog
 
+## 11.3.2 - 2024-11-xx
+
+### Fixed
+- Ensure `proof.@context` is unmodified for JCS Data Integrity Cryptosuites.
+
 ## 11.3.1 - 2024-10-02
 
 ### Fixed
