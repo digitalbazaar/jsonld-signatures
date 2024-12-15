@@ -1,6 +1,6 @@
 # jsonld-signatures ChangeLog
 
-## 11.4.0 - 2024-12-dd
+## 11.4.0 - 2024-12-15
 
 ### Added
 - Add support for validating proof with `domain` expressed as an array.
