@@ -1,5 +1,12 @@
 # jsonld-signatures ChangeLog
 
+## 11.5.0 - 2024-12-dd
+
+### Added
+- Add support for signing `@direction` in documents when using the
+  base `LinkedDataSignature` class. Other cryptosuites may already
+  support `@direction` if they were not using this class.
+
 ## 11.4.0 - 2024-12-15
 
 ### Added
