@@ -1,6 +1,6 @@
 # jsonld-signatures ChangeLog
 
-## 11.5.0 - 2024-12-dd
+## 11.5.0 - 2024-12-17
 
 ### Added
 - Add support for signing `@direction` in documents when using the
