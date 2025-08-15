@@ -1,8 +1,7 @@
 # JSON-LD Signatures _(jsonld-signatures)_
 
-[![Build status](https://img.shields.io/github/workflow/status/digitalbazaar/jsonld-signatures/Node.js%20CI)](https://github.com/digitalbazaar/jsonld-signatures/actions?query=workflow%3A%22Node.js+CI%22)
+[![Build status](https://img.shields.io/github/actions/workflow/status/digitalbazaar/jsonld-signatures/main.yml)](https://github.com/digitalbazaar/jsonld-signatures/actions?query=workflow%3A%22Node.js+CI%22)
 [![Coverage status](https://img.shields.io/codecov/c/github/digitalbazaar/jsonld-signatures)](https://codecov.io/gh/digitalbazaar/jsonld-signatures)
-[![Dependency Status](https://img.shields.io/david/digitalbazaar/jsonld-signatures.svg)](https://david-dm.org/digitalbazaar/jsonld-signatures)
 [![NPM Version](https://img.shields.io/npm/v/jsonld-signatures.svg)](https://npm.im/jsonld-signatures)
 
 > An implementation of the Linked Data Signatures specification for JSON-LD, for Node.js and browsers.
