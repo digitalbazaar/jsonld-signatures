@@ -1,5 +1,15 @@
 # jsonld-signatures ChangeLog
 
+## 11.6.0 - 2026-xx-xx
+
+### Changed
+- Update dependencies:
+  - `jsonld@9`.
+  - `rdf-canonize@5`.
+- **NOTE**: The `jsonld` update may have rare edge case compatibility issues.
+  The important related `rdf-canonize` issues were addressed with the update in
+  v11.3.0.
+
 ## 11.5.0 - 2024-12-17
 
 ### Added
