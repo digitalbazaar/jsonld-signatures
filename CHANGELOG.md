@@ -1,6 +1,6 @@
 # jsonld-signatures ChangeLog
 
-## 11.6.0 - 2026-xx-xx
+## 11.6.0 - 2026-02-04
 
 ### Changed
 - Update dependencies:
