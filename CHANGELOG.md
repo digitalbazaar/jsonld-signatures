@@ -1,5 +1,19 @@
 # jsonld-signatures ChangeLog
 
+## 11.7.0 - TBD
+
+### Added
+- Add `VerificationMethodError` (exported) with a `code` of `notFound`,
+  `notAuthorized`, or `invalidId` and the offending `verificationMethod` id
+  where known. `LinkedDataSignature.getVerificationMethod` and
+  `ControllerProofPurpose.validate` now throw it instead of a plain `Error`;
+  messages are unchanged.
+
+### Fixed
+- Throw `notFound` from `LinkedDataSignature.getVerificationMethod` when
+  framing yields no match. The previous check tested for a falsy result, which
+  current `jsonld` no longer returns for a missing node.
+
 ## 11.6.0 - 2026-02-04
 
 ### Changed
